@@ -62,7 +62,7 @@ const validator = data => {
     data.headers.forEach(header => {
         if (header.meta) {
             if (!isArray(data.metaData[header.name])) {
-                throw new Error('Metadata ids (' + header.name + ') is not an array');
+                throw new Error(`No metadata ids found for header "${header.name}"`);
             }
         }
     });
