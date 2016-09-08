@@ -88,8 +88,8 @@ export default function getYAxis(layout) {
     // decimals
     const decimals = getDecimals(layout);
 
-    if (isDefined(amount)) {
-        yAxis.tickAmount = amount;
+    if (isDefined(decimals)) {
+        yAxis.tickAmount = decimals;
     }
 
     // title
@@ -106,23 +106,5 @@ export default function getYAxis(layout) {
         yAxis.plotLines = lines;
     }
 
-
-
-
-
-    // title
-    const title = getTitle(layout);
-
-    if (isDefined(title)) {
-        yAxis.title = title;
-    }
-
-    // target/base line
-    const targetLine = getTargetLine(layout);
-
-    if (targetLine)
-        plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)])
-    };
-
-    //
+    return yAxis;
 }
