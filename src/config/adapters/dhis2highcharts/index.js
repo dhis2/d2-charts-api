@@ -4,7 +4,7 @@ import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
 
-export default function adapter(store, layout, response, extraLayout) {
+export default function adapter(store, layout, response, extraConfig) {
     const config = {
 
         // type
@@ -35,6 +35,9 @@ export default function adapter(store, layout, response, extraLayout) {
     if (isDefined(legend)) {
         config.legend = legend;
     }
+
+    // force apply extra config
+    Object.assign(config, extraConfig);
 
     return config;
 }
