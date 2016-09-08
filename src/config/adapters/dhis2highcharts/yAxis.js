@@ -67,7 +67,7 @@ function getBaseLine(layout) {
 }
 
 export default function getYAxis(layout) {
-    const yAxis = {
+    const axis = {
         min: getMinValue(layout)
     };
 
@@ -75,36 +75,36 @@ export default function getYAxis(layout) {
     const maxValue = getMaxValue(layout);
 
     if (isDefined(maxValue)) {
-        yAxis.max = maxValue;
+        axis.max = maxValue;
     }
 
     // tick steps
     const steps = getSteps(layout);
 
     if (isDefined(amount)) {
-        yAxis.tickAmount = steps;
+        axis.tickAmount = steps;
     }
 
     // decimals
     const decimals = getDecimals(layout);
 
     if (isDefined(decimals)) {
-        yAxis.tickAmount = decimals;
+        axis.tickAmount = decimals;
     }
 
     // title
     const title = getTitle(layout);
 
     if (isDefined(title)) {
-        yAxis.title = title;
+        axis.title = title;
     }
 
     // target/base line
     const lines = arrayClean([getTargetLine(layout), getBaseLine(layout)]);
 
     if (lines.length) {
-        yAxis.plotLines = lines;
+        axis.plotLines = lines;
     }
 
-    return yAxis;
+    return axis;
 }
