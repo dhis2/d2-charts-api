@@ -19,9 +19,7 @@ export default function adapter(store, layout, response, extraLayout) {
         yAxis: getYAxis(layout),
 
         // series
-        series: getSeries(store),
-
-
+        series: getSeries(store)
     };
 
     // title
@@ -29,6 +27,13 @@ export default function adapter(store, layout, response, extraLayout) {
 
     if (isDefined(title)) {
         config.title = title;
+    }
+
+    // legend
+    const legend = getLegend(layout);
+
+    if (isDefined(legend)) {
+        config.legend = legend;
     }
 
     return config;

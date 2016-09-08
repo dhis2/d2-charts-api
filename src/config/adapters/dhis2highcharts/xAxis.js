@@ -23,14 +23,9 @@ function getTitle(layout) {
 }
 
 export default function getXAxis(layout, response) {
-    const axis = {};
-
-    // categories
-    const categories = getCategories(response);
-
-    if (isDefined(categories)) {
-        axis.categories = categories;
-    }
+    const axis = {
+        categories: getCategories(response)
+    };
 
     // title
     const title = getTitle(layout);
