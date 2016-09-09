@@ -3,7 +3,7 @@ import adapters from './adapters';
 
 const config = (layout, response, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout) => {
     let _validator = validators[inputFormat] || validators.noValidation;
-    let _adapter = adapters[inputFormat + '2' + outputFormat];
+    let _adapter = adapters[inputFormat + '_' + outputFormat];
 
     if (!_validator) {
         console.log(`Validation not supported for config input format "${inputFormat}"`);
@@ -19,3 +19,4 @@ const config = (layout, response, inputFormat = 'dhis', outputFormat = 'highchar
 export default store;
 
 //todo sorting
+

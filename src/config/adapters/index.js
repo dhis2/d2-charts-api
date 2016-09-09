@@ -1,5 +1,5 @@
-import dhis2highcharts from './dhis2highcharts';
+import dhis_highcharts from './dhis_highcharts';
 
 export default {
-    dhis2highcharts
+    dhis_highcharts
 };
