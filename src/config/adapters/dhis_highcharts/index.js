@@ -22,6 +22,13 @@ export default function adapter(store, layout, response, extraConfig) {
         series: getSeries(store)
     };
 
+    // element
+    const el = layout.el;
+
+    if (el) {
+        config.chart.renderTo = el;
+    }
+
     // title
     const title = getTitle(layout);
 
