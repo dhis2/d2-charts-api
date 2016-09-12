@@ -3,7 +3,7 @@ import adapters from './adapters';
 
 const store = ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', seriesId, categoryId) => {
     let _validator = validators[inputFormat] || validators.noValidation;
-    let _adapter = adapters[inputFormat + '2' + outputFormat];
+    let _adapter = adapters[inputFormat + '_' + outputFormat];
 
     if (!_validator) {
         console.log(`Validation not supported for data input format "${inputFormat}"`);
