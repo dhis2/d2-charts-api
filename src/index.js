@@ -1,9 +1,9 @@
-import store from './store';
-import config from './config';
-import chart from './chart';
+import Store from './store';
+import Config from './config';
+import Chart from './chart';
 
 export default {
-    store,
-    config,
-    chart,
+    Store,
+    Config,
+    Chart
 };

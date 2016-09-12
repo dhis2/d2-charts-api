@@ -16,7 +16,7 @@ const config = (layout, response, inputFormat = 'dhis', outputFormat = 'highchar
     this.getConfig = (sId = seriesId, cId = categoryId) => _adapter(_validator(layout), response, extraLayout);
 };
 
-export default store;
+export default config;
 
 //todo sorting
 

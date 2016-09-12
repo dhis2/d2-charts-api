@@ -1,7 +1,7 @@
 import validators from './validators';
 import adapters from './adapters';
 
-const store = (data, inputFormat = 'dhis', outputFormat = 'highcharts', seriesId, categoryId) => {
+const store = ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', seriesId, categoryId) => {
     let _validator = validators[inputFormat] || validators.noValidation;
     let _adapter = adapters[inputFormat + '2' + outputFormat];
 
@@ -17,5 +17,3 @@ const store = (data, inputFormat = 'dhis', outputFormat = 'highcharts', seriesId
 };
 
 export default store;
-
-//todo sorting
