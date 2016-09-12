@@ -1,5 +1,5 @@
 import H from 'highcharts';
 
-export default generator(config) {
+export default function (config) {
     return new H.Chart(config);
 };
