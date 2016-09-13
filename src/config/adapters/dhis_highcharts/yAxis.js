@@ -4,6 +4,7 @@ import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
 
 const DEFAULT_MIN_VALUE = 0;
+const PLOTLINE_ZINDEX = 4;
 
 function getMinValue(layout) {
     return isNumeric(layout.rangeAxisMaxValue) ? layout.rangeAxisMaxValue : DEFAULT_MIN_VALUE;
@@ -34,7 +35,8 @@ function getTargetLine(layout) {
         targetLine = {
             value: layout.targetLineValue,
             width: 1,
-            color: '#333'
+            color: '#333',
+            zIndex: PLOTLINE_ZINDEX
         };
 
         if (isString(layout.targetLineTitle)) {
@@ -54,7 +56,8 @@ function getBaseLine(layout) {
         baseLine = {
             value: layout.baseLineValue,
             width: 1,
-            color: '#333'
+            color: '#333',
+            zIndex: PLOTLINE_ZINDEX
         };
 
         if (isString(layout.baseLineTitle)) {
