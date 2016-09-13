@@ -2,4 +2,5 @@ node_modules/
 build/
 tmp/
 .idea/
-.log
+*.log
+*.gzip
