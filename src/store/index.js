@@ -15,7 +15,11 @@ const store = ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', series
 
     this.data = data;
 
-    this.generateData = (sId = seriesId, cId = categoryId) => _adapter(_validator(data), sId, cId);
+    this.generateData = (sId = seriesId, cId = categoryId) => _adapter({
+        data: _validator(data),
+        seriesId: sId,
+        categoryId: cId
+    });
 };
 
 export default store;
