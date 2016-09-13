@@ -37,7 +37,7 @@ function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
 
         categoryItems.forEach(categoryItem => {
             key = seriesItem + '-' + categoryItem;
-            value = idValueMap[key] || null;
+            value = parseFloat(idValueMap[key]) || null;
 
             dataItem.data.push(value);
         });

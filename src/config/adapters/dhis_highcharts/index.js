@@ -4,14 +4,15 @@ import getXAxis from './xAxis';
 import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
+import getLegend from './legend';
 
-export default function (el = layout.el, layout, store, extraConfig) {
+export default function (el, layout, store, extraConfig) {
     const config = {
 
         // type
         chart: objectClean({
             type: layout.type,
-            renderTo: el
+            renderTo: el || layout.el
         }),
 
         // title

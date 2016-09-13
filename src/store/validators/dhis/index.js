@@ -20,12 +20,12 @@ function validateRowValue(rowValue) {
     }
 }
 
-function validateRow(row) {
+function validateRow(row, headersLength) {
     if (!isArray(row)) {
         throw new Error('Data row is not an array');
     }
 
-    if (row.length !== data.headers.length) {
+    if (row.length !== headersLength) {
         throw new Error('Data row length is invalid');
     }
 
@@ -77,7 +77,7 @@ export default function (data) {
         throw new Error('No data rows provided');
     }
 
-    data.rows.forEach(row => validateRow(row));
+    data.rows.forEach(row => validateRow(row, data.headers.length));
 
     return data;
 }

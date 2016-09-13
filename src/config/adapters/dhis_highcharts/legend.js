@@ -1,4 +1,4 @@
-export default function getLegend(layout) {
+export default function (layout) {
     return layout.hideLegend ? {
         enabled: false
     } : undefined;
