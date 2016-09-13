@@ -66,7 +66,7 @@ function getBaseLine(layout) {
     return baseLine;
 }
 
-export default function getYAxis(layout) {
+export default function (layout) {
     const axis = {
         min: getMinValue(layout)
     };

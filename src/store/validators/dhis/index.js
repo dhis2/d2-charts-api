@@ -1,6 +1,6 @@
-import isArray from 'd2-analysis/lib/isArray';
-import isObject from 'd2-analysis/lib/isObject';
-import isString from 'd2-analysis/lib/isString';
+import isArray from 'd2-utilizr/lib/isArray';
+import isObject from 'd2-utilizr/lib/isObject';
+import isString from 'd2-utilizr/lib/isString';
 
 function validateHeader(header) {
     if (!isObject(header)) {

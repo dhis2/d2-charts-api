@@ -1,4 +1,4 @@
-export default function getSeries(store, layout) {
+export default function (store, layout) {
     const data = store.getData(layout.columns[0].dimension, layout.rows[0].dimension);
 
     if (layout.showTrendLine) {

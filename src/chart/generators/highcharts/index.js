@@ -1,7 +1,11 @@
 import H from 'highcharts';
 
 export default function (config, el) {
-    config.chart.renderTo = config.chart.renderTo || el;
 
-    return new H.Chart(config);
+console.log("config", config, el);
+    chartConfig = config.getConfig();
+
+    chartConfig.chart.renderTo = el || chartConfig.chart.renderTo;
+
+    return new H.Chart(chartConfig);
 };
