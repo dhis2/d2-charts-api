@@ -1,9 +1,9 @@
 import validators from './validators';
 import adapters from './adapters';
 
-const config = (layout, response, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout) => {
-    let _validator = validators[inputFormat] || validators.noValidation;
-    let _adapter = adapters[inputFormat + '_' + outputFormat];
+const config = ({ el, layout, store, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout }) => {
+    const _validator = validators[inputFormat] || validators.noValidation;
+    const _adapter = adapters[inputFormat + '_' + outputFormat];
 
     if (!_validator) {
         console.log(`Validation not supported for config input format "${inputFormat}"`);
@@ -13,10 +13,11 @@ const config = (layout, response, inputFormat = 'dhis', outputFormat = 'highchar
         throw new Error(`Config tranformation from "${inputFormat}" to "${outputFormat}" is not supported`);
     }
 
-    this.getConfig = (sId = seriesId, cId = categoryId) => _adapter(_validator(layout), response, extraLayout);
+    const layout = _validator(layout);
+
+    this.getConfig = (sId = seriesId, cId = categoryId) => _adapter({ el, layout, store, extraLayout });
 };
 
 export default config;
 
 //todo sorting
-

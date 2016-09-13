@@ -1,50 +1,37 @@
 import isDefined from 'd2-utilizr/lib/isDefined';
+import objectClean from 'd2-utilizr/lib/objectClean';
 import getXAxis from './xAxis';
 import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
 
-export default function adapter(store, layout, response, extraConfig) {
+export default function adapter({ el, layout, store, extraConfig }) {
     const config = {
 
         // type
-        chart: {
-            type: layout.type
-        },
+        chart: objectClean({
+            type: layout.type,
+            renderTo: el || layout.el
+        }),
+
+        // title
+        title: getTitle(layout),
 
         // x-axis
-        xAxis: getXAxis(layout, response),
+        xAxis: getXAxis(layout, store),
 
         // y-axis
         yAxis: getYAxis(layout),
 
         // series
-        series: getSeries(store)
+        series: getSeries(store),
+
+        // legend
+        legend: getLegend(layout)
     };
-
-    // element
-    const el = layout.el;
-
-    if (el) {
-        config.chart.renderTo = el;
-    }
-
-    // title
-    const title = getTitle(layout);
-
-    if (isDefined(title)) {
-        config.title = title;
-    }
-
-    // legend
-    const legend = getLegend(layout);
-
-    if (isDefined(legend)) {
-        config.legend = legend;
-    }
 
     // force apply extra config
     Object.assign(config, extraConfig);
 
-    return config;
+    return objectClean(config);
 }

@@ -13,7 +13,9 @@ const store = ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', series
         throw new Error(`Data tranformation from "${inputFormat}" to "${outputFormat}" is not supported`);
     }
 
-    this.getData = (sId = seriesId, cId = categoryId) => _adapter(_validator(data), sId, cId);
+    this.data = data;
+
+    this.generateData = (sId = seriesId, cId = categoryId) => _adapter(_validator(data), sId, cId);
 };
 
 export default store;

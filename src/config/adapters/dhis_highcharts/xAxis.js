@@ -1,15 +1,17 @@
 import isDefined from 'd2-utilizr/lib/isDefined';
 import isString from 'd2-utilizr/lib/isString';
 
-function getCategories(response) {
+function getCategories(store) {
     let categories;
-    const ids = response.metaData[layout.rows[0].dimension];
+    const metaData = store.inputData.metaData;
+
+    const ids = metaData[layout.rows[0].dimension];
 
     if (isArray(ids) && ids.length) {
         categories = [];
 
         ids.forEach(id => {
-            categories.push(response.metaData.names[id]);
+            categories.push(metaData.names[id]);
         });
     }
 
@@ -22,9 +24,9 @@ function getTitle(layout) {
     } : undefined;
 }
 
-export default function getXAxis(layout, response) {
+export default function getXAxis(layout, store) {
     const axis = {
-        categories: getCategories(response)
+        categories: getCategories(store)
     };
 
     // title

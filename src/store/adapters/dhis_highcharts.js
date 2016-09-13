@@ -1,50 +1,37 @@
-const adapter = (response, seriesId = response.headers[0].name, categoryId = response.headers[1].name) => {
-    const valueId = 'value';
+function getHeaderIdIndexMap(headers) {
+    const map = new Map();
 
-    const headers = response.headers;
-    const metaData = response.metaData;
-    const rows = response.rows;
+    headers.forEach((header, index) => {
+        map.set(header.name, index);
+    });
 
-    const headerIdIndexMap = (() => {
-        let map = new Map();
+    return map;
+}
 
-        headers.forEach((header, index) => {
-            map.set(header.name, index);
-        });
+function getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex) {
+    const map = {};
+    let key;
+    let value;
 
-        return map;
-    })();
+    rows.forEach(row => {
+        key = row[seriesIndex] + '-' + row[categoryIndex];
+        value = row[valueIndex];
 
-    const seriesItems = metaData[seriesId];
-    const categoryItems = metaData[categoryId];
+        map[key] = value;
+    });
 
-    const seriesIndex = headerIdIndexMap.get(seriesId);
-    const categoryIndex = headerIdIndexMap.get(categoryId);
-    const valueIndex = headerIdIndexMap.get(valueId);
+    return map;
+}
 
-    const idValueMap = (() => {
-        let map = {};
-        let key;
-        let value;
-
-        rows.forEach(row => {
-            key = row[seriesIndex] + '-' + row[categoryIndex];
-            value = row[valueIndex];
-
-            map[key] = value;
-        });
-
-        return map;
-    })();
-
-    let data = [];
+function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
+    const data = [];
     let dataItem;
     let key;
     let value;
 
     seriesItems.forEach(seriesItem => {
         dataItem = {
-            name: metaData.names[seriesItem],
+            name: metaDataNames[seriesItem],
             data: []
         };
 
@@ -59,6 +46,22 @@ const adapter = (response, seriesId = response.headers[0].name, categoryId = res
     });
 
     return data;
-};
+}
 
-export default adapter;
+export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name }) {
+    const headers = data.headers;
+    const metaData = data.metaData;
+    const rows = data.rows;
+    const headerIdIndexMap = getHeaderIdIndexMap(headers);
+    const valueId = 'value';
+
+    const seriesIndex = headerIdIndexMap.get(seriesId);
+    const categoryIndex = headerIdIndexMap.get(categoryId);
+    const valueIndex = headerIdIndexMap.get(valueId);
+    const seriesItems = metaData[seriesId];
+    const categoryItems = metaData[categoryId];
+
+    const idValueMap = getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex);
+
+    return getData(seriesItems, categoryItems, idValueMap, metaData.names);
+}
