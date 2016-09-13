@@ -1,7 +1,7 @@
 import validators from './validators';
 import adapters from './adapters';
 
-const config = ({ el, layout, store, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout }) => {
+export default function ({ el, layout, store, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout }) {
     const _validator = validators[inputFormat] || validators.noValidation;
     const _adapter = adapters[inputFormat + '_' + outputFormat];
 
@@ -14,8 +14,6 @@ const config = ({ el, layout, store, inputFormat = 'dhis', outputFormat = 'highc
     }
 
     this.getConfig = () => _adapter(el, layout, store, extraLayout);
-};
+}
 
-export default config;
-
-//todo sorting
+// todo sorting

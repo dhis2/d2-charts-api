@@ -1,7 +1,7 @@
 import validators from './validators';
 import adapters from './adapters';
 
-const store = ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', seriesId, categoryId }) => {
+export default function ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', seriesId, categoryId }) {
     let _validator = validators[inputFormat] || validators.noValidation;
     let _adapter = adapters[inputFormat + '_' + outputFormat];
 
@@ -20,6 +20,4 @@ const store = ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', series
         seriesId: sId,
         categoryId: cId
     });
-};
-
-export default store;
+}

@@ -5,7 +5,7 @@ import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
 
-export default function adapter(el = layout.el, layout, store, extraConfig) {
+export default function (el = layout.el, layout, store, extraConfig) {
     const config = {
 
         // type

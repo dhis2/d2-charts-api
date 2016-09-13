@@ -32,7 +32,7 @@ function validateRow(row) {
     row.forEach(rowValue => validateRowValue(rowValue));
 }
 
-const validator = data => {
+export default function (data) {
     if (!isObject(data)) {
         throw new Error('Data is not an object');
     }
@@ -80,6 +80,4 @@ const validator = data => {
     data.rows.forEach(row => validateRow(row));
 
     return data;
-};
-
-export default validator;
+}

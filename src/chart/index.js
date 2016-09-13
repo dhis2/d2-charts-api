@@ -1,6 +1,6 @@
 import generators from './generators';
 
-const chart = ({ config, el, outputFormat = 'highcharts' }) => {
+export default function ({ config, el, outputFormat = 'highcharts' }) {
     const generator = generators[outputFormat];
 
     if (!generator) {
@@ -9,5 +9,3 @@ const chart = ({ config, el, outputFormat = 'highcharts' }) => {
 
     return generator(config, el);
 }
-
-export default chart;
