@@ -18,13 +18,13 @@ export default function (el = layout.el, layout, store, extraConfig) {
         title: getTitle(layout),
 
         // x-axis
-        xAxis: getXAxis(layout, store),
+        xAxis: getXAxis(store, layout),
 
         // y-axis
         yAxis: getYAxis(layout),
 
         // series
-        series: getSeries(store),
+        series: getSeries(store, layout),
 
         // legend
         legend: getLegend(layout)
