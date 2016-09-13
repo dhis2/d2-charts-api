@@ -13,9 +13,7 @@ const config = ({ el, layout, store, inputFormat = 'dhis', outputFormat = 'highc
         throw new Error(`Config tranformation from "${inputFormat}" to "${outputFormat}" is not supported`);
     }
 
-    const layout = _validator(layout);
-
-    this.getConfig = () => _adapter({ el, layout, store, extraLayout });
+    this.getConfig = () => _adapter(el, layout, store, extraLayout);
 };
 
 export default config;

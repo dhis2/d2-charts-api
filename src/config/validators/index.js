@@ -4,5 +4,5 @@ const noValidation = (data) => data;
 
 export default {
     dhis,
-    noValidation,
+    noValidation
 };

@@ -5,13 +5,13 @@ import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
 
-export default function adapter({ el, layout, store, extraConfig }) {
+export default function adapter(el = layout.el, layout, store, extraConfig) {
     const config = {
 
         // type
         chart: objectClean({
             type: layout.type,
-            renderTo: el || layout.el
+            renderTo: el
         }),
 
         // title

@@ -7,7 +7,7 @@ const chart = ({ config, el, outputFormat = 'highcharts' }) => {
         throw new Error(`Output format ${outputFormat} is not supported`);
     }
 
-    return generator(config);
+    return generator(config, el);
 }
 
 export default chart;
