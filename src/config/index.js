@@ -15,7 +15,7 @@ const config = ({ el, layout, store, inputFormat = 'dhis', outputFormat = 'highc
 
     const layout = _validator(layout);
 
-    this.getConfig = (sId = seriesId, cId = categoryId) => _adapter({ el, layout, store, extraLayout });
+    this.getConfig = () => _adapter({ el, layout, store, extraLayout });
 };
 
 export default config;
