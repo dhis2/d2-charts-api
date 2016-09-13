@@ -1,4 +1,5 @@
 import arrayClean from 'd2-utilizr/lib/arrayClean';
+import objectClean from 'd2-utilizr/lib/objectClean';
 import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
 
@@ -67,44 +68,12 @@ function getBaseLine(layout) {
 }
 
 export default function (layout) {
-    const axis = {
-        min: getMinValue(layout)
-    };
-
-    // max value
-    const maxValue = getMaxValue(layout);
-
-    if (isDefined(maxValue)) {
-        axis.max = maxValue;
-    }
-
-    // tick steps
-    const steps = getSteps(layout);
-
-    if (isDefined(amount)) {
-        axis.tickAmount = steps;
-    }
-
-    // decimals
-    const decimals = getDecimals(layout);
-
-    if (isDefined(decimals)) {
-        axis.tickAmount = decimals;
-    }
-
-    // title
-    const title = getTitle(layout);
-
-    if (isDefined(title)) {
-        axis.title = title;
-    }
-
-    // target/base line
-    const lines = arrayClean([getTargetLine(layout), getBaseLine(layout)]);
-
-    if (lines.length) {
-        axis.plotLines = lines;
-    }
-
-    return axis;
+    return objectClean({
+        min: getMinValue(layout),
+        max: getMaxValue(layout),
+        tickAmount: getSteps(layout),
+        //decimals: getDecimals(layout),
+        title: getTitle(layout),
+        plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)])
+    });
 }

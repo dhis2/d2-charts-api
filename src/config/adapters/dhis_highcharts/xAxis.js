@@ -1,9 +1,10 @@
-import isDefined from 'd2-utilizr/lib/isDefined';
+import isArray from 'd2-utilizr/lib/isArray';
 import isString from 'd2-utilizr/lib/isString';
+import objectClean from 'd2-utilizr/lib/objectClean';
 
-function getCategories(store) {
-    let categories;
+function getCategories(layout, store) {
     const metaData = store.data.metaData;
+    let categories;
 
     const ids = metaData[layout.rows[0].dimension];
 
@@ -26,7 +27,7 @@ function getTitle(layout) {
 
 export default function (layout, store) {
     return objectClean({
-        categories: getCategories(store),
+        categories: getCategories(layout, store),
         title: getTitle(layout)
     });
 }
