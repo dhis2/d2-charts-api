@@ -1,4 +1,3 @@
-import isDefined from 'd2-utilizr/lib/isDefined';
 import objectClean from 'd2-utilizr/lib/objectClean';
 import getXAxis from './xAxis';
 import getYAxis from './yAxis';
