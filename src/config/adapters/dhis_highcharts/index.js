@@ -30,6 +30,11 @@ export default function ({ store, layout, el, extraConfig }) {
         legend: getLegend(layout)
     };
 
+    // sorting
+    if (layout.sortOrder) {
+        // get
+    }
+
     // force apply extra config
     Object.assign(config, extraConfig);
 

@@ -1,3 +1,5 @@
+import isObject from 'd2-utilizr/lib/isObject';
+
 function getHeaderIdIndexMap(headers) {
     const map = new Map();
 
@@ -23,8 +25,15 @@ function getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex) {
     return map;
 }
 
-function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
-    const data = [];
+function getSortedCategoryItems(categoryItems, data, sorting) {
+    console.log("categoryItems", categoryItems);
+    console.log("data", data);
+    console.log("sorting", sorting);
+    return categoryItems;
+}
+
+function getDataObjects(seriesItems, categoryItems, idValueMap, metaDataNames) {
+    const dataObjects = [];
     let dataItem;
     let key;
     let value;
@@ -42,13 +51,24 @@ function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
             dataItem.data.push(value);
         });
 
-        data.push(dataItem);
+        dataObjects.push(dataItem);
     });
+
+    return dataObjects;
+}
+
+function getData(seriesItems, categoryItems, idValueMap, metaDataNames, sorting) {
+    let data = getDataObjects(seriesItems, categoryItems, idValueMap, metaDataNames);
+
+    if (isObject(sorting)) {
+        const sortedCategoryItems = getSortedCategoryItems(categoryItems, data, sorting);
+        data = getDataObjects(seriesItems, sortedCategoryItems, idValueMap, metaDataNames);
+    }
 
     return data;
 }
 
-export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name }) {
+export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name, sorting }) {
     const headers = data.headers;
     const metaData = data.metaData;
     const rows = data.rows;

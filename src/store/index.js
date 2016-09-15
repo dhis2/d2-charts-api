@@ -13,11 +13,9 @@ export default function ({ data, inputFormat = 'dhis', outputFormat = 'highchart
         throw new Error(`Data tranformation from "${inputFormat}" to "${outputFormat}" is not supported`);
     }
 
-    this.data = data;
-
-    this.generateData = (sId = seriesId, cId = categoryId) => _adapter({
+    this.generateData = (seriesId = seriesId, categoryId = categoryId) => _adapter({
         data: _validator(data),
-        seriesId: sId,
-        categoryId: cId
+        seriesId,
+        categoryId
     });
 }
