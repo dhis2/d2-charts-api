@@ -2,7 +2,7 @@ import validators from './validators';
 import adapters from './adapters';
 import generators from './generators';
 
-export default function ({ el, layout, store, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout }) {
+export default function ({ store, layout, el, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout }) {
     const _validator = validators[inputFormat] || validators.noValidation;
     const _adapter = adapters[inputFormat + '_' + outputFormat];
     const _generator = generators[outputFormat];
@@ -19,7 +19,7 @@ export default function ({ el, layout, store, inputFormat = 'dhis', outputFormat
         throw new Error(`Chart output format ${outputFormat} is not supported`);
     }
 
-    this.getConfig = () => _adapter(el, layout, store, extraLayout);
+    this.getConfig = () => _adapter({ store, layout, el, extraLayout });
 
     this.createChart = () => _generator(this.getConfig(), el);
 }

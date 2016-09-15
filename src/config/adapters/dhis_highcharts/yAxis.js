@@ -5,6 +5,7 @@ import isString from 'd2-utilizr/lib/isString';
 
 const DEFAULT_MIN_VALUE = 0;
 const PLOTLINE_ZINDEX = 4;
+const PLOTLINE_LABEL_Y = -7;
 
 function getMinValue(layout) {
     return isNumeric(layout.rangeAxisMaxValue) ? layout.rangeAxisMaxValue : DEFAULT_MIN_VALUE;
@@ -35,19 +36,21 @@ function getTargetLine(layout) {
         color: '#333',
         zIndex: PLOTLINE_ZINDEX,
         label: isString(layout.targetLineTitle) ? {
-            text: layout.targetLineTitle
+            text: layout.targetLineTitle,
+            y: PLOTLINE_LABEL_Y
         } : undefined
     }) : undefined;
 }
 
-function getTargetLine(layout) {
+function getBaseLine(layout) {
     return isNumeric(layout.baseLineValue) ? objectClean({
         value: layout.baseLineValue,
         width: 1,
         color: '#333',
         zIndex: PLOTLINE_ZINDEX,
         label: isString(layout.baseLineTitle) ? {
-            text: layout.baseLineTitle
+            text: layout.baseLineTitle,
+            y: PLOTLINE_LABEL_Y
         } : undefined
     }) : undefined;
 }
