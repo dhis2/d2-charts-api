@@ -28,46 +28,28 @@ function getTitle(layout) {
     } : undefined;
 }
 
-function getTargetLine(layout) {
-    let targetLine;
-
-    if (isNumeric(layout.targetLineValue)) {
-        targetLine = {
-            value: layout.targetLineValue,
-            width: 1,
-            color: '#333',
-            zIndex: PLOTLINE_ZINDEX
-        };
-
-        if (isString(layout.targetLineTitle)) {
-            targetLine.label = {
-                text: layout.targetLineTitle
-            };
-        }
-    }
-
-    return targetLine;
+function getTargetLine(layout) {
+    return isNumeric(layout.targetLineValue) ? objectClean({
+        value: layout.targetLineValue,
+        width: 1,
+        color: '#333',
+        zIndex: PLOTLINE_ZINDEX,
+        label: isString(layout.targetLineTitle) ? {
+            text: layout.targetLineTitle
+        } : undefined
+    }) : undefined;
 }
 
-function getBaseLine(layout) {
-    let baseLine;
-
-    if (isNumeric(layout.baseLineValue)) {
-        baseLine = {
-            value: layout.baseLineValue,
-            width: 1,
-            color: '#333',
-            zIndex: PLOTLINE_ZINDEX
-        };
-
-        if (isString(layout.baseLineTitle)) {
-            baseLine.label = {
-                text: layout.baseLineTitle
-            };
-        }
-    }
-
-    return baseLine;
+function getTargetLine(layout) {
+    return isNumeric(layout.baseLineValue) ? objectClean({
+        value: layout.baseLineValue,
+        width: 1,
+        color: '#333',
+        zIndex: PLOTLINE_ZINDEX,
+        label: isString(layout.baseLineTitle) ? {
+            text: layout.baseLineTitle
+        } : undefined
+    }) : undefined;
 }
 
 export default function (layout) {
