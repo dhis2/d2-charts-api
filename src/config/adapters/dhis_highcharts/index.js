@@ -4,9 +4,10 @@ import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
 import getLegend from './legend';
+import getSortedConfig from './sortedConfig';
 
 export default function ({ store, layout, el, extraConfig }) {
-    const config = {
+    let config = {
 
         // type
         chart: objectClean({
@@ -32,7 +33,7 @@ export default function ({ store, layout, el, extraConfig }) {
 
     // sorting
     if (layout.sortOrder) {
-        // get
+        config = getSortedConfig(config, layout.sortOrder);
     }
 
     // force apply extra config
