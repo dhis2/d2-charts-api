@@ -18,7 +18,7 @@ export default function ({ store, layout, el, inputFormat = 'dhis', outputFormat
     if (!_generator) {
         throw new Error(`Chart output format ${outputFormat} is not supported`);
     }
-console.log("store", store);
+
     this.getConfig = () => _adapter({ store, layout, el, extraLayout });
 
     this.createChart = () => _generator(this.getConfig(), el);

@@ -11,7 +11,7 @@ export default function ({ store, layout, el, extraConfig }) {
 
         // type
         chart: objectClean({
-            type: layout.type,
+            type: layout.type.replace('stacked', '').toLowerCase(),
             renderTo: el || layout.el
         }),
 
