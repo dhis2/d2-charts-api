@@ -38,8 +38,7 @@ function getSortedConfig(config, isStacked, direction) {
     return sortedConfig;
 }
 
-export default function (config, layout) {
-    const isStacked = layout.type.toLowerCase().indexOf('stacked') !== -1;
+export default function (config, layout, isStacked) {
     const direction = sortOrderMap.get(parseInt(layout.sortOrder));
 
     return getSortedConfig(config, isStacked, direction);

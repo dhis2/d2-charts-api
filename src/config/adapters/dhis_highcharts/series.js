@@ -1,6 +1,5 @@
-export default function (store, layout) {
+export default function (store, layout, isStacked) {
     const data = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
-    const isStacked = layout.type.toLowerCase().indexOf('stacked') !== -1;
 
     data.forEach(series => {
 

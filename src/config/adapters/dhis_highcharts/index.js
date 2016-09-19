@@ -7,6 +7,8 @@ import getLegend from './legend';
 import getSortedConfig from './sortedConfig';
 
 export default function ({ store, layout, el, extraConfig }) {
+    const isStacked = layout.type.toLowerCase().indexOf('stacked') !== -1;
+
     let config = {
 
         // type
@@ -25,7 +27,7 @@ export default function ({ store, layout, el, extraConfig }) {
         yAxis: getYAxis(layout),
 
         // series
-        series: getSeries(store, layout),
+        series: getSeries(store, layout, isStacked),
 
         // legend
         legend: getLegend(layout)
