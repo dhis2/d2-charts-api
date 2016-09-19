@@ -1,3 +1,5 @@
+const DEFAULT_ANIMATION_DURATION = 300;
+
 export default function (store, layout, isStacked) {
     const data = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
 
@@ -19,6 +21,11 @@ export default function (store, layout, isStacked) {
         if (isStacked) {
             series.stacking = 'normal';
         }
+
+        // animation
+        series.animation = {
+            duration: DEFAULT_ANIMATION_DURATION
+        };
     });
 
     return data;

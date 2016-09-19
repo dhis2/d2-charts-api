@@ -18,7 +18,7 @@ export default function ({ store, layout, el, extraConfig }) {
         }),
 
         // title
-        title: getTitle(layout),
+        title: getTitle(layout, store.data.metaData.names),
 
         // x-axis
         xAxis: getXAxis(store, layout),
