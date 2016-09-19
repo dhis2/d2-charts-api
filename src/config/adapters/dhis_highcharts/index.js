@@ -6,6 +6,8 @@ import getTitle from './title';
 import getLegend from './legend';
 import getSortedConfig from './sortedConfig';
 
+const DEFAULT_SPACING_TOP = 20;
+
 export default function ({ store, layout, el, extraConfig }) {
     const isStacked = layout.type.toLowerCase().indexOf('stacked') !== -1;
 
@@ -14,6 +16,7 @@ export default function ({ store, layout, el, extraConfig }) {
         // type
         chart: objectClean({
             type: layout.type.toLowerCase().replace('stacked', ''),
+            spacingTop: DEFAULT_SPACING_TOP,
             renderTo: el || layout.el
         }),
 
