@@ -1,18 +1,11 @@
 import arrayPluck from 'd2-utilizr/lib/arrayPluck';
 import arraySort from 'd2-utilizr/lib/arraySort';
+import getStackedData from './getStackedData';
 
 const sortOrderMap = new Map([
     [-1, 'ASC'],
     [1, 'DESC']
 ]);
-
-function getStackedData(series) {
-    return series[0].data.map((value, index) => {
-        return series.reduce((total, obj) => {
-            return total + obj.data[index];
-        }, 0);
-    });
-}
 
 function getIndexOrder(config, isStacked, direction) {
     const dataToBeSorted = isStacked ? getStackedData(config.series) : config.series[0].data.slice();

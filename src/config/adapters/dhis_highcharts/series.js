@@ -1,32 +1,60 @@
+import { fitData } from '../../../util/regression/jqplot_regression';
+import getStackedData from './getStackedData';
+
 const DEFAULT_ANIMATION_DURATION = 300;
 
+function getTrendLines(series, isStacked) {
+    const trendLines = [];
+
+    if (isStacked) {
+        trendLines.push({
+            name: 'Trend',
+            type: 'line',
+            data: fitData(getStackedData(series)).data
+        });
+    }
+    else {
+        series.forEach(seriesObj => {
+            trendLines.push({
+                name: `(Trend) ${seriesObj.name}`,
+                type: 'line',
+                data: fitData(seriesObj.data.slice())
+            });
+        });
+    }
+
+    return trendLines;
+}
+
 export default function (store, layout, isStacked) {
-    const data = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
+    let series = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
 
-    data.forEach(series => {
-
-        // trend line
-        if (layout.showTrendLine) {
-            series.regression = true;
-        }
+    series.forEach(series => {
 
         // show values
-        if (layout.showValues) {
-            series.dataLabels = {
+        if (layout.showValues) {
+            series.dataLabels = {
                 enabled: true
             };
         }
 
         // stacked
-        if (isStacked) {
+        if (isStacked) {
             series.stacking = 'normal';
         }
+    });
+
+    if (layout.showTrendLine) {
+        series = series.concat(getTrendLines(series, isStacked));
+    }
+
+    series.forEach(series => {
 
         // animation
-        series.animation = {
+        series.animation = {
             duration: DEFAULT_ANIMATION_DURATION
         };
     });
 
-    return data;
+    return series;
 }

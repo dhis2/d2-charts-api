@@ -4,7 +4,7 @@ import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
 import getLegend from './legend';
-import getSortedConfig from './sortedConfig';
+import getSortedConfig from './getSortedConfig';
 
 const DEFAULT_SPACING_TOP = 20;
 
