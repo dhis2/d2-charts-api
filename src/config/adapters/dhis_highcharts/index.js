@@ -13,7 +13,7 @@ export default function ({ store, layout, el, extraConfig }) {
 
         // type
         chart: objectClean({
-            type: layout.type.replace('stacked', '').toLowerCase(),
+            type: layout.type.toLowerCase().replace('stacked', ''),
             renderTo: el || layout.el
         }),
 
@@ -41,5 +41,7 @@ export default function ({ store, layout, el, extraConfig }) {
     // force apply extra config
     Object.assign(config, extraConfig);
 
+
+console.log("layout", layout);
     return objectClean(config);
 }

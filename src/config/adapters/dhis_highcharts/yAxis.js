@@ -4,11 +4,12 @@ import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
 
 const DEFAULT_MIN_VALUE = 0;
+const DEFAULT_GRIDLINE_COLOR = '#E1E1E1';
 const PLOTLINE_ZINDEX = 4;
 const PLOTLINE_LABEL_Y = -7;
 
 function getMinValue(layout) {
-    return isNumeric(layout.rangeAxisMaxValue) ? layout.rangeAxisMaxValue : DEFAULT_MIN_VALUE;
+    return isNumeric(layout.rangeAxisMinValue) ? layout.rangeAxisMinValue : DEFAULT_MIN_VALUE;
 }
 
 function getMaxValue(layout) {
@@ -62,6 +63,7 @@ export default function (layout) {
         tickAmount: getSteps(layout),
         //decimals: getDecimals(layout),
         title: getTitle(layout),
-        plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)])
+        plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)]),
+        gridLineColor: DEFAULT_GRIDLINE_COLOR
     });
 }

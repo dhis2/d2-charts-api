@@ -18,6 +18,8 @@ function getFilterTitle(layout, names) {
 
 export default function (layout, names) {
     return layout.hideTitle ? undefined : {
-        text: isString(layout.title) ? layout.title : (layout.filters ? getFilterTitle(layout, names) : DEFAULT_TITLE)
+        text: isString(layout.title) ? layout.title : (layout.filters ? getFilterTitle(layout, names) : DEFAULT_TITLE),
+        margin: 30,
+        y: 20
     };
 }
