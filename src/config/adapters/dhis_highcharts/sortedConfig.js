@@ -1,6 +1,5 @@
 import arrayPluck from 'd2-utilizr/lib/arrayPluck';
 import arraySort from 'd2-utilizr/lib/arraySort';
-import uuid from 'd2-utilizr/lib/uuid';
 
 const sortOrderMap = new Map([
     [-1, 'ASC'],
@@ -39,9 +38,9 @@ function getSortedConfig(config, isStacked, direction) {
     return sortedConfig;
 }
 
-export default function (config, sortOrder) {
-    const isStacked = config.chart.type.toLowerCase().indexOf('stacked') !== -1;
-    const direction = sortOrderMap.get(parseInt(sortOrder));
+export default function (config, layout) {
+    const isStacked = layout.type.toLowerCase().indexOf('stacked') !== -1;
+    const direction = sortOrderMap.get(parseInt(layout.sortOrder));
 
     return getSortedConfig(config, isStacked, direction);
 }

@@ -33,7 +33,7 @@ export default function ({ store, layout, el, extraConfig }) {
 
     // sorting
     if (layout.sortOrder) {
-        config = getSortedConfig(config, layout.sortOrder);
+        config = getSortedConfig(config, layout);
     }
 
     // force apply extra config
