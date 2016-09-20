@@ -12,7 +12,7 @@ const DEFAULT_TRENDLINE = {
     lineWidth: 1,
     marker: {
         symbol: 'circle',
-        radius: 3
+        radius: 2
     }
 };
 
