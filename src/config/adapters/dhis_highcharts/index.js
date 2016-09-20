@@ -8,14 +8,23 @@ import getSortedConfig from './getSortedConfig';
 
 const DEFAULT_SPACING_TOP = 20;
 
+const typeMap = new Map([
+    ['area', 'stackedarea']
+]);
+
+function getType(type) {
+    return typeMap.get(type) || type;
+}
+
 export default function ({ store, layout, el, extraConfig, extraOptions }) {
-    const isStacked = layout.type.toLowerCase().indexOf('stacked') !== -1;
+    const type = getType(layout.type);
+    const isStacked = type.toLowerCase().indexOf('stacked') !== -1;
 
     let config = {
 
         // type
         chart: objectClean({
-            type: layout.type.toLowerCase().replace('stacked', ''),
+            type: type.toLowerCase().replace('stacked', ''),
             spacingTop: DEFAULT_SPACING_TOP,
             renderTo: el || layout.el
         }),
