@@ -5,8 +5,13 @@ import isString from 'd2-utilizr/lib/isString';
 
 const DEFAULT_MIN_VALUE = 0;
 const DEFAULT_GRIDLINE_COLOR = '#E1E1E1';
-const PLOTLINE_ZINDEX = 4;
-const PLOTLINE_LABEL_Y = -7;
+
+const DEFAULT_PLOTLINE_LABEL_Y = -7;
+const DEFAULT_PLOTLINE = {
+    width: 2,
+    color: '#000',
+    zIndex: 4
+};
 
 function getMinValue(layout) {
     return isNumeric(layout.rangeAxisMinValue) ? layout.rangeAxisMinValue : DEFAULT_MIN_VALUE;
@@ -31,29 +36,23 @@ function getTitle(layout) {
 }
 
 function getTargetLine(layout) {
-    return isNumeric(layout.targetLineValue) ? objectClean({
+    return isNumeric(layout.targetLineValue) ? Object.assign({}, DEFAULT_PLOTLINE, objectClean({
         value: layout.targetLineValue,
-        width: 1,
-        color: '#333',
-        zIndex: PLOTLINE_ZINDEX,
         label: isString(layout.targetLineTitle) ? {
             text: layout.targetLineTitle,
-            y: PLOTLINE_LABEL_Y
+            y: DEFAULT_PLOTLINE_LABEL_Y
         } : undefined
-    }) : undefined;
+    })) : undefined;
 }
 
 function getBaseLine(layout) {
-    return isNumeric(layout.baseLineValue) ? objectClean({
+    return isNumeric(layout.baseLineValue) ? Object.assign({}, DEFAULT_PLOTLINE, objectClean({
         value: layout.baseLineValue,
-        width: 1,
-        color: '#333',
-        zIndex: PLOTLINE_ZINDEX,
         label: isString(layout.baseLineTitle) ? {
             text: layout.baseLineTitle,
-            y: PLOTLINE_LABEL_Y
+            y: DEFAULT_PLOTLINE_LABEL_Y
         } : undefined
-    }) : undefined;
+    })) : undefined;
 }
 
 export default function (layout) {

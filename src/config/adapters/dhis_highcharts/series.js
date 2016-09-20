@@ -7,8 +7,9 @@ const DEFAULT_ANIMATION_DURATION = 300;
 const DEFAULT_TRENDLINE = {
     type: 'line',
     name: 'Trend',
-    dashStyle: 'LongDash',
+    dashStyle: 'solid',
     color: '#000',
+    lineWidth: 1,
     marker: {
         symbol: 'circle',
         radius: 3
@@ -32,10 +33,8 @@ function getDarkerColor(color) {
 }
 
 function addTrendLines(series, isStacked) {
-    let newSeries;
-
     if (isStacked) {
-        newSeries = [
+        return [
             ...series,
             Object.assign({}, DEFAULT_TRENDLINE, {
                 data: getRegressionData(getStackedData(series))
@@ -43,7 +42,7 @@ function addTrendLines(series, isStacked) {
         ];
     }
     else {
-        newSeries = [];
+        const newSeries = [];
 
         series.forEach(seriesObj => {
             newSeries.push(seriesObj, Object.assign({}, DEFAULT_TRENDLINE, {
@@ -51,9 +50,9 @@ function addTrendLines(series, isStacked) {
                 data: getRegressionData(seriesObj.data)
             }));
         });
-    }
 
-    return newSeries;
+        return newSeries;
+    }
 }
 
 export default function (store, layout, isStacked, colors) {
