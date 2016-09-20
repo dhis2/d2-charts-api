@@ -1,27 +1,18 @@
 import objectClean from 'd2-utilizr/lib/objectClean';
+import getChart from './chart';
 import getXAxis from './xAxis';
 import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
 import getLegend from './legend';
-import getType from './type';
+import { isStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 
-const STACKED = 'stacked';
-const DEFAULT_SPACING_TOP = 20;
-
 export default function ({ store, layout, el, extraConfig, extraOptions }) {
-    const type = getType(layout.type);
-    const isStacked = type.indexOf(STACKED) !== -1;
-
     let config = {
 
-        // type
-        chart: objectClean({
-            type: type.replace(STACKED, ''),
-            spacingTop: DEFAULT_SPACING_TOP,
-            renderTo: el || layout.el
-        }),
+        // type etc
+        chart: getChart(layout, el),
 
         // title
         title: getTitle(layout, store.data.metaData.names),
@@ -33,7 +24,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         yAxis: getYAxis(layout),
 
         // series
-        series: getSeries(store, layout, isStacked, extraOptions.colors),
+        series: getSeries(store, layout, isStacked(layout.type), extraOptions.colors),
 
         // legend
         legend: getLegend(layout)

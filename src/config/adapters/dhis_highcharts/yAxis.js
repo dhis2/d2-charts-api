@@ -2,14 +2,15 @@ import arrayClean from 'd2-utilizr/lib/arrayClean';
 import objectClean from 'd2-utilizr/lib/objectClean';
 import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
+import getAxisTitle from './getAxisTitle';
 
 const DEFAULT_MIN_VALUE = 0;
 
 const DEFAULT_GRIDLINE_COLOR = '#E1E1E1';
 
 const DEFAULT_PLOTLINE = {
-    width: 2,
     color: '#000',
+    width: 2,
     zIndex: 4
 };
 
@@ -36,12 +37,6 @@ function getDecimals(layout) {
     return isNumeric(layout.rangeAxisDecimals) ? layout.rangeAxisDecimals : undefined;
 }
 
-function getTitle(layout) {
-    return isString(layout.rangeAxisTitle) ? {
-        text: layout.rangeAxisTitle
-    } : undefined;
-}
-
 function getTargetLine(layout) {
     return isNumeric(layout.targetLineValue) ? Object.assign({}, DEFAULT_PLOTLINE, objectClean({
         value: layout.targetLineValue,
@@ -66,7 +61,7 @@ export default function (layout) {
         max: getMaxValue(layout),
         tickAmount: getSteps(layout),
         //decimals: getDecimals(layout),
-        title: getTitle(layout),
+        title: getAxisTitle(layout.rangeAxisTitle),
         plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)]),
         gridLineColor: DEFAULT_GRIDLINE_COLOR
     });
