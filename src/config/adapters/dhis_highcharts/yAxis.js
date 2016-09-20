@@ -4,13 +4,20 @@ import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
 
 const DEFAULT_MIN_VALUE = 0;
+
 const DEFAULT_GRIDLINE_COLOR = '#E1E1E1';
 
-const DEFAULT_PLOTLINE_LABEL_Y = -7;
 const DEFAULT_PLOTLINE = {
     width: 2,
     color: '#000',
     zIndex: 4
+};
+
+const DEFAULT_PLOTLINE_LABEL = {
+    y: -7,
+    style: {
+        fontSize: 13
+    }
 };
 
 function getMinValue(layout) {
@@ -38,20 +45,18 @@ function getTitle(layout) {
 function getTargetLine(layout) {
     return isNumeric(layout.targetLineValue) ? Object.assign({}, DEFAULT_PLOTLINE, objectClean({
         value: layout.targetLineValue,
-        label: isString(layout.targetLineTitle) ? {
-            text: layout.targetLineTitle,
-            y: DEFAULT_PLOTLINE_LABEL_Y
-        } : undefined
+        label: isString(layout.targetLineTitle) ? Object.assign({}, DEFAULT_PLOTLINE_LABEL, {
+            text: layout.targetLineTitle
+        }) : undefined
     })) : undefined;
 }
 
 function getBaseLine(layout) {
     return isNumeric(layout.baseLineValue) ? Object.assign({}, DEFAULT_PLOTLINE, objectClean({
         value: layout.baseLineValue,
-        label: isString(layout.baseLineTitle) ? {
+        label: isString(layout.baseLineTitle) ? Object.assign({}, DEFAULT_PLOTLINE_LABEL, {
             text: layout.baseLineTitle,
-            y: DEFAULT_PLOTLINE_LABEL_Y
-        } : undefined
+        }) : undefined
     })) : undefined;
 }
 
