@@ -8,7 +8,7 @@ const DEFAULT_TRENDLINE = {
     type: 'line',
     name: 'Trend',
     dashStyle: 'solid',
-    color: '#000',
+    color: '#333',
     lineWidth: 1,
     marker: {
         symbol: 'circle',
