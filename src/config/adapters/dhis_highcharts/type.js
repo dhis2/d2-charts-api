@@ -9,6 +9,11 @@ const typeMap = new Map([
     ['radar', {
         type: 'line',
         polar: true
+    }],
+
+    // gauge
+    ['gauge', {
+        type: 'solidgauge'
     }]
 ]);
 

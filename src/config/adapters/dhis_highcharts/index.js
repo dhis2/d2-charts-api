@@ -5,6 +5,7 @@ import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
 import getLegend from './legend';
+import getPane from './pane';
 import { isStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 
@@ -27,7 +28,15 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         series: getSeries(store, layout, isStacked(layout.type), extraOptions.colors),
 
         // legend
-        legend: getLegend(layout)
+        legend: getLegend(layout),
+
+        // pane
+        pane: getPane(layout.type),
+
+        // credits
+        credits: {
+            enabled: false
+        }
     };
 
     // sorting
