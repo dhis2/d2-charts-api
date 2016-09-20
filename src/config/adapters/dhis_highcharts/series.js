@@ -1,51 +1,84 @@
 import { fitData } from '../../../util/regression/jqplot_regression';
+import { rgb } from 'd3-color';
 import getStackedData from './getStackedData';
 
 const DEFAULT_ANIMATION_DURATION = 300;
 
-function getTrendLines(series, isStacked) {
-    const trendLines = [];
-
-    if (isStacked) {
-        trendLines.push({
-            name: 'Trend',
-            type: 'line',
-            data: fitData(getStackedData(series)).data
-        });
+const DEFAULT_TRENDLINE = {
+    type: 'line',
+    name: 'Trend',
+    dashStyle: 'LongDash',
+    color: '#000',
+    marker: {
+        symbol: 'circle',
+        radius: 3
     }
-    else {
-        series.forEach(seriesObj => {
-            trendLines.push({
-                name: `(Trend) ${seriesObj.name}`,
-                type: 'line',
-                data: fitData(seriesObj.data.slice())
-            });
-        });
-    }
+};
 
-    return trendLines;
+function getAdaptedRegressionData(data) {
+    return data.map(array => array[1]);
 }
 
-export default function (store, layout, isStacked) {
+function getRegressionData(data) {
+    return getAdaptedRegressionData(fitData(data).data);
+}
+
+function getColor(colors, index) {
+    return colors[index] || getColor(index - colors.length);
+}
+
+function getDarkerColor(color) {
+    return rgb(color).darker(0.5).toString();
+}
+
+function addTrendLines(series, isStacked) {
+    let newSeries;
+
+    if (isStacked) {
+        newSeries = [
+            ...series,
+            Object.assign({}, DEFAULT_TRENDLINE, {
+                data: getRegressionData(getStackedData(series))
+            })
+        ];
+    }
+    else {
+        newSeries = [];
+
+        series.forEach(seriesObj => {
+            newSeries.push(seriesObj, Object.assign({}, DEFAULT_TRENDLINE, {
+                color: getDarkerColor(seriesObj.color),
+                data: getRegressionData(seriesObj.data)
+            }));
+        });
+    }
+
+    return newSeries;
+}
+
+export default function (store, layout, isStacked, colors) {
     let series = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
 
-    series.forEach(series => {
+    series.forEach((seriesObj, index) => {
 
         // show values
         if (layout.showValues) {
-            series.dataLabels = {
+            seriesObj.dataLabels = {
                 enabled: true
             };
         }
 
         // stacked
         if (isStacked) {
-            series.stacking = 'normal';
+            seriesObj.stacking = 'normal';
         }
+
+        // color
+        seriesObj.color = getColor(colors, index);
     });
 
     if (layout.showTrendLine) {
-        series = series.concat(getTrendLines(series, isStacked));
+        series = addTrendLines(series, isStacked);
     }
 
     series.forEach(series => {

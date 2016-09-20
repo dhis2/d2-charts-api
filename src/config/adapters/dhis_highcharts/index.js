@@ -8,7 +8,7 @@ import getSortedConfig from './getSortedConfig';
 
 const DEFAULT_SPACING_TOP = 20;
 
-export default function ({ store, layout, el, extraConfig }) {
+export default function ({ store, layout, el, extraConfig, extraOptions }) {
     const isStacked = layout.type.toLowerCase().indexOf('stacked') !== -1;
 
     let config = {
@@ -30,7 +30,7 @@ export default function ({ store, layout, el, extraConfig }) {
         yAxis: getYAxis(layout),
 
         // series
-        series: getSeries(store, layout, isStacked),
+        series: getSeries(store, layout, isStacked, extraOptions.colors),
 
         // legend
         legend: getLegend(layout)
@@ -44,7 +44,5 @@ export default function ({ store, layout, el, extraConfig }) {
     // force apply extra config
     Object.assign(config, extraConfig);
 
-
-console.log("layout", layout);
     return objectClean(config);
 }
