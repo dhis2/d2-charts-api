@@ -7,7 +7,7 @@ const typeMap = new Map([
 
     // radar
     ['radar', {
-        type: 'area',
+        type: 'line',
         polar: true
     }]
 ]);
