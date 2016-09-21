@@ -5,8 +5,7 @@ const DEFAULT_AXIS_TITLE = {
     margin: 15,
     style: {
         color: '#222',
-        fill: '#222',
-        textShadow: '0 0 #777',
+        textShadow: '0 0 #999',
         fontSize: '13px',
     }
 };

@@ -4,7 +4,8 @@ import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 const DEFAULT_SUBTITLE = {
     style: {
         fontSize: '13px',
-        color: '#333'
+        color: '#444',
+        textShadow: '0 0 #999'
     }
 };
 
