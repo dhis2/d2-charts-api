@@ -1,10 +1,13 @@
 import isString from 'd2-utilizr/lib/isString';
 
 const DEFAULT_AXIS_TITLE = {
+    align: 'low',
+    margin: 15,
     style: {
         color: '#222',
         fill: '#222',
-        fontSize: '13px'
+        textShadow: '0 0 #777',
+        fontSize: '13px',
     }
 };
 
