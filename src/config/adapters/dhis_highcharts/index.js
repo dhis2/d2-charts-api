@@ -22,7 +22,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         chart: getChart(layout, el),
 
         // title
-        title: getTitle(layout, store.data.metaData.names),
+        title: getTitle(layout, store.data.metaData),
 
         // subtitle
         subtitle: getSubtitle(series.slice(), layout),

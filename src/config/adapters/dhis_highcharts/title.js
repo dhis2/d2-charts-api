@@ -5,12 +5,12 @@ const DEFAULT_PROPS = {
     y: 18
 };
 
-function getFilterTitle(layout, names) {
+function getFilterTitle(layout, metaData) {
     let title = '';
 
     layout.filters.forEach((dimension, index, array) => {
-        dimension.items.forEach((item, index, array) => {
-            title += names[item.id] + (index < array.length - 1 ? ', ' : '');
+        metaData[dimension.dimension].forEach((id, index, array) => {
+            title += metaData.names[id] + (index < array.length - 1 ? ', ' : '');
         });
 
         title +=  (index < array.length - 1 ? ' - ' : '');
@@ -19,16 +19,16 @@ function getFilterTitle(layout, names) {
     return title;
 }
 
-function getText(layout, names) {
-    return isString(layout.title) ? layout.title : (layout.filters ? getFilterTitle(layout, names) : null);
+function getText(layout, metaData) {
+    return isString(layout.title) ? layout.title : (layout.filters ? getFilterTitle(layout, metaData) : null);
 }
 
-function getTextObject(layout, names) {
+function getTextObject(layout, metaData) {
     return {
-        text: layout.hideTitle ? null : getText(layout, names)
+        text: layout.hideTitle ? null : getText(layout, metaData)
     };
 }
 
-export default function (layout, names) {
-    return Object.assign(getTextObject(layout, names), DEFAULT_PROPS);
+export default function (layout, metaData) {
+    return Object.assign(getTextObject(layout, metaData), DEFAULT_PROPS);
 }
