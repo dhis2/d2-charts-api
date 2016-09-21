@@ -28,5 +28,3 @@ export default function ({ store, layout, el, inputFormat = 'dhis', outputFormat
 
     this.createChart = () => _generator(this.getConfig(), el);
 }
-
-// todo sorting
