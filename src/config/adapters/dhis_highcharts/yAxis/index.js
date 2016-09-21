@@ -57,15 +57,27 @@ function getBaseLine(layout) {
     })) : undefined;
 }
 
+function getFormatter(layout) {
+    return {
+        formatter: function () {
+            return this.value.toFixed(layout.rangeAxisDecimals);
+        }
+    };
+}
+
+function getLabels(layout) {
+    return isNumeric(layout.rangeAxisDecimals) ? getFormatter(layout) : undefined;
+}
+
 function getDefault(layout) {
     return objectClean({
         min: getMinValue(layout),
         max: getMaxValue(layout),
         tickAmount: getSteps(layout),
-        //decimals: getDecimals(layout),
         title: getAxisTitle(layout.rangeAxisTitle),
         plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)]),
-        gridLineColor: DEFAULT_GRIDLINE_COLOR
+        gridLineColor: DEFAULT_GRIDLINE_COLOR,
+        labels: getLabels(layout)
     });
 }
 
