@@ -1,9 +1,6 @@
-const typeMap = new Map([
+import arrayContains from 'd2-utilizr/lib/arrayContains';
 
-    // area
-    ['area', {
-        type: 'stackedarea'
-    }],
+const typeMap = new Map([
 
     // radar
     ['radar', {
@@ -17,8 +14,10 @@ const typeMap = new Map([
     }]
 ]);
 
+const stackedTypes = ['area'];
+
 export function isStacked(type) {
-    return type.indexOf('stacked') !== -1;
+    return type.indexOf('stacked') !== -1 || arrayContains(stackedTypes, type);
 }
 
 export default function (type) {
