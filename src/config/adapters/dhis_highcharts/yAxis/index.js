@@ -2,7 +2,9 @@ import arrayClean from 'd2-utilizr/lib/arrayClean';
 import objectClean from 'd2-utilizr/lib/objectClean';
 import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
-import getAxisTitle from './getAxisTitle';
+import getAxisTitle from '../getAxisTitle';
+import { CHART_TYPE_GAUGE } from '..';
+import getGauge from './gauge';
 
 const DEFAULT_MIN_VALUE = 0;
 
@@ -55,7 +57,7 @@ function getBaseLine(layout) {
     })) : undefined;
 }
 
-export default function (layout) {
+function getDefault(layout) {
     return objectClean({
         min: getMinValue(layout),
         max: getMaxValue(layout),
@@ -65,4 +67,18 @@ export default function (layout) {
         plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)]),
         gridLineColor: DEFAULT_GRIDLINE_COLOR
     });
+}
+
+export default function (layout) {
+    let series;
+
+    switch(layout.type) {
+        case CHART_TYPE_GAUGE:
+            series = getGauge(layout);
+            break;
+        default:
+            series = getDefault(layout);
+    }
+
+    return series;
 }
