@@ -22,6 +22,6 @@ export function isStacked(type) {
 
 export default function (type) {
     return typeMap.get(type) || {
-        type: type.toLowerCase()
+        type: type.toLowerCase().replace('stacked', '')
     };
 }
