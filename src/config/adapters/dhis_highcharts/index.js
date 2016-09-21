@@ -9,6 +9,8 @@ import getPane from './pane';
 import { isStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 
+export const CHART_TYPE_GAUGE = 'gauge';
+
 export default function ({ store, layout, el, extraConfig, extraOptions }) {
     let config = {
 

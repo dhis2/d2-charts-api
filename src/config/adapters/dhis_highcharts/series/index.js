@@ -1,6 +1,8 @@
-import { fitData } from '../../../util/regression/jqplot_regression';
+import { fitData } from '../../../../util/regression/jqplot_regression';
 import { rgb } from 'd3-color';
-import getStackedData from './getStackedData';
+import getStackedData from './../getStackedData';
+import getGauge from './gauge';
+import { CHART_TYPE_GAUGE } from '..';
 
 const DEFAULT_ANIMATION_DURATION = 300;
 
@@ -55,9 +57,9 @@ function addTrendLines(series, isStacked) {
     }
 }
 
-export default function (store, layout, isStacked, colors) {
+function getDefault(store, layout, isStacked, colors) {
     let series = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
-
+console.log("series", series);
     series.forEach((seriesObj, index) => {
 
         // show values
@@ -90,3 +92,13 @@ export default function (store, layout, isStacked, colors) {
 
     return series;
 };
+
+export default function (store, layout, isStacked, colors) {
+    switch(layout.type) {
+        case CHART_TYPE_GAUGE:
+            return getGauge(store, layout, isStacked, colors);
+            break;
+        default:
+            return getDefault(store, layout, isStacked, colors);
+    }
+}

@@ -1,5 +1,5 @@
-export default function(type) {
-    return type === 'gauge' ? {
+export default function () {
+    return {
         center: ['50%', '85%'],
         size: '140%',
         startAngle: -90,
@@ -10,5 +10,5 @@ export default function(type) {
             outerRadius: '100%',
             shape: 'arc'
         }
-    } : undefined;
+    };
 }
