@@ -1,7 +1,6 @@
 import isArray from 'd2-utilizr/lib/isArray';
-import isString from 'd2-utilizr/lib/isString';
 import objectClean from 'd2-utilizr/lib/objectClean';
-import getAxisTitle from './getAxisTitle';
+import getAxisTitle from '../getAxisTitle';
 import getGauge from './gauge';
 import { CHART_TYPE_GAUGE } from '..';
 
@@ -34,10 +33,10 @@ export default function (store, layout) {
 
     switch(layout.type) {
         case CHART_TYPE_GAUGE:
-            xAxis = getGauge(layout);
+            xAxis = getGauge();
             break;
         default:
-            xAxis = getDefault(layout);
+            xAxis = getDefault(store, layout);
     }
 
     return xAxis;

@@ -4,12 +4,13 @@ export default function (layout) {
         max: 100,
         lineWidth: 0,
         minorTickInterval: null,
-        tickAmount: 2,
-        title: {
-            y: -70
-        },
+        tickLength: 0,
+        tickAmount: 0,
         labels: {
-            y: 16
+            y: 18,
+            style: {
+                fontSize: '13px'
+            }
         }
     };
 }

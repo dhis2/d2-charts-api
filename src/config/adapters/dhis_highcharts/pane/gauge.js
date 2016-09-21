@@ -1,7 +1,7 @@
 export default function () {
     return {
         center: ['50%', '85%'],
-        size: '140%',
+        size: '90%',
         startAngle: -90,
         endAngle: 90,
         background: {

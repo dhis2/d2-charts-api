@@ -4,11 +4,14 @@ export default function (store, layout, isStacked, colors) {
     return [{
         name: series[0].name,
         data: series[0].data.slice(0, 1),
+        enableMouseTracking: false,
         dataLabels: {
-            y: 5,
+            y: 0,
             borderWidth: 0,
-            useHTML: true,
-            format: '<div style="text-align:center"><span style="font-size:25px;color:#000">{y}</span></div>'
+            verticalAlign: 'bottom',
+            style: {
+                fontSize: 35
+            }
         }
     }];
 }

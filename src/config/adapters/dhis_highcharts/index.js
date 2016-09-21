@@ -20,6 +20,11 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         // title
         title: getTitle(layout, store.data.metaData.names),
 
+        // subtitle
+        subtitle: {
+            text: 'ANC 1 Coverage'
+        },
+
         // x-axis
         xAxis: getXAxis(store, layout),
 
