@@ -82,23 +82,27 @@ console.log("series", series);
         series = addTrendLines(series, isStacked);
     }
 
-    series.forEach(series => {
+    return series;
+};
+
+export default function (store, layout, isStacked, colors) {
+    let series;
+
+    switch(layout.type) {
+        case CHART_TYPE_GAUGE:
+            series = getGauge(store, layout, isStacked, colors);
+            break;
+        default:
+            series = getDefault(store, layout, isStacked, colors);
+    }
+
+    series.forEach(seriesObj => {
 
         // animation
-        series.animation = {
+        seriesObj.animation = {
             duration: DEFAULT_ANIMATION_DURATION
         };
     });
 
     return series;
-};
-
-export default function (store, layout, isStacked, colors) {
-    switch(layout.type) {
-        case CHART_TYPE_GAUGE:
-            return getGauge(store, layout, isStacked, colors);
-            break;
-        default:
-            return getDefault(store, layout, isStacked, colors);
-    }
 }
