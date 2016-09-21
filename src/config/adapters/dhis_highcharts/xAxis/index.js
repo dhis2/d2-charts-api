@@ -1,25 +1,9 @@
 import isArray from 'd2-utilizr/lib/isArray';
 import objectClean from 'd2-utilizr/lib/objectClean';
 import getAxisTitle from '../getAxisTitle';
+import getCategories from '../getCategories';
 import getGauge from './gauge';
 import { CHART_TYPE_GAUGE } from '..';
-
-function getCategories(store, layout) {
-    const metaData = store.data.metaData;
-    let categories;
-
-    const ids = metaData[layout.rows[0].dimension];
-
-    if (isArray(ids) && ids.length) {
-        categories = [];
-
-        ids.forEach(id => {
-            categories.push(metaData.names[id]);
-        });
-    }
-
-    return categories;
-}
 
 function getDefault(store, layout) {
     return objectClean({

@@ -10,6 +10,7 @@ import getPane from './pane';
 import { isStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 
+export const CHART_TYPE_PIE = 'pie';
 export const CHART_TYPE_GAUGE = 'gauge';
 
 export default function ({ store, layout, el, extraConfig, extraOptions }) {
@@ -33,7 +34,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         yAxis: getYAxis(layout),
 
         // series
-        series: getSeries(series.slice(), layout, isStacked(layout.type), extraOptions.colors),
+        series: getSeries(series.slice(), store, layout, isStacked(layout.type), extraOptions.colors),
 
         // legend
         legend: getLegend(layout),

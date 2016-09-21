@@ -1,8 +1,9 @@
 import { fitData } from '../../../../util/regression/jqplot_regression';
 import { rgb } from 'd3-color';
 import getStackedData from './../getStackedData';
+import getPie from './pie';
 import getGauge from './gauge';
-import { CHART_TYPE_GAUGE } from '..';
+import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 
 const DEFAULT_ANIMATION_DURATION = 300;
 
@@ -57,7 +58,7 @@ function addTrendLines(series, isStacked) {
     }
 }
 
-function getDefault(series, layout, isStacked, colors) {
+function getDefault(series, store, layout, isStacked, colors) {
     series.forEach((seriesObj, index) => {
 
         // show values
@@ -83,13 +84,16 @@ function getDefault(series, layout, isStacked, colors) {
     return series;
 }
 
-export default function (series, layout, isStacked, colors) {
+export default function (series, store, layout, isStacked, colors) {
     switch(layout.type) {
+        case CHART_TYPE_PIE:
+            series = getPie(series, store, layout, isStacked, colors);
+            break;
         case CHART_TYPE_GAUGE:
             series = getGauge(series);
             break;
         default:
-            series = getDefault(series, layout, isStacked, colors);
+            series = getDefault(series, store, layout, isStacked, colors);
     }
 
     series.forEach(seriesObj => {

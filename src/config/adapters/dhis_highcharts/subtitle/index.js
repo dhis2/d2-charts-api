@@ -1,5 +1,5 @@
 import getGauge from './gauge';
-import { CHART_TYPE_GAUGE } from '..';
+import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 
 const DEFAULT_SUBTITLE = {
     style: {
@@ -12,6 +12,7 @@ export default function (series, layout) {
     let subtitle;
 
     switch(layout.type) {
+        case CHART_TYPE_PIE:
         case CHART_TYPE_GAUGE:
             subtitle = getGauge(series);
             break;
