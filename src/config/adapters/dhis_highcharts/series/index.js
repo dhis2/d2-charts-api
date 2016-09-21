@@ -57,9 +57,7 @@ function addTrendLines(series, isStacked) {
     }
 }
 
-function getDefault(store, layout, isStacked, colors) {
-    let series = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
-console.log("series", series);
+function getDefault(series, layout, isStacked, colors) {
     series.forEach((seriesObj, index) => {
 
         // show values
@@ -83,17 +81,15 @@ console.log("series", series);
     }
 
     return series;
-};
+}
 
-export default function (store, layout, isStacked, colors) {
-    let series;
-
+export default function (series, layout, isStacked, colors) {
     switch(layout.type) {
         case CHART_TYPE_GAUGE:
-            series = getGauge(store, layout, isStacked, colors);
+            series = getGauge(series);
             break;
         default:
-            series = getDefault(store, layout, isStacked, colors);
+            series = getDefault(series, layout, isStacked, colors);
     }
 
     series.forEach(seriesObj => {

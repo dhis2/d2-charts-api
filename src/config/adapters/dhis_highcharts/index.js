@@ -4,6 +4,7 @@ import getXAxis from './xAxis';
 import getYAxis from './yAxis';
 import getSeries from './series';
 import getTitle from './title';
+import getSubtitle from './subtitle';
 import getLegend from './legend';
 import getPane from './pane';
 import { isStacked } from './type';
@@ -12,6 +13,8 @@ import getSortedConfig from './getSortedConfig';
 export const CHART_TYPE_GAUGE = 'gauge';
 
 export default function ({ store, layout, el, extraConfig, extraOptions }) {
+    let series = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
+
     let config = {
 
         // type etc
@@ -21,9 +24,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         title: getTitle(layout, store.data.metaData.names),
 
         // subtitle
-        subtitle: {
-            text: 'ANC 1 Coverage'
-        },
+        subtitle: getSubtitle(series.slice(), layout),
 
         // x-axis
         xAxis: getXAxis(store, layout),
@@ -32,7 +33,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         yAxis: getYAxis(layout),
 
         // series
-        series: getSeries(store, layout, isStacked(layout.type), extraOptions.colors),
+        series: getSeries(series.slice(), layout, isStacked(layout.type), extraOptions.colors),
 
         // legend
         legend: getLegend(layout),

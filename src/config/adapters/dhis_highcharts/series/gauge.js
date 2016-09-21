@@ -1,6 +1,4 @@
-export default function (store, layout, isStacked, colors) {
-    let series = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
-
+export default function (series) {
     return [{
         name: series[0].name,
         data: series[0].data.slice(0, 1),
