@@ -81,12 +81,12 @@ function getDefault(layout) {
     });
 }
 
-export default function (layout) {
+export default function (layout, extraOptions) {
     let series;
 
     switch(layout.type) {
         case CHART_TYPE_GAUGE:
-            series = getGauge(layout);
+            series = getGauge(layout, extraOptions);
             break;
         default:
             series = getDefault(layout);

@@ -1,9 +1,10 @@
 import Store from './store';
 import Config from './config';
 
-function createChart(data, layout, el) {
+function createChart(data, layout, el, extraOptions) {
+console.log("extraOptions", extraOptions);
     const store = new Store({ data });
-    const config = new Config({ store, layout, el });
+    const config = new Config({ store, layout, el, extraOptions });
 
     return {
         store,

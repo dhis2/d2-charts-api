@@ -7,7 +7,7 @@ const DEFAULT_EXTRA_OPTIONS = {
     colors: theme1
 };
 
-export default function ({ store, layout, el, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout, extraOptions = {} }) {
+export default function ({ store, layout, el, inputFormat = 'dhis', outputFormat = 'highcharts', extraLayout, extraOptions }) {
     const _validator = validators[inputFormat] || validators.noValidation;
     const _adapter = adapters[inputFormat + '_' + outputFormat];
     const _generator = generators[outputFormat];

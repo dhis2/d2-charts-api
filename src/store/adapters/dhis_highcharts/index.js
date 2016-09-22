@@ -1,5 +1,7 @@
 import isObject from 'd2-utilizr/lib/isObject';
 
+const VALUE_ID = 'value';
+
 function getHeaderIdIndexMap(headers) {
     const map = new Map();
 
@@ -68,16 +70,15 @@ function getData(seriesItems, categoryItems, idValueMap, metaDataNames, sorting)
     return data;
 }
 
-export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name, sorting }) {
+export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name }) {
     const headers = data.headers;
     const metaData = data.metaData;
     const rows = data.rows;
     const headerIdIndexMap = getHeaderIdIndexMap(headers);
-    const valueId = 'value';
 
     const seriesIndex = headerIdIndexMap.get(seriesId);
     const categoryIndex = headerIdIndexMap.get(categoryId);
-    const valueIndex = headerIdIndexMap.get(valueId);
+    const valueIndex = headerIdIndexMap.get(VALUE_ID);
     const seriesItems = metaData[seriesId];
     const categoryItems = metaData[categoryId];
 

@@ -1,7 +1,19 @@
-export default function (layout) {
-    return {
+import arraySort from 'd2-utilizr/lib/arraySort';
+import isObject from 'd2-utilizr/lib/isObject';
+import objectClean from 'd2-utilizr/lib/objectClean';
+
+const DEFAULT_MAX_VALUE = 100;
+
+function getStopsByLegendSet(legendSet) {
+    return isObject(legendSet) ? arraySort(legendSet.legends, 'ASC', 'endValue').map(legend => [parseFloat(legend.endValue) / DEFAULT_MAX_VALUE, legend.color]) : undefined;
+}
+
+export default function (layout, extraOptions) {
+
+    console.log("legendSet", extraOptions.legendSet);
+    return objectClean({
         min: 0,
-        max: 100,
+        max: DEFAULT_MAX_VALUE,
         lineWidth: 0,
         minorTickInterval: null,
         tickLength: 0,
@@ -11,6 +23,7 @@ export default function (layout) {
             style: {
                 fontSize: '13px'
             }
-        }
-    };
+        },
+        stops: getStopsByLegendSet(extraOptions.legendSet)
+    });
 }

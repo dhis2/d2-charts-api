@@ -9,6 +9,7 @@ import getLegend from './legend';
 import getPane from './pane';
 import { isStacked } from './type';
 import getSortedConfig from './getSortedConfig';
+import getTrimmedConfig from './getTrimmedConfig';
 
 export const CHART_TYPE_PIE = 'pie';
 export const CHART_TYPE_GAUGE = 'gauge';
@@ -31,7 +32,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         xAxis: getXAxis(store, layout),
 
         // y-axis
-        yAxis: getYAxis(layout),
+        yAxis: getYAxis(layout, extraOptions),
 
         // series
         series: getSeries(series.slice(), store, layout, isStacked(layout.type), extraOptions.colors),
@@ -47,6 +48,11 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
             enabled: false
         }
     };
+
+    // hide empty categories
+    if (layout.hideEmptyRows) {
+        config = getTrimmedConfig(config);
+    }
 
     // sorting
     if (layout.sortOrder) {

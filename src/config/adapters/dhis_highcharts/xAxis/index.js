@@ -9,6 +9,12 @@ function getDefault(store, layout) {
     return objectClean({
         categories: getCategories(store, layout),
         title: getAxisTitle(layout.domainAxisTitle),
+        labels: {
+            style: {
+                color: '#666',
+                textShadow: '0 0 #ccc'
+            }
+        }
     });
 }
 
