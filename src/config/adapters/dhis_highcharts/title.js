@@ -4,8 +4,7 @@ const DEFAULT_PROPS = {
     margin: 30,
     y: 18,
     style: {
-        color: '#111',
-        textShadow: '0 0 #999'
+        color: '#111'
     }
 };
 
