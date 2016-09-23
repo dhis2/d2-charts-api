@@ -18,7 +18,7 @@ const DEFAULT_PLOTLINE = {
 
 const DEFAULT_PLOTLINE_LABEL = {
     y: -7,
-    style: {n
+    style: {
         fontSize: 13,
         textShadow: '0 0 6px #FFF'
     }
