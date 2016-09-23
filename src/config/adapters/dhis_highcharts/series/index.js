@@ -5,6 +5,8 @@ import getPie from './pie';
 import getGauge from './gauge';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 
+const REGRESSION_TYPE_LINEAR = 'LINEAR';
+
 const DEFAULT_ANIMATION_DURATION = 300;
 
 const DEFAULT_TRENDLINE = {
@@ -77,7 +79,7 @@ function getDefault(series, store, layout, isStacked, colors) {
         seriesObj.color = getColor(colors, index);
     });
 
-    if (layout.showTrendLine) {
+    if (layout.regressionType === REGRESSION_TYPE_LINEAR) {
         series = addTrendLines(series, isStacked);
     }
 
