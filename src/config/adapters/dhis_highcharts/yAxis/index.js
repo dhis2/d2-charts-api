@@ -36,10 +36,6 @@ function getSteps(layout) {
     return isNumeric(layout.rangeAxisSteps) ? layout.rangeAxisSteps : undefined;
 }
 
-function getDecimals(layout) {
-    return isNumeric(layout.rangeAxisDecimals) ? layout.rangeAxisDecimals : undefined;
-}
-
 function getTargetLine(layout) {
     return isNumeric(layout.targetLineValue) ? Object.assign({}, DEFAULT_PLOTLINE, objectClean({
         value: layout.targetLineValue,
