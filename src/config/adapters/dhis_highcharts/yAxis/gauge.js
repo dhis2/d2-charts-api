@@ -8,9 +8,7 @@ function getStopsByLegendSet(legendSet) {
     return isObject(legendSet) ? arraySort(legendSet.legends, 'ASC', 'endValue').map(legend => [parseFloat(legend.endValue) / DEFAULT_MAX_VALUE, legend.color]) : undefined;
 }
 
-export default function (layout, extraOptions) {
-
-    console.log("legendSet", extraOptions.legendSet);
+export default function (layout, legendSet) {
     return objectClean({
         min: 0,
         max: DEFAULT_MAX_VALUE,
@@ -24,6 +22,6 @@ export default function (layout, extraOptions) {
                 fontSize: '13px'
             }
         },
-        stops: getStopsByLegendSet(extraOptions.legendSet)
+        stops: getStopsByLegendSet(legendSet)
     });
 }

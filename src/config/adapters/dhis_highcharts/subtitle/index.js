@@ -9,7 +9,13 @@ const DEFAULT_SUBTITLE = {
     }
 };
 
-export default function (series, layout) {
+const DASHBOARD_SUBTITLE = {
+    style: {
+        fontSize: '12px'
+    }
+};
+
+export default function (series, layout, dashboard) {
     let subtitle;
 
     switch(layout.type) {
@@ -21,5 +27,5 @@ export default function (series, layout) {
             subtitle = undefined;
     }
 
-    return subtitle ? Object.assign({}, DEFAULT_SUBTITLE, subtitle) : subtitle;
+    return subtitle ? Object.assign({}, DEFAULT_SUBTITLE, (dashboard ? DASHBOARD_SUBTITLE : undefined), subtitle) : subtitle;
 }

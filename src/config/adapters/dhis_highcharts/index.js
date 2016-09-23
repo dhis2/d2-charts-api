@@ -20,13 +20,13 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
     let config = {
 
         // type etc
-        chart: getChart(layout, el),
+        chart: getChart(layout, el, extraOptions.dashboard),
 
         // title
-        title: getTitle(layout, store.data.metaData),
+        title: getTitle(layout, store.data.metaData, extraOptions.dashboard),
 
         // subtitle
-        subtitle: getSubtitle(series.slice(), layout),
+        subtitle: getSubtitle(series.slice(), layout, extraOptions.dashboard),
 
         // x-axis
         xAxis: getXAxis(store, layout),

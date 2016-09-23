@@ -1,10 +1,20 @@
 import getType from './type';
 
-const DEFAULT_SPACING_TOP = 20;
+const DEFAULT_CHART = {
+    fontFamily: 'Helvetica Neue,Helvetica,Arial,sans-serif !important',
+    spacingTop: 20
+};
 
-export default function (layout, el) {
-    return Object.assign({}, getType(layout.type), {
-        spacingTop: DEFAULT_SPACING_TOP,
-        renderTo: el || layout.el
-    });
+const DASHBOARD_CHART = {
+    spacingTop: 0
+};
+
+export default function (layout, el, dashboard) {
+    return Object.assign(
+        {},
+        getType(layout.type),
+        { renderTo: el || layout.el },
+        DEFAULT_CHART,
+        (dashboard ? DASHBOARD_CHART : undefined)
+    );
 };

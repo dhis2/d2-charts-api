@@ -1,10 +1,19 @@
 import isString from 'd2-utilizr/lib/isString';
 
-const DEFAULT_PROPS = {
+const DEFAULT_TITLE = {
     margin: 30,
     y: 18,
     style: {
         color: '#111'
+    }
+};
+
+const DASHBOARD_TITLE = {
+    margin: 15,
+    y: 12,
+    style: {
+        fontSize: '13px',
+        fontWeight: 'bold'
     }
 };
 
@@ -32,6 +41,6 @@ function getTextObject(layout, metaData) {
     };
 }
 
-export default function (layout, metaData) {
-    return Object.assign(getTextObject(layout, metaData), DEFAULT_PROPS);
+export default function (layout, metaData, dashboard) {
+    return Object.assign(getTextObject(layout, metaData), DEFAULT_TITLE, dashboard ? DASHBOARD_TITLE : undefined);
 }

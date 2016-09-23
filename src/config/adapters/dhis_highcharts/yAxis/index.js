@@ -83,7 +83,7 @@ export default function (layout, extraOptions) {
 
     switch(layout.type) {
         case CHART_TYPE_GAUGE:
-            series = getGauge(layout, extraOptions);
+            series = getGauge(layout, extraOptions.legendSet);
             break;
         default:
             series = getDefault(layout);
