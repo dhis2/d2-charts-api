@@ -86,16 +86,16 @@ function getDefault(series, store, layout, isStacked, colors) {
     return series;
 }
 
-export default function (series, store, layout, isStacked, colors) {
+export default function (series, store, layout, isStacked, extraOptions) {
     switch(layout.type) {
         case CHART_TYPE_PIE:
-            series = getPie(series, store, layout, isStacked, colors);
+            series = getPie(series, store, layout, isStacked, extraOptions.colors);
             break;
         case CHART_TYPE_GAUGE:
-            series = getGauge(series);
+            series = getGauge(series, extraOptions.dashboard);
             break;
         default:
-            series = getDefault(series, store, layout, isStacked, colors);
+            series = getDefault(series, store, layout, isStacked, extraOptions.colors);
     }
 
     series.forEach(seriesObj => {

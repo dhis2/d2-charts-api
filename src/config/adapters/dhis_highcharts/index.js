@@ -35,10 +35,10 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         yAxis: getYAxis(layout, extraOptions),
 
         // series
-        series: getSeries(series.slice(), store, layout, isStacked(layout.type), extraOptions.colors),
+        series: getSeries(series.slice(), store, layout, isStacked(layout.type), extraOptions),
 
         // legend
-        legend: getLegend(layout),
+        legend: getLegend(layout, extraOptions.dashboard),
 
         // pane
         pane: getPane(layout.type),
