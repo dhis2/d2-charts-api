@@ -16,7 +16,7 @@ const typeMap = new Map([
 
 const stackedTypes = ['area'];
 
-export function isStacked(type) {
+export function getIsStacked(type) {
     return type.indexOf('stacked') !== -1 || arrayContains(stackedTypes, type);
 }
 

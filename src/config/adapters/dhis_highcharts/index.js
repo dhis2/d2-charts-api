@@ -7,7 +7,7 @@ import getTitle from './title';
 import getSubtitle from './subtitle';
 import getLegend from './legend';
 import getPane from './pane';
-import { isStacked } from './type';
+import { getIsStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 import getTrimmedConfig from './getTrimmedConfig';
 
@@ -16,6 +16,8 @@ export const CHART_TYPE_GAUGE = 'gauge';
 
 export default function ({ store, layout, el, extraConfig, extraOptions }) {
     let series = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
+
+    const isStacked = getIsStacked(layout.type);
 
     let config = {
 
@@ -35,7 +37,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         yAxis: getYAxis(layout, extraOptions),
 
         // series
-        series: getSeries(series.slice(), store, layout, isStacked(layout.type), extraOptions),
+        series: getSeries(series.slice(), store, layout, isStacked, extraOptions),
 
         // legend
         legend: getLegend(layout, extraOptions.dashboard),
@@ -56,7 +58,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
 
     // sorting
     if (layout.sortOrder) {
-        config = getSortedConfig(config, layout);
+        config = getSortedConfig(config, layout, isStacked);
     }
 
     // force apply extra config

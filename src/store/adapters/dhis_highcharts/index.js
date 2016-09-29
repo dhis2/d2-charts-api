@@ -13,7 +13,7 @@ function getHeaderIdIndexMap(headers) {
 }
 
 function getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex) {
-    const map = {};
+    const map = new Map();
     let key;
     let value;
 
@@ -21,21 +21,14 @@ function getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex) {
         key = row[seriesIndex] + '-' + row[categoryIndex];
         value = row[valueIndex];
 
-        map[key] = value;
+        map.set(key, value);
     });
 
     return map;
 }
 
-function getSortedCategoryItems(categoryItems, data, sorting) {
-    console.log("categoryItems", categoryItems);
-    console.log("data", data);
-    console.log("sorting", sorting);
-    return categoryItems;
-}
-
-function getDataObjects(seriesItems, categoryItems, idValueMap, metaDataNames) {
-    const dataObjects = [];
+function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
+    const data = [];
     let dataItem;
     let key;
     let value;
@@ -48,24 +41,13 @@ function getDataObjects(seriesItems, categoryItems, idValueMap, metaDataNames) 
 
         categoryItems.forEach(categoryItem => {
             key = seriesItem + '-' + categoryItem;
-            value = parseFloat(idValueMap[key]) || null;
+            value = parseFloat(idValueMap.get(key)) || null;
 
             dataItem.data.push(value);
         });
 
-        dataObjects.push(dataItem);
+        data.push(dataItem);
     });
-
-    return dataObjects;
-}
-
-function getData(seriesItems, categoryItems, idValueMap, metaDataNames, sorting) {
-    let data = getDataObjects(seriesItems, categoryItems, idValueMap, metaDataNames);
-
-    if (isObject(sorting)) {
-        const sortedCategoryItems = getSortedCategoryItems(categoryItems, data, sorting);
-        data = getDataObjects(seriesItems, sortedCategoryItems, idValueMap, metaDataNames);
-    }
 
     return data;
 }

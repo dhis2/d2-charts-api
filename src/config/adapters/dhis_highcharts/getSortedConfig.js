@@ -9,6 +9,7 @@ const sortOrderMap = new Map([
 
 function getIndexOrder(config, isStacked, direction) {
     const dataToBeSorted = isStacked ? getStackedData(config.series) : config.series[0].data.slice();
+console.log("dataToBeSorted", dataToBeSorted);
     const dataObjectsToBeSorted = dataToBeSorted.map((value, index) => ({ index, value }));
 
     arraySort(dataObjectsToBeSorted, direction, 'value');
@@ -17,6 +18,8 @@ function getIndexOrder(config, isStacked, direction) {
 }
 
 function getSortedConfig(config, isStacked, direction) {
+console.log(config, isStacked, direction);
+
     const categories = config.xAxis.categories;
     const series = config.series;
     const indexOrder = getIndexOrder(config, isStacked, direction);
@@ -33,6 +36,6 @@ function getSortedConfig(config, isStacked, direction) {
 
 export default function (config, layout, isStacked) {
     const direction = sortOrderMap.get(parseInt(layout.sortOrder));
-
+console.log("isStacked", isStacked);
     return getSortedConfig(config, isStacked, direction);
 }
