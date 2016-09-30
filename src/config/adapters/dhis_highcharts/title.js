@@ -1,4 +1,5 @@
 import isString from 'd2-utilizr/lib/isString';
+import getFilterTitle from './getFilterTitle';
 
 const DEFAULT_TITLE = {
     margin: 30,
@@ -17,30 +18,36 @@ const DASHBOARD_TITLE = {
     }
 };
 
-function getFilterTitle(layout, metaData) {
-    let title = '';
+function getText(layout, metaData, dashboard) {
 
-    layout.filters.forEach((dimension, index, array) => {
-        metaData[dimension.dimension].forEach((id, index, array) => {
-            title += metaData.names[id] + (index < array.length - 1 ? ', ' : '');
-        });
+    // title
+    if (isString(layout.title)) {
+        return layout.title;
+    }
+    
+    // name
+    if (dashboard && isString(layout.name)) {
+        return layout.name;
+    }
 
-        title +=  (index < array.length - 1 ? ' - ' : '');
-    });
+    // filters
+    if (layout.filters) {
+        return getFilterTitle(layout, metaData);
+    }
 
-    return title;
+    return null;
 }
 
-function getText(layout, metaData) {
-    return isString(layout.title) ? layout.title : (layout.filters ? getFilterTitle(layout, metaData) : null);
-}
-
-function getTextObject(layout, metaData) {
+function getTextObject(layout, metaData, dashboard) {
     return {
-        text: layout.hideTitle ? null : getText(layout, metaData)
+        text: layout.hideTitle ? null : getText(layout, metaData, dashboard)
     };
 }
 
 export default function (layout, metaData, dashboard) {
-    return Object.assign(getTextObject(layout, metaData), DEFAULT_TITLE, dashboard ? DASHBOARD_TITLE : undefined);
+    return Object.assign(
+        getTextObject(layout, metaData, dashboard),
+        DEFAULT_TITLE,
+        dashboard ? DASHBOARD_TITLE : undefined
+    );
 }

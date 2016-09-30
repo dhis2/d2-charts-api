@@ -28,7 +28,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         title: getTitle(layout, store.data.metaData, extraOptions.dashboard),
 
         // subtitle
-        subtitle: getSubtitle(series.slice(), layout, extraOptions.dashboard),
+        subtitle: getSubtitle(series, layout, store.data.metaData, extraOptions.dashboard),
 
         // x-axis
         xAxis: getXAxis(store, layout),
