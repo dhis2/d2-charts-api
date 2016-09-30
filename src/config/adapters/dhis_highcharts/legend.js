@@ -10,6 +10,7 @@ export default function (layout, dashboard) {
     } : {
         symbolWidth: 11,
         symbolHeight: 11,
+        itemMarginBottom: 1,
         itemStyle: {
             fontSize: fontSize,
             fontWeight: 'normal'
