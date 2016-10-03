@@ -63,6 +63,6 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
 
     // force apply extra config
     Object.assign(config, extraConfig);
-
+console.log("config", config);
     return objectClean(config);
 }

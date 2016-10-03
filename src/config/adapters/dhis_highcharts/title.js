@@ -24,7 +24,7 @@ function getText(layout, metaData, dashboard) {
     if (isString(layout.title)) {
         return layout.title;
     }
-    
+
     // name
     if (dashboard && isString(layout.name)) {
         return layout.name;

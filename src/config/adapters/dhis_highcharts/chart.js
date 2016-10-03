@@ -6,7 +6,10 @@ const DEFAULT_CHART = {
 };
 
 const DASHBOARD_CHART = {
-    spacingTop: 0
+    spacingTop: 0,
+    spacingRight: 5,
+    spacingBottom: 2,
+    spacingLeft: 5
 };
 
 export default function (layout, el, dashboard) {
