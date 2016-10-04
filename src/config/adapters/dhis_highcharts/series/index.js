@@ -26,7 +26,6 @@ function getAdaptedRegressionData(data) {
 }
 
 function getRegressionData(data, isClean) {
-console.log("getreg input: ", data);
     const adaptedRegressionData = getAdaptedRegressionData(fitData(data).data);
     let i = 0;
 
