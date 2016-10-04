@@ -30,7 +30,7 @@ function getRegressionData(data) {
 }
 
 function getColor(colors, index) {
-    return colors[index] || getColor(index - colors.length);
+    return colors[index] || getColor(colors, index - colors.length);
 }
 
 function getDarkerColor(color) {
