@@ -25,8 +25,11 @@ function getAdaptedRegressionData(data) {
     return data.map(array => array[1]);
 }
 
-function getRegressionData(data) {
-    return getAdaptedRegressionData(fitData(data).data);
+function getRegressionData(data, isClean) {
+    const adaptedRegressionData = getAdaptedRegressionData(fitData(data).data);
+    let i = 0;
+
+    return isClean ? adaptedRegressionData : data.map((value, index) => value === null ? value : adaptedRegressionData[i++]);
 }
 
 function getColor(colors, index) {
