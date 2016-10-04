@@ -1,3 +1,3 @@
-export default function (data) {
-    return data;
+export default function ({ layout, onError, onWarning }) {
+    return layout;
 }

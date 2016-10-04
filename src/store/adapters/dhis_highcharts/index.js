@@ -1,5 +1,3 @@
-import isObject from 'd2-utilizr/lib/isObject';
-
 const VALUE_ID = 'value';
 
 function getHeaderIdIndexMap(headers) {

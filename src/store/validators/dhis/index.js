@@ -2,67 +2,73 @@ import isArray from 'd2-utilizr/lib/isArray';
 import isObject from 'd2-utilizr/lib/isObject';
 import isString from 'd2-utilizr/lib/isString';
 
-function validateHeader(header) {
+const MODULE = 'Data validator: ';
+
+function getMessage(text) {
+    return MODULE + text;
+}
+
+function validateHeader(header, error) {
     if (!isObject(header)) {
-        throw new Error('Header is not an object');
+        error(getMessage('Header is not an object'));
     }
 
     if (header.meta) {
         if (!isString(header.name)) {
-            throw new Error('Header name is not a string');
+            error(getMessage('Header name is not a string'));
         }
     }
 }
 
-function validateRowValue(rowValue) {
+function validateRowValue(rowValue, error) {
     if (!isString(rowValue)) {
-        throw new Error('Row value is not a string');
+        error(getMessage('Row value is not a string'));
     }
 }
 
-function validateRow(row, headersLength) {
+function validateRow(row, headersLength, error) {
     if (!isArray(row)) {
-        throw new Error('Data row is not an array');
+        error(getMessage('Data row is not an array'));
     }
 
     if (row.length !== headersLength) {
-        throw new Error('Data row length is invalid');
+        error(getMessage('Data row length is invalid'));
     }
 
-    row.forEach(rowValue => validateRowValue(rowValue));
+    row.forEach(rowValue => validateRowValue(rowValue, error));
 }
 
-export default function (data) {
+export default function ({ data, error, warning }) {
     if (!isObject(data)) {
-        throw new Error('Data is not an object');
+        error(getMessage('Data is not an object'));
     }
 
     // headers
 
     if (!isArray(data.headers)) {
-        throw new Error('Response headers is not an array');
+        error(getMessage('Response headers is not an array'));
     }
 
     if (!data.headers.length > 1) {
-        throw new Error('At least two response headers required');
+        error(getMessage('At least two response headers required'));
     }
 
-    data.headers.forEach(header => validateHeader(header));
+    data.headers.forEach(header => validateHeader(header, error));
 
     // meta data
 
     if (!isObject(data.metaData)) {
-        throw new Error('Metadata is not an object');
+        error(getMessage('Metadata is not an object'));
     }
 
     if (!isObject(data.metaData.names)) {
-        throw new Error('Metadata names is not an object');
+        error(getMessage('Metadata names is not an object'));
     }
 
     data.headers.forEach(header => {
         if (header.meta) {
             if (!isArray(data.metaData[header.name])) {
-                throw new Error(`No metadata ids found for header "${header.name}"`);
+                error(getMessage(`No metadata ids found for header "${header.name}"`));
             }
         }
     });
@@ -70,14 +76,14 @@ export default function (data) {
     // data
 
     if (!isArray(data.rows)) {
-        throw new Error('Headers is not an array');
+        warning(getMessage('Headers is not an array'));
     }
 
     if (!data.rows.length) {
-        throw new Error('No data rows provided');
+        warning(getMessage('No data rows provided'));
     }
 
-    data.rows.forEach(row => validateRow(row, data.headers.length));
+    data.rows.forEach(row => validateRow(row, data.headers.length, error));
 
     return data;
 }

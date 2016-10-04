@@ -1,4 +1,4 @@
-import getFilterTitle from '../getFilterTitle';
+import isString from 'd2-utilizr/lib/isString';
 
 export default function (series, layout, metaData, dashboard, filterTitle) {
     const seriesName = series[0].name;

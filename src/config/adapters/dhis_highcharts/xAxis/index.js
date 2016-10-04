@@ -1,4 +1,3 @@
-import isArray from 'd2-utilizr/lib/isArray';
 import objectClean from 'd2-utilizr/lib/objectClean';
 import getAxisTitle from '../getAxisTitle';
 import getCategories from '../getCategories';

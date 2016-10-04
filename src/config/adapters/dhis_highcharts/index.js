@@ -7,6 +7,7 @@ import getTitle from './title';
 import getSubtitle from './subtitle';
 import getLegend from './legend';
 import getPane from './pane';
+import getNoData from './noData';
 import { getIsStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 import getTrimmedConfig from './getTrimmedConfig';
@@ -15,7 +16,10 @@ export const CHART_TYPE_PIE = 'pie';
 export const CHART_TYPE_GAUGE = 'gauge';
 
 export default function ({ store, layout, el, extraConfig, extraOptions }) {
-    let series = store.generateData(layout.columns[0].dimension, layout.rows[0].dimension);
+    let series = store.generateData({
+        seriesId: layout.columns[0].dimension,
+        categoryId: layout.rows[0].dimension
+    });
 
     const isStacked = getIsStacked(layout.type);
 
@@ -44,6 +48,9 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
 
         // pane
         pane: getPane(layout.type),
+
+        // no data
+        noData: getNoData(),
 
         // credits
         credits: {

@@ -1,9 +1,17 @@
 import Store from './store';
 import Config from './config';
 
-function createChart(data, layout, el, extraOptions) {
-    const store = new Store({ data });
-    const config = new Config({ store, layout, el, extraOptions });
+const defaultError = (error) => {
+    throw new Error(error);
+};
+
+const defaultWarning = (warning) => {
+    console.log(warning);
+};
+
+function createChart(data, layout, el, extraOptions, error = defaultError, warning = defaultWarning) {
+    const store = new Store({ data, error, warning });
+    const config = new Config({ store, layout, el, extraOptions, error, warning });
 
     return {
         store,
