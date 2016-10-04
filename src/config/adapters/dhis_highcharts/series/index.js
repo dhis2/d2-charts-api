@@ -26,6 +26,7 @@ function getAdaptedRegressionData(data) {
 }
 
 function getRegressionData(data, isClean) {
+console.log("getreg input: ", data);
     const adaptedRegressionData = getAdaptedRegressionData(fitData(data).data);
     let i = 0;
 
@@ -45,7 +46,7 @@ function addTrendLines(series, isStacked) {
         return [
             ...series,
             Object.assign({}, DEFAULT_TRENDLINE, {
-                data: getRegressionData(getStackedData(series))
+                data: getRegressionData(getStackedData(series, true))
             })
         ];
     }
