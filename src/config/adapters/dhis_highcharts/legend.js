@@ -1,19 +1,47 @@
-const DEFAULT_FONT_SIZE = '13px';
+const DEFAULT_ITEM_STYLE = {
+    fontSize: '13px',
+    fontWeight: 'normal'
+};
 
-const DASHBOARD_FONT_SIZE = '10px';
+const DASHBOARD_ITEM_STYLE = {
+    fontSize: '10px'
+};
+
+const DEFAULT_LEGEND = {
+    symbolWidth: 11,
+    symbolHeight: 11,
+    itemMarginBottom: 2
+};
+
+const DASHBOARD_LEGEND = {
+    symbolPadding: 2,
+    itemDistance: 10
+};
+
+function getItemStyle(dashboard) {
+    return {
+        itemStyle: Object.assign(
+            {},
+            DEFAULT_ITEM_STYLE,
+            dashboard ? DASHBOARD_ITEM_STYLE : null
+        )
+    };
+}
+
+function getLegend(dashboard) {
+    return Object.assign(
+        {},
+        DEFAULT_LEGEND,
+        dashboard ? DASHBOARD_LEGEND : null
+    );
+}
 
 export default function (layout, dashboard) {
-    const fontSize = dashboard ? DASHBOARD_FONT_SIZE : DEFAULT_FONT_SIZE;
-
     return layout.hideLegend ? {
         enabled: false
-    } : {
-        symbolWidth: 11,
-        symbolHeight: 11,
-        itemMarginBottom: 2,
-        itemStyle: {
-            fontSize: fontSize,
-            fontWeight: 'normal'
-        }
-    };
+    } : Object.assign(
+        {},
+        getLegend(dashboard),
+        getItemStyle(dashboard)
+    );
 }
