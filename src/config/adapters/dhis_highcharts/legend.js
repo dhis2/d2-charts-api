@@ -14,7 +14,7 @@ const DEFAULT_LEGEND = {
 };
 
 const DASHBOARD_LEGEND = {
-    symbolPadding: 2,
+    symbolPadding: 3,
     itemDistance: 10
 };
 
