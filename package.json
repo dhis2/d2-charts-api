@@ -2,7 +2,7 @@
   "name": "d2-charts-api",
   "version": "25.0.1",
   "description": "DHIS2 charts api",
-  "main": "index.html",
+  "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "rm -rf lib/ && ./node_modules/.bin/babel src/ -d lib/ --presets es2015,stage-2 --source-maps"
