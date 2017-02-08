@@ -1,7 +1,6 @@
 import validators from './validators';
 import adapters from './adapters';
 import generators from './generators';
-import onError from '..';
 import { theme1 } from '../util/colors';
 
 const DEFAULT_EXTRA_OPTIONS = {

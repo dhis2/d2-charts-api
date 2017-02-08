@@ -33,7 +33,7 @@ function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
 
     seriesItems.forEach(seriesItem => {
         dataItem = {
-            name: metaDataNames[seriesItem],
+            name: metaDataNames[seriesItem].name,
             data: []
         };
 
@@ -59,10 +59,10 @@ export default function ({ data, seriesId = data.headers[0].name, categoryId = d
     const seriesIndex = headerIdIndexMap.get(seriesId);
     const categoryIndex = headerIdIndexMap.get(categoryId);
     const valueIndex = headerIdIndexMap.get(VALUE_ID);
-    const seriesItems = metaData[seriesId];
-    const categoryItems = metaData[categoryId];
+    const seriesItems = metaData.dimensions[seriesId];
+    const categoryItems = metaData.dimensions[categoryId];
 
     const idValueMap = getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex);
 
-    return getData(seriesItems, categoryItems, idValueMap, metaData.names);
+    return getData(seriesItems, categoryItems, idValueMap, metaData.items);
 }

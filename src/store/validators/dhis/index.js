@@ -61,13 +61,13 @@ export default function ({ data, error, warning }) {
         error(getMessage('Metadata is not an object'));
     }
 
-    if (!isObject(data.metaData.names)) {
+    if (!isObject(data.metaData.items)) {
         error(getMessage('Metadata names is not an object'));
     }
 
     data.headers.forEach(header => {
         if (header.meta) {
-            if (!isArray(data.metaData[header.name])) {
+            if (!isArray(data.metaData.dimensions[header.name])) {
                 error(getMessage(`No metadata ids found for header "${header.name}"`));
             }
         }
