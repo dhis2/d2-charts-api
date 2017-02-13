@@ -10,7 +10,7 @@ const defaultWarning = (warning) => {
 };
 
 function createChart(data, layout, el, extraOptions, error = defaultError, warning = defaultWarning) {
-    const store = new Store({ data, error, warning });
+    const store = new Store({ data, error, warning, extraOptions });
     const config = new Config({ store, layout, el, extraOptions, error, warning });
 
     return {
