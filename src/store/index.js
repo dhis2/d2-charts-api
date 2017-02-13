@@ -1,7 +1,7 @@
 import validators from './validators';
 import adapters from './adapters';
 
-export default function ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', seriesId, categoryId, error, warning }) {
+export default function ({ data, inputFormat = 'dhis', outputFormat = 'highcharts', seriesId, categoryId, error, warning, extraOptions }) {
     let _validator = validators[inputFormat] || validators.noValidation;
     let _adapter = adapters[inputFormat + '_' + outputFormat];
 
@@ -19,7 +19,8 @@ export default function ({ data, inputFormat = 'dhis', outputFormat = 'highchart
         return _adapter({
             data: _validator({ data, error, warning }),
             seriesId,
-            categoryId
+            categoryId,
+            extraOptions
         });
     };
 }

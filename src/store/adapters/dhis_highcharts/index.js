@@ -1,3 +1,5 @@
+import numberConstrain from 'd2-utilizr/lib/numberConstrain';
+
 const VALUE_ID = 'value';
 
 function getHeaderIdIndexMap(headers) {
@@ -25,7 +27,7 @@ function getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex) {
     return map;
 }
 
-function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
+function getData(seriesItems, categoryItems, idValueMap, metaDataNames, extraOptions = {}) {
     const data = [];
     let dataItem;
     let key;
@@ -41,7 +43,19 @@ function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
             key = seriesItem + '-' + categoryItem;
             value = parseFloat(idValueMap.get(key)) || null;
 
-            dataItem.data.push(value);
+            let item = { y: value };
+
+            if (extraOptions.legendSet && extraOptions.appManager) {
+                const legends = extraOptions.legendSet.legends;
+
+                for (var i = 0; i < legends.length; i++) {
+                    if (numberConstrain(value, legends[i].startValue, legends[i].endValue) === value) {
+                        item.color = legends[i].color;
+                    }
+                }
+            }
+
+            dataItem.data.push(item);
         });
 
         data.push(dataItem);
@@ -50,7 +64,7 @@ function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
     return data;
 }
 
-export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name }) {
+export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name, extraOptions }) {
     const headers = data.headers;
     const metaData = data.metaData;
     const rows = data.rows;
@@ -64,5 +78,5 @@ export default function ({ data, seriesId = data.headers[0].name, categoryId = d
 
     const idValueMap = getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex);
 
-    return getData(seriesItems, categoryItems, idValueMap, metaData.items);
+    return getData(seriesItems, categoryItems, idValueMap, metaData.items, extraOptions);
 }
