@@ -6,11 +6,16 @@ export default function (series, store, layout, isStacked, colors) {
         colorByPoint: true,
         allowPointSelect: true,
         cursor: 'pointer',
-        data: getCategories(store, layout).map((category, index) => ({
-            name: category,
-            color: colors[index],
-            y: series[0].data[index],
-        })),
+        data: getCategories(store, layout).map((category, index) => {
+            return {
+                ...{
+                    name: category,
+                    color: colors[index],
+                    y: series[0].data[index]
+                },
+                ...series[0].data[index]
+            }
+        }),
         dataLabels: {
             enabled: true,
             formatter: function() {
