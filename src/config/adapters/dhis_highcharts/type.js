@@ -1,6 +1,6 @@
 import arrayContains from 'd2-utilizr/lib/arrayContains';
 
-const typeMap = new Map([
+const chartTypeMap = new Map([
 
     // radar
     ['radar', {
@@ -11,17 +11,28 @@ const typeMap = new Map([
     // gauge
     ['gauge', {
         type: 'solidgauge'
+    }],
+
+    // stackedcolumn
+    ['stackedcolumn', {
+        type: 'column'
+    }],
+
+    // stackedbar
+    ['stackedbar', {
+        type: 'bar'
     }]
+
 ]);
 
-const stackedTypes = ['area'];
+const stackedTypes = ['stackedcolumn', 'stackedbar', 'area'];
 
 export function getIsStacked(type) {
-    return type.indexOf('stacked') !== -1 || arrayContains(stackedTypes, type);
+    return arrayContains(stackedTypes, type.toLowerCase());
 }
 
 export default function (type) {
-    return typeMap.get(type) || {
-        type: type.toLowerCase().replace('stacked', '')
+    return chartTypeMap.get(type.toLowerCase()) || {
+        type: type.toLowerCase()
     };
 }
