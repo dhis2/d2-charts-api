@@ -5,6 +5,7 @@ import isString from 'd2-utilizr/lib/isString';
 import getAxisTitle from '../getAxisTitle';
 import { CHART_TYPE_GAUGE } from '..';
 import getGauge from './gauge';
+import { getIsStacked } from '../type';
 
 const DEFAULT_MIN_VALUE = 0;
 
@@ -74,7 +75,11 @@ function getDefault(layout) {
         title: getAxisTitle(layout.rangeAxisTitle),
         plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)]),
         gridLineColor: DEFAULT_GRIDLINE_COLOR,
-        labels: getLabels(layout)
+        labels: getLabels(layout),
+
+        // DHIS2-649: put first serie at the bottom of the stack
+        // in this way the legend sequence matches the serie sequence
+        reversedStacks: getIsStacked(layout.type) ? false : true
     });
 }
 
