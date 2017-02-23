@@ -1,6 +1,7 @@
 import { fitData } from '../../../../util/regression/jqplot_regression';
 import { rgb } from 'd3-color';
 import getStackedData from './../getStackedData';
+import getCumulativeData from './../getCumulativeData';
 import getPie from './pie';
 import getGauge from './gauge';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
@@ -85,6 +86,11 @@ function getDefault(series, store, layout, isStacked, colors) {
 
     if (layout.regressionType === REGRESSION_TYPE_LINEAR) {
         series = addTrendLines(series, isStacked);
+    }
+
+    // DHIS2-701: use cumulative values
+    if (layout.useCumulativeValues === true) {
+        series = getCumulativeData(series);
     }
 
     return series;
