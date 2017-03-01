@@ -5,6 +5,11 @@ import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 
 const DEFAULT_SUBTITLE = {
     style: {
+        // DHIS2-578: dynamically truncate subtitle when it's taking more than 1 line
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+
         fontSize: '14px',
         color: '#555',
         textShadow: '0 0 #999'
@@ -18,12 +23,26 @@ const DASHBOARD_SUBTITLE = {
 };
 
 function getDefault(layout, dashboard, filterTitle) {
+    let subtitle;
+
+    // DHIS2-578: allow for optional custom subtitle
+    if (isString(layout.subtitle)) {
+        subtitle = layout.subtitle;
+    }
+    else if (dashboard || isString(layout.title)) {
+        subtitle = filterTitle;
+    }
+
     return {
-        text: dashboard || isString(layout.title) ? filterTitle : undefined
+        text: subtitle
     };
 }
 
 export default function (series, layout, metaData, dashboard) {
+    if (layout.hideSubtitle) {
+        return null;
+    }
+
     let subtitle;
 
     const filterTitle = getFilterTitle(layout, metaData);
