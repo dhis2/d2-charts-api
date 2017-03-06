@@ -61,22 +61,18 @@ export default function ({ data, error, warning }) {
         error(getMessage('Metadata is not an object'));
     }
 
-    if (!isObject(data.metaData.names)) {
-        error(getMessage('Metadata names is not an object'));
+    if (!isObject(data.metaData.items)) {
+        error(getMessage('Metadata items is not an object'));
     }
 
-    data.headers.forEach(header => {
-        if (header.meta) {
-            if (!isArray(data.metaData[header.name])) {
-                error(getMessage(`No metadata ids found for header "${header.name}"`));
-            }
-        }
-    });
+    if (!isObject(data.metaData.dimensions)) {
+        error(getMessage('Metadata dimensions is not an object'));
+    }
 
     // data
 
     if (!isArray(data.rows)) {
-        warning(getMessage('Headers is not an array'));
+        warning(getMessage('Data rows is not an array'));
     }
 
     if (!data.rows.length) {
