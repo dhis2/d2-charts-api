@@ -50,7 +50,7 @@ export default function (series, layout, metaData, dashboard) {
     switch(layout.type) {
         case CHART_TYPE_PIE:
         case CHART_TYPE_GAUGE:
-            subtitle = getGauge(series, layout, metaData, dashboard, filterTitle);
+            subtitle = getGauge(series, layout, dashboard, filterTitle);
             break;
         default:
             subtitle = getDefault(layout, dashboard, filterTitle);

@@ -1,6 +1,8 @@
 export default function (series) {
+    let cumulativeValues;
+
     series.forEach(seriesObj => {
-        const cumulativeValues = seriesObj.data.reduce((accumulator, value) => {
+        cumulativeValues = seriesObj.data.reduce((accumulator, value) => {
             if (accumulator.length > 0) {
                 value += accumulator[accumulator.length - 1];
             }

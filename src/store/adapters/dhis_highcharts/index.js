@@ -64,6 +64,7 @@ export default function ({ data, seriesDimensionName = data.headers[0].name, cat
 
     const seriesIds = metaData.dimensions[seriesDimensionName];
     const categoryIds = metaData.dimensions[categoryDimensionName];
-
+console.log("input data", data);
+console.log("adapted store", getData(seriesIds, categoryIds, idValueMap, metaData.items));
     return getData(seriesIds, categoryIds, idValueMap, metaData.items);
 }
