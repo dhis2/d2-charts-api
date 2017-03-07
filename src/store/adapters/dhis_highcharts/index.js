@@ -10,13 +10,21 @@ function getHeaderIdIndexMap(headers) {
     return map;
 }
 
-function getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex) {
+function getPrefixedId(row, header) {
+    return (header.isPrefix ? (header.name + '_') : '') + row[header.index];
+}
+
+function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
     const map = new Map();
+
     let key;
     let value;
 
+console.log("seriesHeader", seriesHeader);
+console.log("categoryHeader", categoryHeader);
+
     rows.forEach(row => {
-        key = row[seriesIndex] + '-' + row[categoryIndex];
+        key = getPrefixedId(row, seriesHeader) + '-' + getPrefixedId(row, categoryHeader);
         value = row[valueIndex];
 
         map.set(key, value);
@@ -31,6 +39,7 @@ function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
     let key;
     let value;
 
+    console.log("idValueMap", idValueMap);
     seriesIds.forEach(seriesId => {
         dataItem = {
             name: metaDataItems[seriesId].name,
@@ -39,6 +48,7 @@ function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
 
         categoryIds.forEach(categoryId => {
             key = seriesId + '-' + categoryId;
+            console.log("key", key);
             value = parseFloat(idValueMap.get(key)) || null;
 
             dataItem.data.push(value);
@@ -60,7 +70,7 @@ export default function ({ data, seriesDimensionName = data.headers[0].name, cat
     const categoryIndex = headerIdIndexMap.get(categoryDimensionName);
     const valueIndex = headerIdIndexMap.get(VALUE_ID);
 
-    const idValueMap = getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex);
+    const idValueMap = getIdValueMap(rows, headers[seriesIndex], headers[categoryIndex], valueIndex);
 
     const seriesIds = metaData.dimensions[seriesDimensionName];
     const categoryIds = metaData.dimensions[categoryDimensionName];
