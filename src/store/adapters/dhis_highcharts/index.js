@@ -70,7 +70,10 @@ export default function ({ data, seriesDimensionName = data.headers[0].name, cat
     const categoryIndex = headerIdIndexMap.get(categoryDimensionName);
     const valueIndex = headerIdIndexMap.get(VALUE_ID);
 
-    const idValueMap = getIdValueMap(rows, headers[seriesIndex], headers[categoryIndex], valueIndex);
+    const seriesHeader = headers[seriesIndex];
+    const categoryHeader = headers[categoryIndex];
+
+    const idValueMap = getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex);
 
     const seriesIds = metaData.dimensions[seriesDimensionName];
     const categoryIds = metaData.dimensions[categoryDimensionName];
