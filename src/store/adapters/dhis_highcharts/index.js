@@ -20,9 +20,6 @@ function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
     let key;
     let value;
 
-console.log("seriesHeader", seriesHeader);
-console.log("categoryHeader", categoryHeader);
-
     rows.forEach(row => {
         key = getPrefixedId(row, seriesHeader) + '-' + getPrefixedId(row, categoryHeader);
         value = row[valueIndex];
@@ -39,7 +36,6 @@ function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
     let key;
     let value;
 
-    console.log("idValueMap", idValueMap);
     seriesIds.forEach(seriesId => {
         dataItem = {
             name: metaDataItems[seriesId].name,
@@ -48,7 +44,7 @@ function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
 
         categoryIds.forEach(categoryId => {
             key = seriesId + '-' + categoryId;
-            console.log("key", key);
+
             value = parseFloat(idValueMap.get(key)) || null;
 
             dataItem.data.push(value);

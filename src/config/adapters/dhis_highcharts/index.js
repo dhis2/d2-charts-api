@@ -71,7 +71,5 @@ console.log("input layout", layout);
     // force apply extra config
     Object.assign(config, extraConfig);
 
-console.log("adapted config", objectClean(config));
-console.log("adapted config", JSON.stringify(objectClean(config)));
     return objectClean(config);
 }
