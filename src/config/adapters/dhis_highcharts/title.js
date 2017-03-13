@@ -21,18 +21,18 @@ const DASHBOARD_TITLE = {
 function getText(layout, metaData, dashboard) {
 
     // title
-    if (isString(layout.title)) {
+    if (isString(layout.title) && layout.title.length) {
         return layout.title;
     }
 
     // name
-    if (dashboard && isString(layout.name)) {
+    if (dashboard && (isString(layout.name) && layout.name.length)) {
         return layout.name;
     }
 
     // filters
     if (layout.filters) {
-        return getFilterTitle(layout, metaData);
+        return getFilterTitle(layout.filters, metaData);
     }
 
     return null;

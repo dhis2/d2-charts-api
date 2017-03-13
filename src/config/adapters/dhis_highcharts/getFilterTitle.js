@@ -1,10 +1,12 @@
 import isArray from 'd2-utilizr/lib/isArray';
 
-export default function (layout, metaData) {
-    let title = '';
+export default function (filters, metaData) {
+    let title;
 
-    if (isArray(layout.filters)) {
-        layout.filters.forEach((dimension, index, array) => {
+    if (isArray(filters) && filters.length) {
+        title = '';
+
+        filters.forEach((dimension, index, array) => {
             metaData.dimensions[dimension.dimension].forEach((id, index, array) => {
                 title += metaData.items[id].name + (index < array.length - 1 ? ', ' : '');
             });
@@ -13,5 +15,5 @@ export default function (layout, metaData) {
         });
     }
 
-    return title;
+    return title || null;
 }
