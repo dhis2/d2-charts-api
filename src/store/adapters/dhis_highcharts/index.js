@@ -28,7 +28,6 @@ function getIdValueMap(rows, seriesIndex, categoryIndex, valueIndex) {
 function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
     const data = [];
     let dataItem;
-    let key;
     let value;
 
     seriesItems.forEach(seriesItem => {
@@ -38,10 +37,12 @@ function getData(seriesItems, categoryItems, idValueMap, metaDataNames) {
         };
 
         categoryItems.forEach(categoryItem => {
-            key = seriesItem + '-' + categoryItem;
-            value = parseFloat(idValueMap.get(key)) || null;
+            value = idValueMap.get(`${ seriesItem }-${ categoryItem }`);
 
-            dataItem.data.push(value);
+            // DHIS2-1261: 0 is a valid value
+            // undefined value means the key was not found within the rows
+            // in that case null is returned as value in the serie for highcharts
+            dataItem.data.push((value === undefined) ? null : parseFloat(value));
         });
 
         data.push(dataItem);
