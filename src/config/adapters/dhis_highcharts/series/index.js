@@ -77,7 +77,7 @@ function getDefault(series, store, layout, isStacked, colors) {
         // stacked
         if (isStacked) {
             // DHIS2-1060: stacked charts can optionally be shown as 100% stacked charts
-            seriesObj.stacking = layout.usePercentStackedValues === true ? 'percent' : 'normal';
+            seriesObj.stacking = layout.percentStackedValues === true ? 'percent' : 'normal';
         }
 
         // color
