@@ -89,7 +89,7 @@ function getDefault(series, store, layout, isStacked, colors) {
     }
 
     // DHIS2-701: use cumulative values
-    if (layout.useCumulativeValues === true) {
+    if (layout.cumulativeValues === true) {
         series = getCumulativeData(series);
     }
 
