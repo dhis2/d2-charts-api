@@ -20,7 +20,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         seriesId: layout.columns[0].dimension,
         categoryId: layout.rows[0].dimension
     });
-console.log("input layout", layout);
+
     const isStacked = getIsStacked(layout.type);
 
     let config = {
