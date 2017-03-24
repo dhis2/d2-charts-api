@@ -47,24 +47,14 @@ export default function (series, layout, metaData, dashboard) {
     else {
         const filterTitle = getFilterTitle(layout, metaData);
 
-<<<<<<< HEAD
-    switch(layout.type) {
-        case CHART_TYPE_PIE:
-        case CHART_TYPE_GAUGE:
-            subtitle = getGauge(series, layout, dashboard, filterTitle);
-            break;
-        default:
-            subtitle = getDefault(layout, dashboard, filterTitle);
-=======
         switch(layout.type) {
             case CHART_TYPE_PIE:
             case CHART_TYPE_GAUGE:
-                subtitle = getGauge(series, layout, metaData, dashboard, filterTitle);
+                subtitle = getGauge(series, layout, dashboard, filterTitle);
                 break;
             default:
                 subtitle = getDefault(layout, dashboard, filterTitle);
         }
->>>>>>> ed691407b31210de6654f72aef63c9a9c838ee9c
     }
 
     return subtitle ? Object.assign(

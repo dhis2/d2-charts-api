@@ -2,14 +2,6 @@ import isInteger from 'd2-utilizr/lib/isInteger';
 import numberDecimals from 'd2-utilizr/lib/numberDecimals';
 
 export default function (series) {
-<<<<<<< HEAD
-    let cumulativeValues;
-
-    series.forEach(seriesObj => {
-        cumulativeValues = seriesObj.data.reduce((accumulator, value) => {
-            if (accumulator.length > 0) {
-                value += accumulator[accumulator.length - 1];
-=======
     let decimals = 0;
     let cumulativeValues = [];
 
@@ -19,7 +11,6 @@ export default function (series) {
 
             if (index > 0) {
                 value += accumulator[index - 1];
->>>>>>> ed691407b31210de6654f72aef63c9a9c838ee9c
             }
 
             accumulator.push(value);
