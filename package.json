@@ -1,6 +1,6 @@
 {
   "name": "d2-charts-api",
-  "version": "27.0.0",
+  "version": "27.0.1",
   "description": "DHIS2 charts api",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "d2-utilizr": "0.2.11",
+    "d2-utilizr": "0.2.13",
     "d3-color": "1.0.1",
     "highcharts": "5.0.7",
     "highcharts-more": "0.1.2",

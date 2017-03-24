@@ -33,7 +33,6 @@ function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
 function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
     const data = [];
     let dataItem;
-    let key;
     let value;
 
     seriesIds.forEach(seriesId => {
@@ -42,12 +41,20 @@ function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
             data: []
         };
 
+<<<<<<< HEAD
         categoryIds.forEach(categoryId => {
             key = seriesId + '-' + categoryId;
 
             value = parseFloat(idValueMap.get(key)) || null;
+=======
+        categoryItems.forEach(categoryItem => {
+            value = idValueMap.get(`${ seriesItem }-${ categoryItem }`);
+>>>>>>> ed691407b31210de6654f72aef63c9a9c838ee9c
 
-            dataItem.data.push(value);
+            // DHIS2-1261: 0 is a valid value
+            // undefined value means the key was not found within the rows
+            // in that case null is returned as value in the serie for highcharts
+            dataItem.data.push((value === undefined) ? null : parseFloat(value));
         });
 
         data.push(dataItem);
@@ -74,5 +81,10 @@ export default function ({ data, seriesDimensionName = data.headers[0].name, cat
     const seriesIds = metaData.dimensions[seriesDimensionName];
     const categoryIds = metaData.dimensions[categoryDimensionName];
 
+<<<<<<< HEAD
     return getData(seriesIds, categoryIds, idValueMap, metaData.items);
 }
+=======
+    return getData(seriesItems, categoryItems, idValueMap, metaData.names);
+}
+>>>>>>> ed691407b31210de6654f72aef63c9a9c838ee9c
