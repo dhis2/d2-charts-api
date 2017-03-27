@@ -47,7 +47,7 @@ function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
             // DHIS2-1261: 0 is a valid value
             // undefined value means the key was not found within the rows
             // in that case null is returned as value in the serie for highcharts
-            dataItem.data.push((value === undefined) ? null : parseFloat(value));
+            dataItem.data.push((value == undefined) ? null : parseFloat(value));
         });
 
         data.push(dataItem);

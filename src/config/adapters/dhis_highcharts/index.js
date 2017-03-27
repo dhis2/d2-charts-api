@@ -60,8 +60,8 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
     };
 
     // hide empty categories
-    if (layout.hideEmptyRows) {
-        config = getTrimmedConfig(config);
+    if (layout.hideEmptyRows !== 'NONE') {
+        config = getTrimmedConfig(config, layout.hideEmptyRows);
     }
 
     // sorting
