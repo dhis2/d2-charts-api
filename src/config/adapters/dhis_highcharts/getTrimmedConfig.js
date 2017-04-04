@@ -29,7 +29,7 @@ function getEmptySeriesIndexes(series) {
 }
 
 function getFirstLastValueIndexes(series) {
-    let firstValueIndex = 0;
+    let firstValueIndex = undefined;
     let lastValueIndex = 0;
     let data;
     let i;
@@ -42,7 +42,7 @@ function getFirstLastValueIndexes(series) {
         i = data.findIndex(value => value != undefined);
 
         if (i > -1) {
-            firstValueIndex = Math.min(firstValueIndex, i);
+            firstValueIndex = (firstValueIndex !== undefined) ? Math.min(firstValueIndex, i) : i;
         }
 
         i = data.reverse().findIndex(value => value != undefined);
