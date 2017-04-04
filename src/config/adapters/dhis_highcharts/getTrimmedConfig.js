@@ -2,15 +2,7 @@ import arrayContains from 'd2-utilizr/lib/arrayContains';
 import arrayUnique from 'd2-utilizr/lib/arrayUnique';
 
 function arrayCleanUndefined(array) {
-    var results = [];
-
-    array.forEach(item => {
-        if (item !== undefined) {
-            results.push(item);
-        }
-    });
-
-    return results;
+    return array.filter(item => item !== undefined);
 }
 
 function arrayNullsOnly(array) {
@@ -39,7 +31,7 @@ function getEmptySeriesIndexes(series) {
 function getFirstLastValueIndexes(series) {
     let firstValueIndex = 0;
     let lastValueIndex = 0;
-    let data = [];
+    let data;
     let i;
 
     series.forEach(seriesObj => {
@@ -47,13 +39,13 @@ function getFirstLastValueIndexes(series) {
         // without affecting the original
         data = seriesObj.data.slice();
 
-        i = data.findIndex(value => { return value != undefined });
+        i = data.findIndex(value => value != undefined);
 
         if (i > -1) {
             firstValueIndex = Math.min(firstValueIndex, i);
         }
 
-        i = data.reverse().findIndex(value => { return value != undefined });
+        i = data.reverse().findIndex(value => value != undefined);
 
         if (i > -1) {
             lastValueIndex = Math.max(lastValueIndex, (data.length - 1 - i));
