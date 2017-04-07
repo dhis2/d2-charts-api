@@ -55,10 +55,10 @@ function getFirstLastValueIndexes(series) {
     return { firstValueIndex, lastValueIndex };
 }
 
-function cleanData(data, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRows) {
+function cleanData(data, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems) {
     let cleanedData;
 
-    switch (hideEmptyRows) {
+    switch (hideEmptyRowItems) {
         case 'ALL':
             cleanedData = arrayCleanUndefined(data.map((value, index) => arrayContains(emptySeriesIndexes, index) ? undefined : value));
             break;
@@ -78,25 +78,25 @@ function cleanData(data, emptySeriesIndexes, firstValueIndex, lastValueIndex, hi
     return cleanedData;
 }
 
-function getTrimmedXAxisObject(xAxis, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRows) {
+function getTrimmedXAxisObject(xAxis, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems) {
     return {
         xAxis: {
             ...xAxis,
-            categories: cleanData(xAxis.categories, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRows)
+            categories: cleanData(xAxis.categories, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems)
         }
     };
 }
 
-function getTrimmedSeriesObject(series, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRows) {
+function getTrimmedSeriesObject(series, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems) {
     return {
         series: series.map(seriesObj => ({
             ...seriesObj,
-            data: cleanData(seriesObj.data, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRows)
+            data: cleanData(seriesObj.data, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems)
         }))
     };
 }
 
-export default function (config, hideEmptyRows) {
+export default function (config, hideEmptyRowItems) {
     const emptySeriesIndexes = getEmptySeriesIndexes(config.series);
 
     const { firstValueIndex, lastValueIndex } = getFirstLastValueIndexes(config.series);
@@ -104,7 +104,7 @@ export default function (config, hideEmptyRows) {
     return emptySeriesIndexes.length && config.xAxis && config.series ?
         Object.assign({},
             config,
-            getTrimmedXAxisObject(config.xAxis, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRows),
-            getTrimmedSeriesObject(config.series, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRows)
+            getTrimmedXAxisObject(config.xAxis, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems),
+            getTrimmedSeriesObject(config.series, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems)
         ) : config;
 }
