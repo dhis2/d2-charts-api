@@ -56,6 +56,12 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
         // credits
         credits: {
             enabled: false
+        },
+
+        // exporting
+        exporting: {
+            // disable exporting context menu
+            enabled: false
         }
     };
 
