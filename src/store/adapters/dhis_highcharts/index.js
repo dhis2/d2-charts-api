@@ -56,14 +56,14 @@ function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
     return data;
 }
 
-export default function ({ data, seriesDimensionName = data.headers[0].name, categoryDimensionName = data.headers[1].name }) {
+export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name }) {
     const headers = data.headers;
     const metaData = data.metaData;
     const rows = data.rows;
     const headerIdIndexMap = getHeaderIdIndexMap(headers);
 
-    const seriesIndex = headerIdIndexMap.get(seriesDimensionName);
-    const categoryIndex = headerIdIndexMap.get(categoryDimensionName);
+    const seriesIndex = headerIdIndexMap.get(seriesId);
+    const categoryIndex = headerIdIndexMap.get(categoryId);
     const valueIndex = headerIdIndexMap.get(VALUE_ID);
 
     const seriesHeader = headers[seriesIndex];
@@ -71,8 +71,8 @@ export default function ({ data, seriesDimensionName = data.headers[0].name, cat
 
     const idValueMap = getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex);
 
-    const seriesIds = metaData.dimensions[seriesDimensionName];
-    const categoryIds = metaData.dimensions[categoryDimensionName];
+    const seriesIds = metaData.dimensions[seriesId];
+    const categoryIds = metaData.dimensions[categoryId];
 
     return getData(seriesIds, categoryIds, idValueMap, metaData.items);
 }
