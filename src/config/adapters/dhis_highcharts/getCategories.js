@@ -8,18 +8,3 @@ export default function (store, layout) {
 
     return dimensionIds.map(id => metaData.items[id].name);
 };
-
-
-/*
-let categories;
-
-if (isArray(ids) && ids.length) {
-    categories = [];
-
-    ids.forEach(id => {
-        categories.push(metaData.items[id].name);
-    });
-}
-
-return categories;
-*/
