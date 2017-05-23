@@ -45,7 +45,7 @@ export default function (series, layout, metaData, dashboard) {
         subtitle = { text: layout.subtitle };
     }
     else {
-        const filterTitle = getFilterTitle(layout, metaData);
+        const filterTitle = getFilterTitle(layout.filters, metaData);
 
         switch(layout.type) {
             case CHART_TYPE_PIE:
