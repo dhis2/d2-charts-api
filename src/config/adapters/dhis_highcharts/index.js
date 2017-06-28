@@ -11,7 +11,7 @@ import getNoData from './noData';
 import { getIsStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 import getTrimmedConfig from './getTrimmedConfig';
-import addTrendLines, { REGRESSION_TYPE_LINEAR } from './addTrendLines';
+import addTrendLines from './addTrendLines';
 
 export const CHART_TYPE_PIE = 'pie';
 export const CHART_TYPE_GAUGE = 'gauge';
@@ -76,8 +76,9 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
     }
 
     // DHIS2-1243 add trend lines after sorting
-    if (layout.regressionType === REGRESSION_TYPE_LINEAR) {
-        config.series = addTrendLines(config.series, isStacked);
+    // trend line on pie and gauge does not make sense
+    if (layout.type !== CHART_TYPE_GAUGE && layout.type !== CHART_TYPE_PIE && layout.regressionType !== 'NONE') {
+        config.series = addTrendLines(layout.regressionType, config.series, isStacked);
     }
 
     // force apply extra config
