@@ -1,3 +1,5 @@
+import 'core-js/fn/array/find-index';
+
 import Store from './store';
 import Config from './config';
 
