@@ -7,17 +7,22 @@ export default function (filters, metaData) {
         title = '';
 
         let filterItems,
-            filterItemsIndex;
+            i,
+            l;
 
         filters.forEach((dimension, index, array) => {
             filterItems = metaData.dimensions[dimension.dimension];
-            filterItemsIndex = 0;
 
             if (isArray(filterItems)) {
-                for (let id of filterItems) {
+                l = filterItems.length;
+                let id;
+
+                for (i = 0; i < l; i++) {
+                    id = filterItems[i];
+
                     // if the value is present in items take the name to show from there
                     if (metaData.items[id]) {
-                        title += metaData.items[id].name + (filterItemsIndex < filterItems.length - 1 ? ', ' : '');
+                        title += metaData.items[id].name + (i < l - 1 ? ', ' : '');
                     }
                     // otherwise use the values directly
                     // this is a temporary fix to avoid app crashing when using filters with data items in EV
@@ -26,8 +31,6 @@ export default function (filters, metaData) {
 
                         break;
                     }
-
-                    filterItemsIndex++;
                 }
 
                 title += (index < array.length - 1 ? ' - ' : '');

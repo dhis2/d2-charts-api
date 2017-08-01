@@ -1,29 +1,12 @@
 import arrayContains from 'd2-utilizr/lib/arrayContains';
 
-const chartTypeMap = new Map([
+// Note: IE11 does not support passing the array directly to the constructor
+const chartTypeMap = new Map();
 
-    // radar
-    ['radar', {
-        type: 'line',
-        polar: true
-    }],
-
-    // gauge
-    ['gauge', {
-        type: 'solidgauge'
-    }],
-
-    // stackedcolumn
-    ['stackedcolumn', {
-        type: 'column'
-    }],
-
-    // stackedbar
-    ['stackedbar', {
-        type: 'bar'
-    }]
-
-]);
+chartTypeMap.set('radar', { type: 'line', polar: true });
+chartTypeMap.set('gauge', { type: 'solidgauge' });
+chartTypeMap.set('stackedcolumn', { type: 'column' });
+chartTypeMap.set('stackedbar', { type: 'bar' });
 
 const stackedTypes = ['stackedcolumn', 'stackedbar', 'area'];
 
