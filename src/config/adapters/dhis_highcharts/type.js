@@ -1,18 +1,10 @@
 import arrayContains from 'd2-utilizr/lib/arrayContains';
 
-const typeMap = new Map([
+// Note: IE11 does not support passing the array directly to the constructor
+const typeMap = new Map();
 
-    // radar
-    ['radar', {
-        type: 'line',
-        polar: true
-    }],
-
-    // gauge
-    ['gauge', {
-        type: 'solidgauge'
-    }]
-]);
+typeMap.set('radar', { type: 'line', polar: true });
+typeMap.set('gauge', { type: 'solidgauge' });
 
 const stackedTypes = ['area'];
 
