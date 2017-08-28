@@ -1,6 +1,7 @@
 import getCumulativeData from './../getCumulativeData';
 import getPie from './pie';
 import getGauge from './gauge';
+import getType from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 
 const DEFAULT_ANIMATION_DURATION = 300;
@@ -22,6 +23,15 @@ function getDefault(series, store, layout, isStacked, colors) {
         if (isStacked) {
             // DHIS2-1060: stacked charts can optionally be shown as 100% stacked charts
             seriesObj.stacking = layout.percentStackedValues === true ? 'percent' : 'normal';
+        }
+
+        // DHIS2-2101
+        // show bar/columm chart as EPI curve (basically remove spacing between bars/columns)
+        const chartType = getType(layout.type).type;
+
+        if ((chartType === 'column' || chartType === 'bar') && layout.showAsEpiCurve) {
+            seriesObj.pointPadding = 0;
+            seriesObj.groupPadding = 0;
         }
 
         // color
