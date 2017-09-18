@@ -29,7 +29,7 @@ function getDefault(series, store, layout, isStacked, colors) {
         // show bar/columm chart as EPI curve (basically remove spacing between bars/columns)
         const chartType = getType(layout.type).type;
 
-        if ((chartType === 'column' || chartType === 'bar') && layout.showAsEpiCurve) {
+        if ((chartType === 'column' || chartType === 'bar') && layout.noSpaceBetweenColumns) {
             seriesObj.pointPadding = 0;
             seriesObj.groupPadding = 0;
         }
