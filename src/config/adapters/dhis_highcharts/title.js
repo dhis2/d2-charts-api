@@ -25,10 +25,10 @@ function getText(layout, metaData, dashboard) {
         return layout.title;
     }
 
-    // name
-    if (dashboard && (isString(layout.name) && layout.name.length)) {
-        return layout.name;
-    }
+    // name - REMOVED: APPS SHOULD HANDLE THIS
+    // if (dashboard && (isString(layout.name) && layout.name.length)) {
+    //     return layout.name;
+    // }
 
     // filters
     if (layout.filters) {
