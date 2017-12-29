@@ -4,7 +4,8 @@ const DEFAULT_ITEM_STYLE = {
 };
 
 const DASHBOARD_ITEM_STYLE = {
-    fontSize: '10px'
+    fontSize: '11px',
+    fontWeight: 500
 };
 
 const DEFAULT_LEGEND = {
