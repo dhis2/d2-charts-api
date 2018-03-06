@@ -1,7 +1,7 @@
 import isString from 'd2-utilizr/lib/isString';
 import getFilterTitle from './getFilterTitle';
 
-const DEFAULT_TITLE = {
+const DEFAULT_TITLE_STYLE = {
     margin: 30,
     y: 18,
     style: {
@@ -9,7 +9,7 @@ const DEFAULT_TITLE = {
     }
 };
 
-const DASHBOARD_TITLE = {
+const DASHBOARD_TITLE_STYLE = {
     margin: 15,
     y: 12,
     style: {
@@ -31,7 +31,7 @@ function getText(layout, metaData, dashboard) {
     // }
 
     // filters
-    if (layout.filters) {
+    if (layout.filters && !dashboard) {
         return getFilterTitle(layout.filters, metaData);
     }
 
@@ -47,7 +47,7 @@ function getTextObject(layout, metaData, dashboard) {
 export default function (layout, metaData, dashboard) {
     return Object.assign(
         getTextObject(layout, metaData, dashboard),
-        DEFAULT_TITLE,
-        dashboard ? DASHBOARD_TITLE : undefined
+        DEFAULT_TITLE_STYLE,
+        dashboard ? DASHBOARD_TITLE_STYLE : undefined
     );
-}
+};
