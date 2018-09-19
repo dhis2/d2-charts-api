@@ -13,7 +13,7 @@ function getColor(colors, index) {
 function getDefault(series, store, layout, isStacked, colors) {
     series.forEach((seriesObj, index) => {
         // show values
-        if (layout.showValues) {
+        if (layout.showValues || layout.showData) {
             seriesObj.dataLabels = {
                 enabled: true
             };
