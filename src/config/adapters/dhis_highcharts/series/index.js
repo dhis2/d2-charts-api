@@ -6,16 +6,16 @@ import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 
 const DEFAULT_ANIMATION_DURATION = 300;
 
-function getColor(colors, index) {
+function getColor(colors, index) {
     return colors[index] || getColor(colors, index - colors.length);
 }
 
-function getDefault(series, store, layout, isStacked, colors) {
+function getDefault(series, store, layout, isStacked, colors) {
     series.forEach((seriesObj, index) => {
         // show values
         if (layout.showValues) {
             seriesObj.dataLabels = {
-                enabled: true
+                enabled: true,
             };
         }
 
@@ -46,8 +46,8 @@ function getDefault(series, store, layout, isStacked, colors) {
     return series;
 }
 
-export default function (series, store, layout, isStacked, extraOptions) {
-    switch(layout.type) {
+export default function(series, store, layout, isStacked, extraOptions) {
+    switch (layout.type.toLowerCase()) {
         case CHART_TYPE_PIE:
             series = getPie(series, store, layout, isStacked, extraOptions.colors);
             break;
@@ -59,10 +59,9 @@ export default function (series, store, layout, isStacked, extraOptions) {
     }
 
     series.forEach(seriesObj => {
-
         // animation
         seriesObj.animation = {
-            duration: DEFAULT_ANIMATION_DURATION
+            duration: DEFAULT_ANIMATION_DURATION,
         };
     });
 

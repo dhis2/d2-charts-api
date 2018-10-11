@@ -16,16 +16,15 @@ import addTrendLines from './addTrendLines';
 export const CHART_TYPE_PIE = 'pie';
 export const CHART_TYPE_GAUGE = 'gauge';
 
-export default function ({ store, layout, el, extraConfig, extraOptions }) {
+export default function({ store, layout, el, extraConfig, extraOptions }) {
     let series = store.generateData({
         seriesId: layout.columns[0].dimension,
-        categoryId: layout.rows[0].dimension
+        categoryId: layout.rows[0].dimension,
     });
 
     const isStacked = getIsStacked(layout.type);
 
     let config = {
-
         // type etc
         chart: getChart(layout, el, extraOptions.dashboard),
 
@@ -55,29 +54,33 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
 
         // credits
         credits: {
-            enabled: false
+            enabled: false,
         },
 
         // exporting
         exporting: {
             // disable exporting context menu
-            enabled: false
-        }
+            enabled: false,
+        },
     };
 
     // hide empty categories
-    if (layout.hideEmptyRowItems !== 'NONE') {
+    if (layout.hideEmptyRowItems !== 'NONE') {
         config = getTrimmedConfig(config, layout.hideEmptyRowItems);
     }
 
     // sorting
-    if (layout.sortOrder) {
+    if (layout.sortOrder) {
         config = getSortedConfig(config, layout, isStacked);
     }
 
     // DHIS2-1243 add trend lines after sorting
     // trend line on pie and gauge does not make sense
-    if (layout.type !== CHART_TYPE_GAUGE && layout.type !== CHART_TYPE_PIE && layout.regressionType !== 'NONE') {
+    if (
+        layout.type !== CHART_TYPE_GAUGE &&
+        layout.type !== CHART_TYPE_PIE &&
+        layout.regressionType !== 'NONE'
+    ) {
         config.series = addTrendLines(layout.regressionType, config.series, isStacked);
     }
 
