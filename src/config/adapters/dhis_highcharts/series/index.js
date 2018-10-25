@@ -2,7 +2,8 @@ import getCumulativeData from './../getCumulativeData';
 import getPie from './pie';
 import getGauge from './gauge';
 import getType from '../type';
-import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
+import getYearOnYear from './yearonyear';
+import { CHART_TYPE_PIE, CHART_TYPE_GAUGE, CHART_TYPE_YEAR_ON_YEAR } from '..';
 
 const DEFAULT_ANIMATION_DURATION = 300;
 
@@ -53,6 +54,9 @@ export default function(series, store, layout, isStacked, extraOptions) {
             break;
         case CHART_TYPE_GAUGE:
             series = getGauge(series, extraOptions.dashboard);
+            break;
+        case CHART_TYPE_YEAR_ON_YEAR:
+            series = getYearOnYear(series, store, layout, isStacked, extraOptions.colors);
             break;
         default:
             series = getDefault(series, store, layout, isStacked, extraOptions.colors);

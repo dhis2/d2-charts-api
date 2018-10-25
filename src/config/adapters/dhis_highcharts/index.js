@@ -15,6 +15,7 @@ import addTrendLines from './addTrendLines';
 
 export const CHART_TYPE_PIE = 'pie';
 export const CHART_TYPE_GAUGE = 'gauge';
+export const CHART_TYPE_YEAR_ON_YEAR = 'yearonyear';
 
 export default function({ store, layout, el, extraConfig, extraOptions }) {
     let series = store.generateData({
