@@ -20,7 +20,7 @@ function getDefault(store, layout) {
 export default function(store, layout) {
     let xAxis;
 
-    switch(layout.type) {
+    switch (layout.type) {
         case CHART_TYPE_GAUGE:
             xAxis = getGauge();
             break;
