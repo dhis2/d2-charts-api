@@ -21,7 +21,7 @@ function createChart(
     warning = defaultWarning
 ) {
     const _data = isArray(data) ? data : [data];
-    const store = new Store({ _data, error, warning });
+    const store = new Store({ data: _data, error, warning });
     const config = new Config({ store, layout, el, extraOptions, error, warning });
 
     return {
