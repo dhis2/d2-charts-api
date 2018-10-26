@@ -52,7 +52,7 @@ function getDefault(series, store, layout, isStacked, extraOptions) {
 }
 
 export default function(series, store, layout, isStacked, extraOptions) {
-    switch (layout.type.toLowerCase()) {
+    switch (layout.type) {
         case CHART_TYPE_PIE:
             series = getPie(series, store, layout, isStacked, extraOptions.colors);
             break;
