@@ -14,9 +14,9 @@ import getSortedConfig from './getSortedConfig';
 import getTrimmedConfig from './getTrimmedConfig';
 import addTrendLines from './addTrendLines';
 
-<<<<<<< HEAD
 export const CHART_TYPE_PIE = 'PIE';
 export const CHART_TYPE_GAUGE = 'GAUGE';
+export const CHART_TYPE_YEAR_ON_YEAR = 'YEAR_ON_YEAR';
 
 const getTransformedLayout = layout => ({
     ...layout,
@@ -29,16 +29,6 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
     let series = store.generateData({
         seriesId: _layout.columns[0].dimension,
         categoryId: _layout.rows[0].dimension
-=======
-export const CHART_TYPE_PIE = 'pie';
-export const CHART_TYPE_GAUGE = 'gauge';
-export const CHART_TYPE_YEAR_ON_YEAR = 'yearonyear';
-
-export default function({ store, layout, el, extraConfig, extraOptions }) {
-    let series = store.generateData({
-        seriesId: layout.columns[0].dimension,
-        categoryId: layout.rows[0].dimension,
->>>>>>> bc158e0da1a55213754b4258f0b83ce8f0a5576f
     });
 
     const isStacked = getIsStacked(_layout.type);
@@ -48,17 +38,10 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
         chart: getChart(_layout, el, extraOptions.dashboard),
 
         // title
-<<<<<<< HEAD
-        title: getTitle(_layout, store.data.metaData, extraOptions.dashboard),
+        title: getTitle(_layout, store.data[0].metaData, extraOptions.dashboard),
 
         // subtitle
-        subtitle: getSubtitle(series, _layout, store.data.metaData, extraOptions.dashboard),
-=======
-        title: getTitle(layout, store.data[0].metaData, extraOptions.dashboard),
-
-        // subtitle
-        subtitle: getSubtitle(series, layout, store.data[0].metaData, extraOptions.dashboard),
->>>>>>> bc158e0da1a55213754b4258f0b83ce8f0a5576f
+        subtitle: getSubtitle(series, _layout, store.data[0].metaData, extraOptions.dashboard),
 
         // x-axis
         xAxis: getXAxis(store, _layout),
