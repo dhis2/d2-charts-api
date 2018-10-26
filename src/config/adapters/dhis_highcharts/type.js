@@ -3,11 +3,11 @@ import arrayContains from 'd2-utilizr/lib/arrayContains';
 const stackedTypes = ['STACKED_COLUMN', 'STACKEDCOLUMN', 'STACKED_BAR', 'STACKEDBAR',  'AREA'];
 
 export function getIsStacked(type) {
-    return arrayContains(stackedTypes, String(type).toUpperCase());
+    return arrayContains(stackedTypes, type);
 }
 
 export default function(type) {
-    switch (String(type).toUpperCase()) {
+    switch (type) {
         case 'BAR':
         case 'STACKED_BAR':
         case 'STACKEDBAR':
