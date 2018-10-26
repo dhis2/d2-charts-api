@@ -13,8 +13,8 @@ import getSortedConfig from './getSortedConfig';
 import getTrimmedConfig from './getTrimmedConfig';
 import addTrendLines from './addTrendLines';
 
-export const CHART_TYPE_PIE = 'pie';
-export const CHART_TYPE_GAUGE = 'gauge';
+export const CHART_TYPE_PIE = 'PIE';
+export const CHART_TYPE_GAUGE = 'GAUGE';
 
 export default function ({ store, layout, el, extraConfig, extraOptions }) {
     let series = store.generateData({
@@ -77,7 +77,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
 
     // DHIS2-1243 add trend lines after sorting
     // trend line on pie and gauge does not make sense
-    if (layout.type !== CHART_TYPE_GAUGE && layout.type !== CHART_TYPE_PIE && layout.regressionType !== 'NONE') {
+    if (![CHART_TYPE_GAUGE, CHART_TYPE_PIE].includes(String(layout.type).toUpperCase()) && layout.regressionType !== 'NONE') {
         config.series = addTrendLines(layout.regressionType, config.series, isStacked);
     }
 
