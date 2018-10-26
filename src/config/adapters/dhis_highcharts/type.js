@@ -13,6 +13,7 @@ export default function(type) {
         case 'STACKEDBAR':
             return { type: 'bar' };
         case 'LINE':
+        case 'YEAR_ON_YEAR':
             return { type: 'line' };
         case 'AREA':
             return { type: 'area' };
