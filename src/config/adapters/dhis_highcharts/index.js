@@ -14,6 +14,7 @@ import getSortedConfig from './getSortedConfig';
 import getTrimmedConfig from './getTrimmedConfig';
 import addTrendLines from './addTrendLines';
 
+<<<<<<< HEAD
 export const CHART_TYPE_PIE = 'PIE';
 export const CHART_TYPE_GAUGE = 'GAUGE';
 
@@ -28,20 +29,36 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
     let series = store.generateData({
         seriesId: _layout.columns[0].dimension,
         categoryId: _layout.rows[0].dimension
+=======
+export const CHART_TYPE_PIE = 'pie';
+export const CHART_TYPE_GAUGE = 'gauge';
+export const CHART_TYPE_YEAR_ON_YEAR = 'yearonyear';
+
+export default function({ store, layout, el, extraConfig, extraOptions }) {
+    let series = store.generateData({
+        seriesId: layout.columns[0].dimension,
+        categoryId: layout.rows[0].dimension,
+>>>>>>> bc158e0da1a55213754b4258f0b83ce8f0a5576f
     });
 
     const isStacked = getIsStacked(_layout.type);
 
     let config = {
-
         // type etc
         chart: getChart(_layout, el, extraOptions.dashboard),
 
         // title
+<<<<<<< HEAD
         title: getTitle(_layout, store.data.metaData, extraOptions.dashboard),
 
         // subtitle
         subtitle: getSubtitle(series, _layout, store.data.metaData, extraOptions.dashboard),
+=======
+        title: getTitle(layout, store.data[0].metaData, extraOptions.dashboard),
+
+        // subtitle
+        subtitle: getSubtitle(series, layout, store.data[0].metaData, extraOptions.dashboard),
+>>>>>>> bc158e0da1a55213754b4258f0b83ce8f0a5576f
 
         // x-axis
         xAxis: getXAxis(store, _layout),
@@ -63,14 +80,14 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
 
         // credits
         credits: {
-            enabled: false
+            enabled: false,
         },
 
         // exporting
         exporting: {
             // disable exporting context menu
-            enabled: false
-        }
+            enabled: false,
+        },
     };
 
     // hide empty categories
@@ -85,7 +102,7 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
 
     // DHIS2-1243 add trend lines after sorting
     // trend line on pie and gauge does not make sense
-    if (!arrayContains([CHART_TYPE_GAUGE, CHART_TYPE_PIE], _layout.type) && layout.regressionType !== 'NONE') {
+    if (!arrayContains([CHART_TYPE_GAUGE, CHART_TYPE_PIE], _layout.type) && _layout.regressionType !== 'NONE') {
         config.series = addTrendLines(_layout.regressionType, config.series, isStacked);
     }
 

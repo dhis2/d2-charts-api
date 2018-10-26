@@ -6,21 +6,21 @@ import { CHART_TYPE_GAUGE } from '..';
 
 function getDefault(store, layout) {
     return objectClean({
-        categories: getCategories(store, layout),
+        categories: getCategories(store.data[0].metaData, layout),
         title: getAxisTitle(layout.domainAxisTitle),
         labels: {
             style: {
                 color: '#666',
-                textShadow: '0 0 #ccc'
-            }
-        }
+                textShadow: '0 0 #ccc',
+            },
+        },
     });
 }
 
-export default function (store, layout) {
+export default function(store, layout) {
     let xAxis;
 
-    switch(layout.type) {
+    switch (layout.type) {
         case CHART_TYPE_GAUGE:
             xAxis = getGauge();
             break;
