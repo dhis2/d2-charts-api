@@ -1,7 +1,6 @@
 import isArray from 'd2-utilizr/lib/isArray';
 
-export default function(store, layout) {
-    const metaData = store.data.metaData;
+export default function(metaData, layout) {
     const dimensionName = layout.rows[0].dimension;
 
     const dimensionIds = isArray(metaData.dimensions[dimensionName])

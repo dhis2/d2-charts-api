@@ -30,10 +30,10 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
         chart: getChart(layout, el, extraOptions.dashboard),
 
         // title
-        title: getTitle(layout, store.data.metaData, extraOptions.dashboard),
+        title: getTitle(layout, store.data[0].metaData, extraOptions.dashboard),
 
         // subtitle
-        subtitle: getSubtitle(series, layout, store.data.metaData, extraOptions.dashboard),
+        subtitle: getSubtitle(series, layout, store.data[0].metaData, extraOptions.dashboard),
 
         // x-axis
         xAxis: getXAxis(store, layout),

@@ -25,7 +25,7 @@ export default function({
 
     this.generateData = ({ seriesId = seriesId, categoryId = categoryId }) => {
         return _adapter({
-            data: _validator({ data, error, warning }),
+            data: data.map(d => _validator({ data: d, error, warning })),
             seriesId,
             categoryId,
         });

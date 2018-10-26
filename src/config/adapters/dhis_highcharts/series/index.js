@@ -3,7 +3,7 @@ import getPie from './pie';
 import getGauge from './gauge';
 import getType from '../type';
 import getYearOnYear from './yearonyear';
-import { CHART_TYPE_PIE, CHART_TYPE_GAUGE, CHART_TYPE_YEAR_ON_YEAR } from '..';
+import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 
 const DEFAULT_ANIMATION_DURATION = 300;
 
@@ -11,7 +11,7 @@ function getColor(colors, index) {
     return colors[index] || getColor(colors, index - colors.length);
 }
 
-function getDefault(series, store, layout, isStacked, colors) {
+function getDefault(series, store, layout, isStacked, extraOptions) {
     series.forEach((seriesObj, index) => {
         // show values
         if (layout.showValues) {
@@ -36,7 +36,12 @@ function getDefault(series, store, layout, isStacked, colors) {
         }
 
         // color
-        seriesObj.color = getColor(colors, index);
+        seriesObj.color = getColor(extraOptions.colors, index);
+
+        // custom names for series for Year on year chart type
+        if (extraOptions.yearlySeries) {
+            seriesObj.name = extraOptions.yearlySeries[index];
+        }
     });
 
     // DHIS2-701: use cumulative values
@@ -55,11 +60,8 @@ export default function(series, store, layout, isStacked, extraOptions) {
         case CHART_TYPE_GAUGE:
             series = getGauge(series, extraOptions.dashboard);
             break;
-        case CHART_TYPE_YEAR_ON_YEAR:
-            series = getYearOnYear(series, store, layout, isStacked, extraOptions.colors);
-            break;
         default:
-            series = getDefault(series, store, layout, isStacked, extraOptions.colors);
+            series = getDefault(series, store, layout, isStacked, extraOptions);
     }
 
     series.forEach(seriesObj => {

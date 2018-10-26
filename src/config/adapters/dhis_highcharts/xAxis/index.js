@@ -6,7 +6,7 @@ import { CHART_TYPE_GAUGE } from '..';
 
 function getDefault(store, layout) {
     return objectClean({
-        categories: getCategories(store, layout),
+        categories: getCategories(store.data[0].metaData, layout),
         title: getAxisTitle(layout.domainAxisTitle),
         labels: {
             style: {
