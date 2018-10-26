@@ -5,8 +5,8 @@ const DEFAULT_TITLE_STYLE = {
     margin: 30,
     y: 18,
     style: {
-        color: '#111'
-    }
+        color: '#111',
+    },
 };
 
 const DASHBOARD_TITLE_STYLE = {
@@ -14,14 +14,13 @@ const DASHBOARD_TITLE_STYLE = {
     y: 12,
     style: {
         fontSize: '13px',
-        fontWeight: 'bold'
-    }
+        fontWeight: 'bold',
+    },
 };
 
-function getText(layout, metaData, dashboard) {
-
+function getText(layout, metaData, dashboard) {
     // title
-    if (isString(layout.title) && layout.title.length) {
+    if (isString(layout.title) && layout.title.length) {
         return layout.title;
     }
 
@@ -31,7 +30,7 @@ function getText(layout, metaData, dashboard) {
     // }
 
     // filters
-    if (layout.filters && !dashboard) {
+    if (layout.filters && !dashboard) {
         return getFilterTitle(layout.filters, metaData);
     }
 
@@ -40,14 +39,14 @@ function getText(layout, metaData, dashboard) {
 
 function getTextObject(layout, metaData, dashboard) {
     return {
-        text: layout.hideTitle ? null : getText(layout, metaData, dashboard)
+        text: layout.hideTitle ? null : getText(layout, metaData, dashboard),
     };
 }
 
-export default function (layout, metaData, dashboard) {
+export default function(layout, metaData, dashboard) {
     return Object.assign(
         getTextObject(layout, metaData, dashboard),
         DEFAULT_TITLE_STYLE,
         dashboard ? DASHBOARD_TITLE_STYLE : undefined
     );
-};
+}

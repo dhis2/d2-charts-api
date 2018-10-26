@@ -7,15 +7,18 @@ chartTypeMap.set('radar', { type: 'line', polar: true });
 chartTypeMap.set('gauge', { type: 'solidgauge' });
 chartTypeMap.set('stackedcolumn', { type: 'column' });
 chartTypeMap.set('stackedbar', { type: 'bar' });
+chartTypeMap.set('yearonyear', { type: 'line' });
 
 const stackedTypes = ['stackedcolumn', 'stackedbar', 'area'];
 
-export function getIsStacked(type) {
+export function getIsStacked(type) {
     return arrayContains(stackedTypes, type.toLowerCase());
 }
 
-export default function (type) {
-    return chartTypeMap.get(type.toLowerCase()) || {
-        type: type.toLowerCase()
-    };
+export default function(type) {
+    return (
+        chartTypeMap.get(type.toLowerCase()) || {
+            type: type.toLowerCase(),
+        }
+    );
 }

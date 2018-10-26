@@ -12,8 +12,8 @@ const DEFAULT_SUBTITLE = {
 
         fontSize: '14px',
         color: '#555',
-        textShadow: '0 0 #999'
-    }
+        textShadow: '0 0 #999',
+    },
 };
 
 const DASHBOARD_SUBTITLE = {
@@ -23,17 +23,17 @@ const DASHBOARD_SUBTITLE = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
 
-        fontSize: '12px'
-    }
+        fontSize: '12px',
+    },
 };
 
-function getDefault(layout, dashboard, filterTitle) {
+function getDefault(layout, dashboard, filterTitle) {
     return {
-        text: dashboard || isString(layout.title) ? filterTitle : undefined
+        text: dashboard || isString(layout.title) ? filterTitle : undefined,
     };
 }
 
-export default function (series, layout, metaData, dashboard) {
+export default function(series, layout, metaData, dashboard) {
     if (layout.hideSubtitle) {
         return null;
     }
@@ -43,11 +43,10 @@ export default function (series, layout, metaData, dashboard) {
     // DHIS2-578: allow for optional custom subtitle
     if (isString(layout.subtitle)) {
         subtitle = { text: layout.subtitle };
-    }
-    else {
+    } else {
         const filterTitle = getFilterTitle(layout.filters, metaData);
 
-        switch(layout.type) {
+        switch (layout.type) {
             case CHART_TYPE_PIE:
             case CHART_TYPE_GAUGE:
                 subtitle = getGauge(series, layout, dashboard, filterTitle);
@@ -57,10 +56,7 @@ export default function (series, layout, metaData, dashboard) {
         }
     }
 
-    return subtitle ? Object.assign(
-        {},
-        DEFAULT_SUBTITLE,
-        dashboard ? DASHBOARD_SUBTITLE : undefined,
-        subtitle
-    ) : subtitle;
+    return subtitle
+        ? Object.assign({}, DEFAULT_SUBTITLE, dashboard ? DASHBOARD_SUBTITLE : undefined, subtitle)
+        : subtitle;
 }

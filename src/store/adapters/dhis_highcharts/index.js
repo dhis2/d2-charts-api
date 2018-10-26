@@ -1,26 +1,26 @@
 const VALUE_ID = 'value';
 
-function getHeaderIdIndexMap(headers) {
+function getHeaderIdIndexMap(headers) {
     const map = new Map();
 
-    headers.forEach((header, index) => {
+    headers.forEach((header, index) => {
         map.set(header.name, index);
     });
 
     return map;
 }
 
-function getPrefixedId(row, header) {
-    return (header.isPrefix ? (header.name + '_') : '') + row[header.index];
+function getPrefixedId(row, header) {
+    return (header.isPrefix ? header.name + '_' : '') + row[header.index];
 }
 
-function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
+function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
     const map = new Map();
 
     let key;
     let value;
 
-    rows.forEach(row => {
+    rows.forEach(row => {
         key = getPrefixedId(row, seriesHeader) + '-' + getPrefixedId(row, categoryHeader);
         value = row[valueIndex];
 
@@ -30,24 +30,24 @@ function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
     return map;
 }
 
-function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
+function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
     const data = [];
     let dataItem;
     let value;
 
-    seriesIds.forEach(seriesId => {
+    seriesIds.forEach(seriesId => {
         dataItem = {
             name: metaDataItems[seriesId].name,
-            data: []
+            data: [],
         };
 
-        categoryIds.forEach(categoryId => {
-            value = idValueMap.get(`${ seriesId }-${ categoryId }`);
+        categoryIds.forEach(categoryId => {
+            value = idValueMap.get(`${seriesId}-${categoryId}`);
 
             // DHIS2-1261: 0 is a valid value
             // undefined value means the key was not found within the rows
             // in that case null is returned as value in the serie for highcharts
-            dataItem.data.push((value == undefined) ? null : parseFloat(value));
+            dataItem.data.push(value == undefined ? null : parseFloat(value));
         });
 
         data.push(dataItem);
@@ -56,23 +56,32 @@ function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
     return data;
 }
 
-export default function ({ data, seriesId = data.headers[0].name, categoryId = data.headers[1].name }) {
-    const headers = data.headers;
-    const metaData = data.metaData;
-    const rows = data.rows;
-    const headerIdIndexMap = getHeaderIdIndexMap(headers);
+export default function({ data, seriesId, categoryId }) {
+    return data.reduce((acc, res) => {
+        seriesId = seriesId || res.headers[0].name;
+        categoryId = categoryId || res.headers[1].name;
 
-    const seriesIndex = headerIdIndexMap.get(seriesId);
-    const categoryIndex = headerIdIndexMap.get(categoryId);
-    const valueIndex = headerIdIndexMap.get(VALUE_ID);
+        const headers = res.headers;
+        const metaData = res.metaData;
+        const rows = res.rows;
+        const headerIdIndexMap = getHeaderIdIndexMap(headers);
 
-    const seriesHeader = headers[seriesIndex];
-    const categoryHeader = headers[categoryIndex];
+        const seriesIndex = headerIdIndexMap.get(seriesId);
+        const categoryIndex = headerIdIndexMap.get(categoryId);
+        const valueIndex = headerIdIndexMap.get(VALUE_ID);
 
-    const idValueMap = getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex);
+        const seriesHeader = headers[seriesIndex];
+        const categoryHeader = headers[categoryIndex];
 
-    const seriesIds = metaData.dimensions[seriesId];
-    const categoryIds = metaData.dimensions[categoryId];
+        const idValueMap = getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex);
 
-    return getData(seriesIds, categoryIds, idValueMap, metaData.items);
+        const seriesIds = metaData.dimensions[seriesId];
+        const categoryIds = metaData.dimensions[categoryId];
+
+        const d = getData(seriesIds, categoryIds, idValueMap, metaData.items);
+
+        acc.push(...d);
+
+        return acc;
+    }, []);
 }
