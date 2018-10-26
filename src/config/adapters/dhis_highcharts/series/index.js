@@ -2,7 +2,6 @@ import getCumulativeData from './../getCumulativeData';
 import getPie from './pie';
 import getGauge from './gauge';
 import getType from '../type';
-import getYearOnYear from './yearonyear';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
 
 const DEFAULT_ANIMATION_DURATION = 300;
