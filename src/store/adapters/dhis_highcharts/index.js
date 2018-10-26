@@ -30,32 +30,6 @@ function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
     return map;
 }
 
-function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
-    const data = [];
-    let dataItem;
-    let value;
-
-    seriesIds.forEach(seriesId => {
-        dataItem = {
-            name: metaDataItems[seriesId].name,
-            data: [],
-        };
-
-        categoryIds.forEach(categoryId => {
-            value = idValueMap.get(`${seriesId}-${categoryId}`);
-
-            // DHIS2-1261: 0 is a valid value
-            // undefined value means the key was not found within the rows
-            // in that case null is returned as value in the serie for highcharts
-            dataItem.data.push(value == undefined ? null : parseFloat(value));
-        });
-
-        data.push(dataItem);
-    });
-
-    return data;
-}
-
 export default function({ data, seriesId, categoryId }) {
     return data.reduce((acc, res) => {
         seriesId = seriesId || res.headers[0].name;
@@ -78,9 +52,23 @@ export default function({ data, seriesId, categoryId }) {
         const seriesIds = metaData.dimensions[seriesId];
         const categoryIds = metaData.dimensions[categoryId];
 
-        const d = getData(seriesIds, categoryIds, idValueMap, metaData.items);
+        const serieData = [];
 
-        acc.push(...d);
+        seriesIds.forEach(seriesId => {
+            categoryIds.forEach(categoryId => {
+                const value = idValueMap.get(`${seriesId}-${categoryId}`);
+
+                // DHIS2-1261: 0 is a valid value
+                // undefined value means the key was not found within the rows
+                // in that case null is returned as value in the serie for highcharts
+                serieData.push(value == undefined ? null : parseFloat(value));
+            });
+        });
+
+        acc.push({
+            name: 'placeholder for yearly serie name',
+            data: serieData,
+        });
 
         return acc;
     }, []);
