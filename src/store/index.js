@@ -23,8 +23,9 @@ export default function({
 
     this.data = data;
 
-    this.generateData = ({ seriesId = seriesId, categoryId = categoryId }) => {
+    this.generateData = ({ type, seriesId = seriesId, categoryId = categoryId }) => {
         return _adapter({
+            type,
             data: data.map(d => _validator({ data: d, error, warning })),
             seriesId,
             categoryId,

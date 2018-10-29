@@ -27,6 +27,7 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
     const _layout = getTransformedLayout(layout);
 
     let series = store.generateData({
+        type: _layout.type,
         seriesId: _layout.columns[0].dimension,
         categoryId: _layout.rows[0].dimension,
     });
