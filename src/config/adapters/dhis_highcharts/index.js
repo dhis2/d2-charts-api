@@ -23,12 +23,12 @@ const getTransformedLayout = layout => ({
     type: String(layout.type).toUpperCase(),
 });
 
-export default function ({ store, layout, el, extraConfig, extraOptions }) {
+export default function({ store, layout, el, extraConfig, extraOptions }) {
     const _layout = getTransformedLayout(layout);
 
     let series = store.generateData({
         seriesId: _layout.columns[0].dimension,
-        categoryId: _layout.rows[0].dimension
+        categoryId: _layout.rows[0].dimension,
     });
 
     const isStacked = getIsStacked(_layout.type);
@@ -74,18 +74,21 @@ export default function ({ store, layout, el, extraConfig, extraOptions }) {
     };
 
     // hide empty categories
-    if (_layout.hideEmptyRowItems !== 'NONE') {
+    if (_layout.hideEmptyRowItems !== 'NONE') {
         config = getTrimmedConfig(config, _layout.hideEmptyRowItems);
     }
 
     // sorting
-    if (_layout.sortOrder) {
+    if (_layout.sortOrder) {
         config = getSortedConfig(config, _layout, isStacked);
     }
 
     // DHIS2-1243 add trend lines after sorting
     // trend line on pie and gauge does not make sense
-    if (!arrayContains([CHART_TYPE_GAUGE, CHART_TYPE_PIE], _layout.type) && _layout.regressionType !== 'NONE') {
+    if (
+        !arrayContains([CHART_TYPE_GAUGE, CHART_TYPE_PIE], _layout.type) &&
+        _layout.regressionType !== 'NONE'
+    ) {
         config.series = addTrendLines(_layout.regressionType, config.series, isStacked);
     }
 
