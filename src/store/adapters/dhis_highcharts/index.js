@@ -1,4 +1,4 @@
-import getYearOnYear from './yearonyear';
+import getYearOnYear from './yearOnYear';
 import { CHART_TYPE_YEAR_ON_YEAR } from '../../../config/adapters/dhis_highcharts';
 
 const VALUE_ID = 'value';
