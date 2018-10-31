@@ -27,9 +27,9 @@ function getDefault(series, store, layout, isStacked, extraOptions) {
 
         // DHIS2-2101
         // show bar/columm chart as EPI curve (basically remove spacing between bars/columns)
-        const chartType = getType(layout.type).type;
+        const seriesType = getType(layout.type).type;
 
-        if ((chartType === 'column' || chartType === 'bar') && layout.noSpaceBetweenColumns) {
+        if ((seriesType === 'column' || seriesType === 'bar') && layout.noSpaceBetweenColumns) {
             seriesObj.pointPadding = 0;
             seriesObj.groupPadding = 0;
         }
@@ -52,7 +52,7 @@ function getDefault(series, store, layout, isStacked, extraOptions) {
 }
 
 export default function(series, store, layout, isStacked, extraOptions) {
-    switch (layout.type.toLowerCase()) {
+    switch (layout.type) {
         case CHART_TYPE_PIE:
             series = getPie(series, store, layout, isStacked, extraOptions.colors);
             break;

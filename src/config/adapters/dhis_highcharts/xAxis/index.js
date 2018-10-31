@@ -2,7 +2,8 @@ import objectClean from 'd2-utilizr/lib/objectClean';
 import getAxisTitle from '../getAxisTitle';
 import getCategories from '../getCategories';
 import getGauge from './gauge';
-import { CHART_TYPE_GAUGE } from '..';
+import getYearOnYear from './yearOnYear';
+import { CHART_TYPE_GAUGE, CHART_TYPE_YEAR_ON_YEAR } from '..';
 
 function getDefault(store, layout) {
     return objectClean({
@@ -23,6 +24,9 @@ export default function(store, layout) {
     switch (layout.type) {
         case CHART_TYPE_GAUGE:
             xAxis = getGauge();
+            break;
+        case CHART_TYPE_YEAR_ON_YEAR:
+            xAxis = getYearOnYear(store, layout);
             break;
         default:
             xAxis = getDefault(store, layout);

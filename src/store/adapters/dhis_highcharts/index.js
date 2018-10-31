@@ -1,3 +1,6 @@
+import getYearOnYear from './yearOnYear';
+import { CHART_TYPE_YEAR_ON_YEAR } from '../../../config/adapters/dhis_highcharts';
+
 const VALUE_ID = 'value';
 
 function getHeaderIdIndexMap(headers) {
@@ -30,33 +33,32 @@ function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
     return map;
 }
 
-function getData(seriesIds, categoryIds, idValueMap, metaDataItems) {
-    const data = [];
-    let dataItem;
-    let value;
-
+function getDefault(acc, seriesIds, categoryIds, idValueMap, metaData) {
     seriesIds.forEach(seriesId => {
-        dataItem = {
-            name: metaDataItems[seriesId].name,
-            data: [],
-        };
+        const serieData = [];
+        const serieLabel = metaData.items[seriesId].name;
 
         categoryIds.forEach(categoryId => {
-            value = idValueMap.get(`${seriesId}-${categoryId}`);
+            const value = idValueMap.get(`${seriesId}-${categoryId}`);
 
             // DHIS2-1261: 0 is a valid value
             // undefined value means the key was not found within the rows
             // in that case null is returned as value in the serie for highcharts
-            dataItem.data.push(value == undefined ? null : parseFloat(value));
+            serieData.push(value == undefined ? null : parseFloat(value));
         });
 
-        data.push(dataItem);
+        acc.push({
+            name: serieLabel,
+            data: serieData,
+        });
     });
 
-    return data;
+    return acc;
 }
 
-export default function({ data, seriesId, categoryId }) {
+export default function({ type, data, seriesId, categoryId }) {
+    const seriesFunction = type === CHART_TYPE_YEAR_ON_YEAR ? getYearOnYear : getDefault;
+
     return data.reduce((acc, res) => {
         seriesId = seriesId || res.headers[0].name;
         categoryId = categoryId || res.headers[1].name;
@@ -78,9 +80,7 @@ export default function({ data, seriesId, categoryId }) {
         const seriesIds = metaData.dimensions[seriesId];
         const categoryIds = metaData.dimensions[categoryId];
 
-        const d = getData(seriesIds, categoryIds, idValueMap, metaData.items);
-
-        acc.push(...d);
+        seriesFunction(acc, seriesIds, categoryIds, idValueMap, metaData);
 
         return acc;
     }, []);
