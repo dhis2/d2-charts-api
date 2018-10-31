@@ -1,28 +1,6 @@
 const VALUE_ID = 'value';
 
 export default function(acc, seriesIds, categoryIds, idValueMap, metaData) {
-    /*
-    return data.reduce((acc, res) => {
-        seriesId = seriesId || res.headers[0].name;
-        categoryId = categoryId || res.headers[1].name;
-
-        const headers = res.headers;
-        const metaData = res.metaData;
-        const rows = res.rows;
-        const headerIdIndexMap = getHeaderIdIndexMap(headers);
-
-        const seriesIndex = headerIdIndexMap.get(seriesId);
-        const categoryIndex = headerIdIndexMap.get(categoryId);
-        const valueIndex = headerIdIndexMap.get(VALUE_ID);
-
-        const seriesHeader = headers[seriesIndex];
-        const categoryHeader = headers[categoryIndex];
-
-        const idValueMap = getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex);
-
-        const seriesIds = metaData.dimensions[seriesId];
-        const categoryIds = metaData.dimensions[categoryId];
-*/
     const serieData = [];
     let serieLabel;
 
