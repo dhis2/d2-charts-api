@@ -16,7 +16,7 @@ import addTrendLines from './addTrendLines';
 
 export const CHART_TYPE_PIE = 'PIE';
 export const CHART_TYPE_GAUGE = 'GAUGE';
-export const CHART_TYPE_YEAR_ON_YEAR = 'YEAR_ON_YEAR';
+export const CHART_TYPE_YEAR_OVER_YEAR_LINE = 'YEAR_OVER_YEAR_LINE';
 
 const getTransformedLayout = layout => ({
     ...layout,

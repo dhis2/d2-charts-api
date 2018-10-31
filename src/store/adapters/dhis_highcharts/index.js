@@ -1,5 +1,5 @@
 import getYearOnYear from './yearOnYear';
-import { CHART_TYPE_YEAR_ON_YEAR } from '../../../config/adapters/dhis_highcharts';
+import { CHART_TYPE_YEAR_OVER_YEAR_LINE } from '../../../config/adapters/dhis_highcharts';
 
 const VALUE_ID = 'value';
 
@@ -57,7 +57,7 @@ function getDefault(acc, seriesIds, categoryIds, idValueMap, metaData) {
 }
 
 export default function({ type, data, seriesId, categoryId }) {
-    const seriesFunction = type === CHART_TYPE_YEAR_ON_YEAR ? getYearOnYear : getDefault;
+    const seriesFunction = type === CHART_TYPE_YEAR_OVER_YEAR_LINE ? getYearOnYear : getDefault;
 
     return data.reduce((acc, res) => {
         seriesId = seriesId || res.headers[0].name;
