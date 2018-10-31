@@ -1,8 +1,8 @@
 import arrayContains from 'd2-utilizr/lib/arrayContains';
 
-const stackedTypes = ['STACKED_COLUMN', 'STACKEDCOLUMN', 'STACKED_BAR', 'STACKEDBAR',  'AREA'];
+const stackedTypes = ['STACKED_COLUMN', 'STACKEDCOLUMN', 'STACKED_BAR', 'STACKEDBAR', 'AREA'];
 
-export function getIsStacked(type) {
+export function getIsStacked(type) {
     return arrayContains(stackedTypes, type);
 }
 
@@ -13,7 +13,7 @@ export default function(type) {
         case 'STACKEDBAR':
             return { type: 'bar' };
         case 'LINE':
-        case 'YEAR_ON_YEAR':
+        case 'YEAR_OVER_YEAR_LINE':
             return { type: 'line' };
         case 'AREA':
             return { type: 'area' };
