@@ -1,5 +1,3 @@
-const VALUE_ID = 'value';
-
 export default function(acc, seriesIds, categoryIds, idValueMap, metaData) {
     const serieData = [];
     let serieLabel;

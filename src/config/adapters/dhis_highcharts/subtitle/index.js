@@ -1,7 +1,7 @@
 import isString from 'd2-utilizr/lib/isString';
 import getGauge from './gauge';
 import getFilterTitle from '../getFilterTitle';
-import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '..';
+import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
 
 const DEFAULT_SUBTITLE = {
     style: {
