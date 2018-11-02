@@ -2,7 +2,7 @@ import arrayContains from 'd2-utilizr/lib/arrayContains';
 import { rgb } from 'd3-color';
 
 import getStackedData from './getStackedData';
-import { CHART_TYPE_GAUGE, CHART_TYPE_PIE } from '.';
+import { CHART_TYPE_GAUGE, CHART_TYPE_PIE } from './type';
 
 const DEFAULT_TRENDLINE = {
     type: 'spline',
