@@ -1,4 +1,3 @@
-import arrayContains from 'd2-utilizr/lib/arrayContains';
 import objectClean from 'd2-utilizr/lib/objectClean';
 import getChart from './chart';
 import getXAxis from './xAxis';
@@ -12,11 +11,7 @@ import getNoData from './noData';
 import { getIsStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 import getTrimmedConfig from './getTrimmedConfig';
-import addTrendLines from './addTrendLines';
-
-export const CHART_TYPE_PIE = 'PIE';
-export const CHART_TYPE_GAUGE = 'GAUGE';
-export const CHART_TYPE_YEAR_OVER_YEAR_LINE = 'YEAR_OVER_YEAR_LINE';
+import addTrendLines, { isRegressionIneligible } from './addTrendLines';
 
 const getTransformedLayout = layout => ({
     ...layout,
@@ -86,10 +81,7 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
 
     // DHIS2-1243 add trend lines after sorting
     // trend line on pie and gauge does not make sense
-    if (
-        !arrayContains([CHART_TYPE_GAUGE, CHART_TYPE_PIE], _layout.type) &&
-        _layout.regressionType !== 'NONE'
-    ) {
+    if (_layout.regressionType !== 'NONE' && !isRegressionIneligible(_layout.type)) {
         config.series = addTrendLines(_layout.regressionType, config.series, isStacked);
     }
 

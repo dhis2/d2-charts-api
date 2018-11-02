@@ -3,7 +3,11 @@ import getAxisTitle from '../getAxisTitle';
 import getCategories from '../getCategories';
 import getGauge from './gauge';
 import getYearOnYear from './yearOnYear';
-import { CHART_TYPE_GAUGE, CHART_TYPE_YEAR_OVER_YEAR_LINE } from '..';
+import {
+    CHART_TYPE_GAUGE,
+    CHART_TYPE_YEAR_OVER_YEAR_LINE,
+    CHART_TYPE_YEAR_OVER_YEAR_COLUMN,
+} from '../type';
 
 function getDefault(store, layout) {
     return objectClean({
@@ -26,6 +30,7 @@ export default function(store, layout) {
             xAxis = getGauge();
             break;
         case CHART_TYPE_YEAR_OVER_YEAR_LINE:
+        case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
             xAxis = getYearOnYear(store, layout);
             break;
         default:
