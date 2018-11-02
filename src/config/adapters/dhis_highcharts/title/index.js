@@ -1,7 +1,7 @@
 import isString from 'd2-utilizr/lib/isString';
 import getFilterTitle from '../getFilterTitle';
 import { CHART_TYPE_YEAR_OVER_YEAR_LINE, CHART_TYPE_YEAR_OVER_YEAR_COLUMN } from '../type';
-import { getYearOverYear } from './yearOverYear';
+import getYearOverYearTitle from './yearOverYear';
 
 const DEFAULT_TITLE_STYLE = {
     margin: 30,
@@ -38,13 +38,13 @@ export default function(layout, metaData, dashboard) {
         text: null,
     };
 
-    if (isString(layout, title) && layout.title.length) {
+    if (isString(layout.title) && layout.title.length) {
         title.text = layout.title;
     } else {
         switch (layout.type) {
             case CHART_TYPE_YEAR_OVER_YEAR_LINE:
             case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
-                title.text = getYearOverYear(layout, metaData, dashboard);
+                title.text = getYearOverYearTitle(layout, metaData, dashboard);
                 break;
             default:
                 title.text = getDefault(layout, metaData, dashboard);
