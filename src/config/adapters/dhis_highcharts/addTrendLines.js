@@ -13,36 +13,29 @@ const DEFAULT_TRENDLINE = {
     marker: {
         enabled: false,
         symbol: 'circle',
-        radius: 2
-    }
+        radius: 2,
+    },
 };
 
-export const isRegressionIneligible = type => arrayContains([CHART_TYPE_GAUGE, CHART_TYPE_PIE], type);
+export const isRegressionIneligible = type =>
+    arrayContains([CHART_TYPE_GAUGE, CHART_TYPE_PIE], type);
 
-export default function (regressionType, series, isStacked) {
+export default function(regressionType, series, isStacked) {
     const newSeries = [];
 
-    if (isStacked) {
+    if (isStacked) {
         newSeries.push(
             ...series,
-            Object.assign(
-                {},
-                getRegressionObj(getStackedData(series), regressionType),
-            )
+            Object.assign({}, getRegressionObj(getStackedData(series), regressionType))
         );
-    }
-    else {
-        series.forEach(seriesObj => {
+    } else {
+        series.forEach(seriesObj => {
             newSeries.push(
                 seriesObj,
-                Object.assign(
-                    {},
-                    getRegressionObj(seriesObj.data, regressionType),
-                    {
-                        name: seriesObj.name + ' (trend)',
-                        color: getDarkerColor(seriesObj.color),
-                    }
-                )
+                Object.assign({}, getRegressionObj(seriesObj.data, regressionType), {
+                    name: seriesObj.name + ' (trend)',
+                    color: getDarkerColor(seriesObj.color),
+                })
             );
         });
     }
@@ -50,15 +43,17 @@ export default function (regressionType, series, isStacked) {
     return newSeries;
 }
 
-function getColor(colors, index) {
+function getColor(colors, index) {
     return colors[index] || getColor(colors, index - colors.length);
 }
 
-function getDarkerColor(color) {
-    return rgb(color).darker(0.5).toString();
+function getDarkerColor(color) {
+    return rgb(color)
+        .darker(0.5)
+        .toString();
 }
 
-function getRegressionData(data) {
+function getRegressionData(data) {
     return data.map((value, index) => {
         return [index, value];
     });
@@ -90,21 +85,19 @@ function getRegressionObj(data, regressionType) {
             // loess(data, smoothing)
             regression = loess(getRegressionData(data), 0.25);
             break;
-    };
+    }
 
-    return Object.assign(
-        {},
-        DEFAULT_TRENDLINE,
-        regressionTypeOptions,
-        {
-            data: regression.points
-        }
-    );
+    return Object.assign({}, DEFAULT_TRENDLINE, regressionTypeOptions, {
+        data: regression.points,
+    });
 }
 
 // Code extracted from https://github.com/Tom-Alexander/regression-js/
 function gaussianElimination(a, o) {
-    let maxrow = 0, tmp = 0, n = a.length - 1, x = new Array(o);
+    let maxrow = 0,
+        tmp = 0,
+        n = a.length - 1,
+        x = new Array(o);
 
     for (let i = 0; i < n; i++) {
         maxrow = i;
@@ -138,7 +131,7 @@ function gaussianElimination(a, o) {
         x[j] = (a[n][j] - tmp) / a[j][j];
     }
 
-    return (x);
+    return x;
 }
 
 // Code extracted from https://github.com/Tom-Alexander/regression-js/
@@ -150,7 +143,9 @@ function gaussianElimination(a, o) {
 //
 // correlation = N * Σ(XY) - Σ(X) * Σ (Y) / √ (  N * Σ(X^2) - Σ(X) ) * ( N * Σ(Y^2) - Σ(Y)^2 ) ) )
 function linear(data, decimalPlaces) {
-    let sum = [0, 0, 0, 0, 0], results = [], N = data.length;
+    let sum = [0, 0, 0, 0, 0],
+        results = [],
+        N = data.length;
 
     for (let n = 0, len = data.length; n < len; n++) {
         if (data[n]['x'] != null) {
@@ -169,7 +164,7 @@ function linear(data, decimalPlaces) {
     }
 
     let gradient = (N * sum[3] - sum[0] * sum[1]) / (N * sum[2] - sum[0] * sum[0]);
-    let intercept = (sum[1] / N) - (gradient * sum[0]) / N;
+    let intercept = sum[1] / N - gradient * sum[0] / N;
     // let correlation = (N * sum[3] - sum[0] * sum[1]) / Math.sqrt((N * sum[2] - sum[0] * sum[0]) * (N * sum[4] - sum[1] * sum[1]));
 
     for (let i = 0, len = data.length; i < len; i++) {
@@ -184,24 +179,31 @@ function linear(data, decimalPlaces) {
     }
 
     results.sort((a, b) => {
-        if (a[0] > b[0]) { return 1; }
-        if (a[0] < b[0]) { return -1; }
+        if (a[0] > b[0]) {
+            return 1;
+        }
+        if (a[0] < b[0]) {
+            return -1;
+        }
 
         return 0;
     });
 
-    let string = 'y = ' + Math.round(gradient * 100) / 100 + 'x + ' + Math.round(intercept * 100) / 100;
+    let string =
+        'y = ' + Math.round(gradient * 100) / 100 + 'x + ' + Math.round(intercept * 100) / 100;
 
     return {
         equation: [gradient, intercept],
         points: results,
-        string: string
+        string: string,
     };
 }
 
 // Code extracted from https://github.com/Tom-Alexander/regression-js/
 function logarithmic(data) {
-    let sum = [0, 0, 0, 0], results = [], mean = 0;
+    let sum = [0, 0, 0, 0],
+        results = [],
+        mean = 0;
 
     for (let n = 0, len = data.length; n < len; n++) {
         if (data[n].x != null) {
@@ -226,8 +228,12 @@ function logarithmic(data) {
     }
 
     results.sort((a, b) => {
-        if (a[0] > b[0]) { return 1; }
-        if (a[0] < b[0]) { return -1; }
+        if (a[0] > b[0]) {
+            return 1;
+        }
+        if (a[0] < b[0]) {
+            return -1;
+        }
 
         return 0;
     });
@@ -237,13 +243,14 @@ function logarithmic(data) {
     return {
         equation: [A, B],
         points: results,
-        string: string
+        string: string,
     };
 }
 
 // Code extracted from https://github.com/Tom-Alexander/regression-js/
 function power(data) {
-    let sum = [0, 0, 0, 0], results = [];
+    let sum = [0, 0, 0, 0],
+        results = [];
 
     for (let n = 0, len = data.length; n < len; n++) {
         if (data[n].x != null) {
@@ -262,14 +269,18 @@ function power(data) {
     let A = Math.pow(Math.E, (sum[2] - B * sum[0]) / n);
 
     for (let i = 0, len = data.length; i < len; i++) {
-        let coordinate = [data[i][0], A * Math.pow(data[i][0] , B)];
+        let coordinate = [data[i][0], A * Math.pow(data[i][0], B)];
 
         results.push(coordinate);
     }
 
-    results.sort((a,b) => {
-        if (a[0] > b[0]) { return 1; }
-        if (a[0] < b[0]) { return -1; }
+    results.sort((a, b) => {
+        if (a[0] > b[0]) {
+            return 1;
+        }
+        if (a[0] < b[0]) {
+            return -1;
+        }
 
         return 0;
     });
@@ -279,7 +290,7 @@ function power(data) {
     return {
         equation: [A, B],
         points: results,
-        string: string
+        string: string,
     };
 }
 
@@ -289,7 +300,12 @@ function polynomial(data, order, extrapolate) {
         order = 2;
     }
 
-    let lhs = [], rhs = [], results = [], a = 0, b = 0, k = order + 1;
+    let lhs = [],
+        rhs = [],
+        results = [],
+        a = 0,
+        b = 0,
+        k = order + 1;
 
     for (let i = 0; i < k; i++) {
         for (let l = 0, len = data.length; l < len; l++) {
@@ -331,7 +347,8 @@ function polynomial(data, order, extrapolate) {
     let step = data[data.length - 1][0] - data[data.length - 2][0];
 
     for (let i = 0, len = resultLength; i < len; i++) {
-        let answer = 0, x = 0;
+        let answer = 0,
+            x = 0;
 
         if (typeof data[i] !== 'undefined') {
             x = data[i][0];
@@ -346,23 +363,25 @@ function polynomial(data, order, extrapolate) {
         results.push([x, answer]);
     }
 
-    results.sort((a,b) => {
-        if (a[0] > b[0]) { return 1; }
-        if (a[0] < b[0]) { return -1; }
+    results.sort((a, b) => {
+        if (a[0] > b[0]) {
+            return 1;
+        }
+        if (a[0] < b[0]) {
+            return -1;
+        }
 
         return 0;
     });
 
     let string = 'y = ';
 
-    for (let i = equation.length-1; i >= 0; i--) {
+    for (let i = equation.length - 1; i >= 0; i--) {
         if (i > 1) {
             string += Math.round(equation[i] * 100) / 100 + 'x^' + i + ' + ';
-        }
-        else if (i == 1) {
+        } else if (i == 1) {
             string += Math.round(equation[i] * 100) / 100 + 'x' + ' + ';
-        }
-        else {
+        } else {
             string += Math.round(equation[i] * 100) / 100;
         }
     }
@@ -370,7 +389,7 @@ function polynomial(data, order, extrapolate) {
     return {
         equation: equation,
         points: results,
-        string: string
+        string: string,
     };
 }
 
@@ -379,22 +398,29 @@ function polynomial(data, order, extrapolate) {
 // - http://commons.apache.org/proper/commons-math/download_math.cgi LoesInterpolator.java
 // - https://gist.github.com/avibryant/1151823
 function loess(data, bandwidth) {
-    bandwidth = bandwidth || 0.25 ;
+    bandwidth = bandwidth || 0.25;
 
-    let xval = data.map(pair => { return pair[0]; });
+    let xval = data.map(pair => {
+        return pair[0];
+    });
 
     let distinctX = array_unique(xval);
 
     if (2 / distinctX.length > bandwidth) {
         bandwidth = Math.min(2 / distinctX.length, 1);
 
-        console.warn("updated bandwith to " + bandwidth);
+        console.warn('updated bandwith to ' + bandwidth);
     }
 
-    let yval = data.map(pair => { return pair[1]; });
+    let yval = data.map(pair => {
+        return pair[1];
+    });
 
     function array_unique(values) {
-        let o = {}, i, l = values.length, r = [];
+        let o = {},
+            i,
+            l = values.length,
+            r = [];
 
         for (i = 0; i < l; i += 1) {
             o[values[i]] = values[i];
@@ -422,8 +448,7 @@ function loess(data, bandwidth) {
         let x = xval[i];
 
         if (i > 0) {
-            if (right < xval.length - 1 &&
-                    xval[right+1] - xval[i] < xval[i] - xval[left]) {
+            if (right < xval.length - 1 && xval[right + 1] - xval[i] < xval[i] - xval[left]) {
                 left++;
                 right++;
             }
@@ -433,14 +458,16 @@ function loess(data, bandwidth) {
 
         if (xval[i] - xval[left] > xval[right] - xval[i]) {
             edge = left;
-        }
-        else {
+        } else {
             edge = right;
         }
 
         let denom = Math.abs(1.0 / (xval[edge] - x));
         let sumWeights = 0;
-        let sumX = 0, sumXSquared = 0, sumY = 0, sumXY = 0;
+        let sumX = 0,
+            sumXSquared = 0,
+            sumY = 0,
+            sumXY = 0;
 
         let k = left;
 
@@ -450,9 +477,9 @@ function loess(data, bandwidth) {
             let dist;
 
             if (k < i) {
-                dist = (x - xk);
+                dist = x - xk;
             } else {
-                dist = (xk - x);
+                dist = xk - x;
             }
 
             let w = tricube(dist * denom);
@@ -476,8 +503,7 @@ function loess(data, bandwidth) {
 
         if (meanXSquared == meanX * meanX) {
             beta = 0;
-        }
-        else {
+        } else {
             beta = (meanXY - meanX * meanY) / (meanXSquared - meanX * meanX);
         }
 
@@ -487,8 +513,10 @@ function loess(data, bandwidth) {
     //console.debug(res);
 
     return {
-        equation: "" ,
-        points: xval.map((x,i) => { return [x, res[i]]; }),
-        string: ""
+        equation: '',
+        points: xval.map((x, i) => {
+            return [x, res[i]];
+        }),
+        string: '',
     };
 }
