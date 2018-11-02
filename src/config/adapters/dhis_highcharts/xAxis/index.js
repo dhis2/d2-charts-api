@@ -7,7 +7,7 @@ import {
     CHART_TYPE_GAUGE,
     CHART_TYPE_YEAR_OVER_YEAR_LINE,
     CHART_TYPE_YEAR_OVER_YEAR_COLUMN,
-} from '..';
+} from '../type';
 
 function getDefault(store, layout) {
     return objectClean({

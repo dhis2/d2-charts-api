@@ -5,7 +5,10 @@ import objectClean from 'd2-utilizr/lib/objectClean';
 const DEFAULT_MAX_VALUE = 100;
 
 function getStopsByLegendSet(legendSet) {
-    return isObject(legendSet) ? arraySort(legendSet.legends, 'ASC', 'endValue').map(legend => [parseFloat(legend.endValue) / DEFAULT_MAX_VALUE, legend.color]) : undefined;
+    return isObject(legendSet) ?
+        arraySort(legendSet.legends, 'ASC', 'endValue')
+            .map(legend => [parseFloat(legend.endValue) / DEFAULT_MAX_VALUE, legend.color]) :
+        undefined;
 }
 
 export default function (layout, legendSet) {

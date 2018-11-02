@@ -1,5 +1,4 @@
 const DEFAULT_FONT_SIZE = '34px';
-
 const DASHBOARD_FONT_SIZE = '24px';
 
 export default function (series, dashboard) {
