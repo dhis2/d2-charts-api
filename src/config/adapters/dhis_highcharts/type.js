@@ -26,6 +26,7 @@ export default function(type) {
         case 'COLUMN':
         case 'STACKED_COLUMN':
         case 'STACKEDCOLUMN':
+        case 'YEAR_OVER_YEAR_COLUMN':
         default:
             return { type: 'column' };
     }
