@@ -22,7 +22,7 @@ function getDefault(store, layout) {
     });
 }
 
-export default function(store, layout) {
+export default function(store, layout, extraOptions) {
     let xAxis;
 
     switch (layout.type) {
@@ -31,7 +31,7 @@ export default function(store, layout) {
             break;
         case CHART_TYPE_YEAR_OVER_YEAR_LINE:
         case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
-            xAxis = getYearOnYear(store, layout);
+            xAxis = getYearOnYear(store, layout, extraOptions);
             break;
         default:
             xAxis = getDefault(store, layout);

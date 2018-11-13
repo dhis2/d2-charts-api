@@ -40,7 +40,7 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
         subtitle: getSubtitle(series, _layout, store.data[0].metaData, extraOptions.dashboard),
 
         // x-axis
-        xAxis: getXAxis(store, _layout),
+        xAxis: getXAxis(store, _layout, extraOptions),
 
         // y-axis
         yAxis: getYAxis(_layout, extraOptions),
