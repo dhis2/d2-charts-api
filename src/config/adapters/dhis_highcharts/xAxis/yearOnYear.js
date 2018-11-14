@@ -4,17 +4,19 @@ export default function(store, layout, extraOptions) {
     if (extraOptions.xAxisLabels) {
         categories = extraOptions.xAxisLabels;
     } else {
-        let res;
-
         // look for the response with the longer list of periods.
         // in some cases (ie. weeks per year) responses might have a different number of periods in metadata
-        store.data.forEach(r => {
-            if (res) {
-                res = r.metaData.dimensions.pe.length > res.metaData.dimensions.pe.length ? r : res;
+        const res = store.data.reduce((out, r) => {
+            if (out) {
+                if (r.metaData.dimensions.pe.length > out.metaData.dimensions.pe.length) {
+                    out = r;
+                }
             } else {
-                res = r;
+                out = r;
             }
-        });
+
+            return out;
+        }, {});
 
         const metaData = res.metaData;
 
