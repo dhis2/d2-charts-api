@@ -12,7 +12,7 @@ import {
 function getDefault(store, layout) {
     return objectClean({
         categories: getCategories(store.data[0].metaData, layout),
-        title: getAxisTitle(layout.domainAxisTitle),
+        title: getAxisTitle(layout.domainAxisLabel),
         labels: {
             style: {
                 color: '#666',

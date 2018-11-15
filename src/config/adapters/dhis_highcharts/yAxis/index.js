@@ -88,7 +88,7 @@ function getDefault(layout) {
         min: getMinValue(layout),
         max: getMaxValue(layout),
         tickAmount: getSteps(layout),
-        title: getAxisTitle(layout.rangeAxisTitle),
+        title: getAxisTitle(layout.rangeAxisLabel),
         plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)]),
         gridLineColor: DEFAULT_GRIDLINE_COLOR,
         labels: getLabels(layout),
