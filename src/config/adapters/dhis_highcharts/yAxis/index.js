@@ -14,56 +14,72 @@ const DEFAULT_GRIDLINE_COLOR = '#E1E1E1';
 const DEFAULT_PLOTLINE = {
     color: '#000',
     width: 2,
-    zIndex: 4
+    zIndex: 4,
 };
 
 const DEFAULT_PLOTLINE_LABEL = {
     y: -7,
     style: {
         fontSize: 13,
-        textShadow: '0 0 6px #FFF'
-    }
+        textShadow: '0 0 6px #FFF',
+    },
 };
 
-function getMinValue(layout) {
+function getMinValue(layout) {
     return isNumeric(layout.rangeAxisMinValue) ? layout.rangeAxisMinValue : DEFAULT_MIN_VALUE;
 }
 
-function getMaxValue(layout) {
+function getMaxValue(layout) {
     return isNumeric(layout.rangeAxisMaxValue) ? layout.rangeAxisMaxValue : undefined;
 }
 
-function getSteps(layout) {
+function getSteps(layout) {
     return isNumeric(layout.rangeAxisSteps) ? layout.rangeAxisSteps : undefined;
 }
 
 function getTargetLine(layout) {
-    return isNumeric(layout.targetLineValue) ? Object.assign({}, DEFAULT_PLOTLINE, objectClean({
-        value: layout.targetLineValue,
-        label: isString(layout.targetLineTitle) ? Object.assign({}, DEFAULT_PLOTLINE_LABEL, {
-            text: layout.targetLineTitle
-        }) : undefined
-    })) : undefined;
+    return isNumeric(layout.targetLineValue)
+        ? Object.assign(
+              {},
+              DEFAULT_PLOTLINE,
+              objectClean({
+                  value: layout.targetLineValue,
+                  label: isString(layout.targetLineTitle)
+                      ? Object.assign({}, DEFAULT_PLOTLINE_LABEL, {
+                            text: layout.targetLineTitle,
+                        })
+                      : undefined,
+              })
+          )
+        : undefined;
 }
 
 function getBaseLine(layout) {
-    return isNumeric(layout.baseLineValue) ? Object.assign({}, DEFAULT_PLOTLINE, objectClean({
-        value: layout.baseLineValue,
-        label: isString(layout.baseLineTitle) ? Object.assign({}, DEFAULT_PLOTLINE_LABEL, {
-            text: layout.baseLineTitle,
-        }) : undefined
-    })) : undefined;
+    return isNumeric(layout.baseLineValue)
+        ? Object.assign(
+              {},
+              DEFAULT_PLOTLINE,
+              objectClean({
+                  value: layout.baseLineValue,
+                  label: isString(layout.baseLineTitle)
+                      ? Object.assign({}, DEFAULT_PLOTLINE_LABEL, {
+                            text: layout.baseLineTitle,
+                        })
+                      : undefined,
+              })
+          )
+        : undefined;
 }
 
-function getFormatter(layout) {
+function getFormatter(layout) {
     return {
-        formatter: function () {
+        formatter: function() {
             return this.value.toFixed(layout.rangeAxisDecimals);
-        }
+        },
     };
 }
 
-function getLabels(layout) {
+function getLabels(layout) {
     return isNumeric(layout.rangeAxisDecimals) ? getFormatter(layout) : undefined;
 }
 
@@ -79,14 +95,14 @@ function getDefault(layout) {
 
         // DHIS2-649: put first serie at the bottom of the stack
         // in this way the legend sequence matches the serie sequence
-        reversedStacks: getIsStacked(layout.type) ? false : true
+        reversedStacks: getIsStacked(layout.type) ? false : true,
     });
 }
 
-export default function (layout, extraOptions) {
+export default function(layout, extraOptions) {
     let series;
 
-    switch(layout.type) {
+    switch (layout.type) {
         case CHART_TYPE_GAUGE:
             series = getGauge(layout, extraOptions.legendSet);
             break;
