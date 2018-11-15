@@ -44,9 +44,9 @@ function getTargetLine(layout) {
               DEFAULT_PLOTLINE,
               objectClean({
                   value: layout.targetLineValue,
-                  label: isString(layout.targetLineTitle)
+                  label: isString(layout.targetLineLabel)
                       ? Object.assign({}, DEFAULT_PLOTLINE_LABEL, {
-                            text: layout.targetLineTitle,
+                            text: layout.targetLineLabel,
                         })
                       : undefined,
               })
@@ -61,9 +61,9 @@ function getBaseLine(layout) {
               DEFAULT_PLOTLINE,
               objectClean({
                   value: layout.baseLineValue,
-                  label: isString(layout.baseLineTitle)
+                  label: isString(layout.baseLineLabel)
                       ? Object.assign({}, DEFAULT_PLOTLINE_LABEL, {
-                            text: layout.baseLineTitle,
+                            text: layout.baseLineLabel,
                         })
                       : undefined,
               })
