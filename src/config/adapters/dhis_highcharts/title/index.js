@@ -30,13 +30,13 @@ function getDefault(layout, metaData, dashboard) {
 }
 
 export default function(layout, metaData, dashboard) {
-    if (layout.hideTitle) {
-        return null;
-    }
-
     const title = {
-        text: null,
+        text: undefined,
     };
+
+    if (layout.hideTitle) {
+        return title;
+    }
 
     if (isString(layout.title) && layout.title.length) {
         title.text = layout.title;
