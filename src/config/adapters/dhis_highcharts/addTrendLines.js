@@ -67,6 +67,7 @@ function getRegressionObj(data, regressionType) {
     // POLYNOMIAL:
     // - order (default = 2)
     // - extrapolate (default = 0)
+    // - decimalPlaces (default = 2)
 
     let regression;
     let regressionTypeOptions = {};
@@ -79,7 +80,7 @@ function getRegressionObj(data, regressionType) {
             break;
         case 'POLYNOMIAL':
             // polynomial(data, order, extrapolate)
-            regression = polynomial(getRegressionData(data), 2, 0);
+            regression = polynomial(getRegressionData(data));
             break;
         case 'LOESS':
             // loess(data, smoothing)
@@ -142,7 +143,7 @@ function gaussianElimination(a, o) {
 //              N * Σ(X^2) - Σ(X)^2
 //
 // correlation = N * Σ(XY) - Σ(X) * Σ (Y) / √ (  N * Σ(X^2) - Σ(X) ) * ( N * Σ(Y^2) - Σ(Y)^2 ) ) )
-function linear(data, decimalPlaces) {
+function linear(data, decimalPlaces = 2) {
     let sum = [0, 0, 0, 0, 0],
         results = [],
         N = data.length;
@@ -295,11 +296,7 @@ function power(data) {
 }
 
 // Code extracted from https://github.com/Tom-Alexander/regression-js/
-function polynomial(data, order, extrapolate) {
-    if (typeof order == 'undefined') {
-        order = 2;
-    }
-
+function polynomial(data, order = 2, extrapolate = 0, decimalPlaces = 2) {
     let lhs = [],
         rhs = [],
         results = [],
@@ -358,6 +355,10 @@ function polynomial(data, order, extrapolate) {
 
         for (let w = 0; w < equation.length; w++) {
             answer += equation[w] * Math.pow(x, w);
+
+            if (decimalPlaces) {
+                answer = parseFloat(answer.toFixed(decimalPlaces));
+            }
         }
 
         results.push([x, answer]);
@@ -397,9 +398,7 @@ function polynomial(data, order, extrapolate) {
 // Based on
 // - http://commons.apache.org/proper/commons-math/download_math.cgi LoesInterpolator.java
 // - https://gist.github.com/avibryant/1151823
-function loess(data, bandwidth) {
-    bandwidth = bandwidth || 0.25;
-
+function loess(data, bandwidth = 0.25) {
     let xval = data.map(pair => {
         return pair[0];
     });
@@ -408,8 +407,6 @@ function loess(data, bandwidth) {
 
     if (2 / distinctX.length > bandwidth) {
         bandwidth = Math.min(2 / distinctX.length, 1);
-
-        console.warn('updated bandwith to ' + bandwidth);
     }
 
     let yval = data.map(pair => {
@@ -453,7 +450,7 @@ function loess(data, bandwidth) {
                 right++;
             }
         }
-        //console.debug("left: "+left  + " right: " + right );
+
         let edge;
 
         if (xval[i] - xval[left] > xval[right] - xval[i]) {
@@ -494,7 +491,6 @@ function loess(data, bandwidth) {
         }
 
         let meanX = sumX / sumWeights;
-        //console.debug(meanX);
 
         let meanY = sumY / sumWeights;
         let meanXY = sumXY / sumWeights;
@@ -510,7 +506,6 @@ function loess(data, bandwidth) {
         let alpha = meanY - beta * meanX;
         res[i] = beta * x + alpha;
     }
-    //console.debug(res);
 
     return {
         equation: '',

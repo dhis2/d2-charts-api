@@ -16,6 +16,10 @@ import addTrendLines, { isRegressionIneligible } from './addTrendLines';
 const getTransformedLayout = layout => ({
     ...layout,
     type: String(layout.type).toUpperCase(),
+    rangeAxisLabel: layout.rangeAxisLabel || layout.rangeAxisTitle,
+    domainAxisLabel: layout.domainAxisLabel || layout.domainAxisTitle,
+    targetLineLabel: layout.targetLineLabel || layout.targetLineTitle,
+    baseLineLabel: layout.baseLineLabel || layout.baseLineTitle,
 });
 
 export default function({ store, layout, el, extraConfig, extraOptions }) {

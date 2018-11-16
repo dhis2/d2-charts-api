@@ -12,11 +12,11 @@
   "dependencies": {
     "d2-utilizr": "0.2.13",
     "d3-color": "1.0.1",
-    "highcharts": "5.0.10",
-    "highcharts-exporting": "0.1.2",
-    "highcharts-more": "0.1.2",
-    "highcharts-no-data-to-display": "0.1.2",
-    "highcharts-solid-gauge": "0.1.2"
+    "highcharts": "^6.2.0",
+    "highcharts-exporting": "^0.1.7",
+    "highcharts-more": "^0.1.7",
+    "highcharts-no-data-to-display": "^0.1.7",
+    "highcharts-solid-gauge": "^0.1.7"
   },
   "devDependencies": {
     "babel-cli": "^6.3.15",
