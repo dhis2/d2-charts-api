@@ -1,6 +1,6 @@
 {
   "name": "d2-charts-api",
-  "version": "31.0.6",
+  "version": "31.0.7",
   "description": "DHIS2 charts api",
   "main": "index.js",
   "scripts": {
