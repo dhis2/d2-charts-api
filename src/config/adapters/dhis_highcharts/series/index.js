@@ -4,10 +4,14 @@ import getGauge from './gauge';
 import getType from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
 
-const DEFAULT_ANIMATION_DURATION = 300;
+const DEFAULT_ANIMATION_DURATION = 200;
 
 function getColor(colors, index) {
     return colors[index] || getColor(colors, index - colors.length);
+}
+
+function getAnimation(option, fallback) {
+    return typeof option === 'number' ? option : fallback;
 }
 
 function getDefault(series, store, layout, isStacked, extraOptions) {
@@ -66,7 +70,7 @@ export default function(series, store, layout, isStacked, extraOptions) {
     series.forEach(seriesObj => {
         // animation
         seriesObj.animation = {
-            duration: DEFAULT_ANIMATION_DURATION,
+            duration: getAnimation(extraOptions.animation, DEFAULT_ANIMATION_DURATION),
         };
     });
 
