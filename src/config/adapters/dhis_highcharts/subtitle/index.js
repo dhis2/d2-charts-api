@@ -1,7 +1,13 @@
 import isString from 'd2-utilizr/lib/isString';
 import getGauge from './gauge';
 import getFilterTitle from '../getFilterTitle';
-import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
+import {
+    CHART_TYPE_PIE,
+    CHART_TYPE_GAUGE,
+    CHART_TYPE_YEAR_OVER_YEAR_LINE,
+    CHART_TYPE_YEAR_OVER_YEAR_COLUMN,
+} from '../type';
+import getYearOverYearTitle from '../title/yearOverYear';
 
 const DEFAULT_SUBTITLE = {
     style: {
@@ -34,15 +40,17 @@ function getDefault(layout, dashboard, filterTitle) {
 }
 
 export default function(series, layout, metaData, dashboard) {
+    let subtitle = {
+        text: undefined,
+    };
+
     if (layout.hideSubtitle) {
         return null;
     }
 
-    let subtitle;
-
     // DHIS2-578: allow for optional custom subtitle
     if (isString(layout.subtitle)) {
-        subtitle = { text: layout.subtitle };
+        subtitle.text = layout.subtitle;
     } else {
         const filterTitle = getFilterTitle(layout.filters, metaData);
 
@@ -50,6 +58,10 @@ export default function(series, layout, metaData, dashboard) {
             case CHART_TYPE_PIE:
             case CHART_TYPE_GAUGE:
                 subtitle = getGauge(series, layout, dashboard, filterTitle);
+                break;
+            case CHART_TYPE_YEAR_OVER_YEAR_LINE:
+            case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
+                subtitle.text = getYearOverYearTitle(layout, metaData, Boolean(!dashboard));
                 break;
             default:
                 subtitle = getDefault(layout, dashboard, filterTitle);
