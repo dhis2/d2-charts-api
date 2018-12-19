@@ -10,6 +10,7 @@ export default function({
     error,
     warning,
 }) {
+    console.log("seriesId, categoryId", seriesId, categoryId);
     let _validator = validators[inputFormat] || validators.noValidation;
     let _adapter = adapters[inputFormat + '_' + outputFormat];
 

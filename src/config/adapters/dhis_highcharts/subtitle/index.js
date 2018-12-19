@@ -53,9 +53,8 @@ export default function(series, layout, metaData, dashboard) {
         subtitle.text = layout.subtitle;
     } else {
         const filterTitle = getFilterTitle(layout.filters, metaData);
-
+console.log("SUBTITLE series", series);
         switch (layout.type) {
-            case CHART_TYPE_PIE:
             case CHART_TYPE_GAUGE:
                 subtitle = getGauge(series, layout, dashboard, filterTitle);
                 break;
