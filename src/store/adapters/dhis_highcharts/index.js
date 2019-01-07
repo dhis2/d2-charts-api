@@ -25,33 +25,19 @@ function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
 
     let key;
     let value;
-console.log("seriesHeader, categoryHeader", seriesHeader, categoryHeader);
-console.log("rows", rows);
+
     rows.forEach(row => {
         key = [
             ...(seriesHeader ? [getPrefixedId(row, seriesHeader)] : []),
             ...(categoryHeader ? [getPrefixedId(row, categoryHeader)] : []),
         ].join('-');
 
-        // key = getPrefixedId(row, seriesHeader) + '-' + getPrefixedId(row, categoryHeader);
         value = row[valueIndex];
 
         map.set(key, value);
     });
-console.log("idvaluemap", map);
-    return map;
-}
 
-function getSeriesFunction(type) {
-    switch (type) {
-        case CHART_TYPE_PIE:
-            return getPie;
-        case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
-        case CHART_TYPE_YEAR_OVER_YEAR_LINE:
-            return getYearOnYear;
-        default:
-            return getDefault;
-    }
+    return map;
 }
 
 function getDefault(acc, seriesIds, categoryIds, idValueMap, metaData) {
@@ -75,6 +61,18 @@ function getDefault(acc, seriesIds, categoryIds, idValueMap, metaData) {
     });
 
     return acc;
+}
+
+function getSeriesFunction(type) {
+    switch (type) {
+        case CHART_TYPE_PIE:
+            return getPie;
+        case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
+        case CHART_TYPE_YEAR_OVER_YEAR_LINE:
+            return getYearOnYear;
+        default:
+            return getDefault;
+    }
 }
 
 export default function({ type, data, seriesId, categoryId }) {
