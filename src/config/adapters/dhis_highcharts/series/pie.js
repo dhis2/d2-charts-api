@@ -1,5 +1,3 @@
-import getCategories from '../getCategories';
-
 export default function(series, store, layout, isStacked, colors) {
     return [
         {
