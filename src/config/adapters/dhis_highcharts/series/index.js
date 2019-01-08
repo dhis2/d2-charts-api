@@ -6,6 +6,11 @@ import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
 
 const DEFAULT_ANIMATION_DURATION = 200;
 
+const HIGHCHARTS_COLUMN = 'column';
+const HIGHCHARTS_BAR = 'bar';
+const HIGHCHARTS_PERCENT = 'percent';
+const HIGHCHARTS_NORMAL = 'normal';
+
 function getColor(colors, index) {
     return colors[index] || getColor(colors, index - colors.length);
 }
@@ -26,14 +31,14 @@ function getDefault(series, store, layout, isStacked, extraOptions) {
         // stacked
         if (isStacked) {
             // DHIS2-1060: stacked charts can optionally be shown as 100% stacked charts
-            seriesObj.stacking = layout.percentStackedValues === true ? 'percent' : 'normal';
+            seriesObj.stacking = layout.percentStackedValues === true ? HIGHCHARTS_PERCENT : HIGHCHARTS_NORMAL;
         }
 
         // DHIS2-2101
         // show bar/columm chart as EPI curve (basically remove spacing between bars/columns)
         const seriesType = getType(layout.type).type;
 
-        if ((seriesType === 'column' || seriesType === 'bar') && layout.noSpaceBetweenColumns) {
+        if ((seriesType === HIGHCHARTS_COLUMN || seriesType === HIGHCHARTS_BAR) && layout.noSpaceBetweenColumns) {
             seriesObj.pointPadding = 0;
             seriesObj.groupPadding = 0;
         }

@@ -27,8 +27,8 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
 
     let series = store.generateData({
         type: _layout.type,
-        seriesId: _layout.columns[0].dimension,
-        categoryId: _layout.rows[0].dimension,
+        seriesId: _layout.columns && _layout.columns.length ? _layout.columns[0].dimension : null,
+        categoryId: _layout.rows && _layout.rows.length ? _layout.rows[0].dimension : null,
     });
 
     const isStacked = getIsStacked(_layout.type);

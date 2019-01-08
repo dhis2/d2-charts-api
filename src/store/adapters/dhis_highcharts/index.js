@@ -1,6 +1,7 @@
 import getYearOnYear from './yearOnYear';
+import getPie from './pie';
 import {
-    isYearOverYear
+    isYearOverYear, CHART_TYPE_YEAR_OVER_YEAR_COLUMN, CHART_TYPE_YEAR_OVER_YEAR_LINE, CHART_TYPE_PIE
 } from '../../../config/adapters/dhis_highcharts/type';
 
 const VALUE_ID = 'value';
@@ -26,7 +27,11 @@ function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
     let value;
 
     rows.forEach(row => {
-        key = getPrefixedId(row, seriesHeader) + '-' + getPrefixedId(row, categoryHeader);
+        key = [
+            ...(seriesHeader ? [getPrefixedId(row, seriesHeader)] : []),
+            ...(categoryHeader ? [getPrefixedId(row, categoryHeader)] : []),
+        ].join('-');
+
         value = row[valueIndex];
 
         map.set(key, value);
@@ -58,13 +63,22 @@ function getDefault(acc, seriesIds, categoryIds, idValueMap, metaData) {
     return acc;
 }
 
+function getSeriesFunction(type) {
+    switch (type) {
+        case CHART_TYPE_PIE:
+            return getPie;
+        case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
+        case CHART_TYPE_YEAR_OVER_YEAR_LINE:
+            return getYearOnYear;
+        default:
+            return getDefault;
+    }
+}
+
 export default function({ type, data, seriesId, categoryId }) {
-    const seriesFunction = isYearOverYear(type) ? getYearOnYear : getDefault;
+    const seriesFunction = getSeriesFunction(type);
 
     return data.reduce((acc, res) => {
-        seriesId = seriesId || res.headers[0].name;
-        categoryId = categoryId || res.headers[1].name;
-
         const headers = res.headers;
         const metaData = res.metaData;
         const rows = res.rows;

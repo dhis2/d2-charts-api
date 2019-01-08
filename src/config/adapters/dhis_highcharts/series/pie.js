@@ -1,5 +1,3 @@
-import getCategories from '../getCategories';
-
 export default function(series, store, layout, isStacked, colors) {
     return [
         {
@@ -7,11 +5,7 @@ export default function(series, store, layout, isStacked, colors) {
             colorByPoint: true,
             allowPointSelect: true,
             cursor: 'pointer',
-            data: getCategories(store.data[0].metaData, layout).map((category, index) => ({
-                name: category,
-                color: colors[index],
-                y: series[0].data[index],
-            })),
+            data: series,
             dataLabels: {
                 enabled: true,
                 formatter: function() {
