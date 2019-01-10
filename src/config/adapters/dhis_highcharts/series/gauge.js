@@ -6,7 +6,7 @@ export default function (series, dashboard) {
 
     return [{
         name: series[0].name,
-        data: series[0].data.slice(0, 1),
+        data: series[0].data,
         enableMouseTracking: false,
         dataLabels: {
             y: 0,
