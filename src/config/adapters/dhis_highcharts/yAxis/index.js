@@ -99,16 +99,16 @@ function getDefault(layout) {
     });
 }
 
-export default function(layout, extraOptions) {
-    let series;
+export default function(layout, series, extraOptions) {
+    let yAxis;
 
     switch (layout.type) {
         case CHART_TYPE_GAUGE:
-            series = getGauge(layout, extraOptions.legendSet);
+            yAxis = getGauge(series, extraOptions.legendSet);
             break;
         default:
-            series = getDefault(layout);
+            yAxis = getDefault(layout);
     }
 
-    return series;
+    return yAxis;
 }

@@ -55,9 +55,6 @@ export default function(series, layout, metaData, dashboard) {
         const filterTitle = getFilterTitle(layout.filters, metaData);
 
         switch (layout.type) {
-            case CHART_TYPE_GAUGE:
-                subtitle = getGauge(series, layout, dashboard, filterTitle);
-                break;
             case CHART_TYPE_YEAR_OVER_YEAR_LINE:
             case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
                 subtitle.text = getYearOverYearTitle(layout, metaData, Boolean(!dashboard));

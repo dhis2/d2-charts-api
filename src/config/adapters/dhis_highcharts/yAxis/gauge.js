@@ -11,7 +11,7 @@ function getStopsByLegendSet(legendSet) {
         undefined;
 }
 
-export default function (layout, legendSet) {
+export default function (series, legendSet) {
     return objectClean({
         min: 0,
         max: DEFAULT_MAX_VALUE,
@@ -24,6 +24,9 @@ export default function (layout, legendSet) {
             style: {
                 fontSize: '13px'
             }
+        },
+        title: {
+            text: series[0].name,
         },
         stops: getStopsByLegendSet(legendSet)
     });

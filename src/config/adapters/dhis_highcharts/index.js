@@ -47,7 +47,7 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
         xAxis: getXAxis(store, _layout, extraOptions),
 
         // y-axis
-        yAxis: getYAxis(_layout, extraOptions),
+        yAxis: getYAxis(_layout, series, extraOptions),
 
         // series
         series: getSeries(series.slice(), store, _layout, isStacked, extraOptions),

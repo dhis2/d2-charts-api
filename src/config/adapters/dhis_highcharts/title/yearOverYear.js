@@ -1,15 +1,15 @@
 import getFilterTitle from '../getFilterTitle';
 
 export default function(layout, metaData, dashboard) {
-    const titleParts = [];
+    const titleFragments = [];
 
     if (layout.columns && !dashboard) {
-        titleParts.push(getFilterTitle(layout.columns, metaData));
+        titleFragments.push(getFilterTitle(layout.columns, metaData));
     }
 
     if (layout.filters && !dashboard) {
-        titleParts.push(getFilterTitle(layout.filters, metaData));
+        titleFragments.push(getFilterTitle(layout.filters, metaData));
     }
 
-    return titleParts.length ? titleParts.join(' - ') : null;
+    return titleFragments.length ? titleFragments.join(' - ') : null;
 }
