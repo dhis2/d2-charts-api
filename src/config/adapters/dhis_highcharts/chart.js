@@ -1,7 +1,7 @@
 import getType from './type';
 
 const DEFAULT_CHART = {
-    fontFamily: 'Helvetica Neue,Helvetica,Arial,sans-serif !important',
+    fontFamily: 'Roboto,Helvetica Neue,Helvetica,Arial,sans-serif !important',
     spacingTop: 20
 };
 
