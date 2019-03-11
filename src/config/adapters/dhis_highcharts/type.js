@@ -13,6 +13,7 @@ export const CHART_TYPE_RADAR = 'RADAR';
 export const CHART_TYPE_GAUGE = 'GAUGE';
 export const CHART_TYPE_YEAR_OVER_YEAR_LINE = 'YEAR_OVER_YEAR_LINE';
 export const CHART_TYPE_YEAR_OVER_YEAR_COLUMN = 'YEAR_OVER_YEAR_COLUMN';
+export const CHART_TYPE_MULTI_AXIS_COLUMN_LINE = 'MULTI_AXIS_COLUMN_LINE';
 
 const stackedTypes = [
     CHART_TYPE_STACKED_COLUMN,
@@ -52,6 +53,8 @@ export default function(type) {
             return { type: 'line', polar: true };
         case CHART_TYPE_GAUGE:
             return { type: 'solidgauge' };
+        case CHART_TYPE_MULTI_AXIS_COLUMN_LINE:
+            return {};
         case CHART_TYPE_COLUMN:
         case CHART_TYPE_STACKED_COLUMN:
         case CHART_TYPE_STACKED_COLUMN_LEGACY:
