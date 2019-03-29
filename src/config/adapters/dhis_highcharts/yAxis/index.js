@@ -1,5 +1,6 @@
 import arrayClean from 'd2-utilizr/lib/arrayClean';
 import objectClean from 'd2-utilizr/lib/objectClean';
+import isNumber from 'd2-utilizr/lib/isNumber';
 import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
 import getAxisTitle from '../getAxisTitle';
@@ -83,7 +84,30 @@ function getLabels(layout) {
     return isNumeric(layout.rangeAxisDecimals) ? getFormatter(layout) : undefined;
 }
 
+function getExtraAxisIds(chartSeries) {
+    return Array.isArray(chartSeries) && chartSeries.filter(s => s.axis === 1);
+};
+
 function getDefault(layout) {
+
+    var _layout = {
+        ...layout,
+        chartSeries: [{
+            "id": "Uvn6LCg7dVU",
+            "axis": 1,
+            "type": "COLUMN",
+            "someContextStuff": 4
+        }, {
+            "id": "ImspTQPwCqd",
+            "type": "LINE",
+            "axis": 1,
+        }]
+    };
+
+    const axes = getExtraAxisIds(_layout.chartSeries);
+
+
+
     return objectClean({
         min: getMinValue(layout),
         max: getMaxValue(layout),
@@ -102,6 +126,7 @@ function getDefault(layout) {
 export default function(layout, series, extraOptions) {
     let yAxis;
 
+console.log("YAXIS", layout, series, extraOptions);
     switch (layout.type) {
         case CHART_TYPE_GAUGE:
             yAxis = getGauge(series, extraOptions.legendSet);
