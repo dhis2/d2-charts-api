@@ -1,6 +1,5 @@
 import arrayClean from 'd2-utilizr/lib/arrayClean';
 import objectClean from 'd2-utilizr/lib/objectClean';
-import isNumber from 'd2-utilizr/lib/isNumber';
 import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
 import getAxisTitle from '../getAxisTitle';
@@ -87,15 +86,14 @@ function getLabels(layout) {
 
 function getDefault(layout, colors) {
     const axes = [];
-
     const hasSecondAxis = Boolean(getSeriesByAxisNumber(layout.chartSeries, 1).length);
 
-    if (hasSecondAxis) {
+    if (isDualAxis(layout.type) && hasSecondAxis) {
         axes.push({
             title: {
                 text: 'Axis 1',
                 style: {
-                    color: colors[0],
+                    // color: colors[0],
                     'font-weight': 700,
                 },
             },
@@ -105,7 +103,7 @@ function getDefault(layout, colors) {
             title: {
                 text: 'Axis 2',
                 style: {
-                    color: colors[1],
+                    // color: colors[1],
                     'font-weight': 700,
                 },
             },
