@@ -56,7 +56,8 @@ function getDefault(acc, seriesIds, categoryIds, idValueMap, metaData) {
         });
 
         acc.push({
-            name: serieLabel,
+            id: seriesId,
+            name: metaData.items[seriesId].name,
             data: serieData,
         });
     });

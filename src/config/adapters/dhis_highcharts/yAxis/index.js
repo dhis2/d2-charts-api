@@ -7,6 +7,7 @@ import getAxisTitle from '../getAxisTitle';
 import { CHART_TYPE_GAUGE } from '../type';
 import getGauge from './gauge';
 import { getIsStacked } from '../type';
+import getSeriesByAxisNumber from '../getSeriesByAxisNumber';
 
 const DEFAULT_MIN_VALUE = 0;
 
@@ -84,43 +85,50 @@ function getLabels(layout) {
     return isNumeric(layout.rangeAxisDecimals) ? getFormatter(layout) : undefined;
 }
 
-function getExtraAxisIds(chartSeries) {
-    return Array.isArray(chartSeries) && chartSeries.filter(s => s.axis === 1);
-};
+function getDefault(layout, colors) {
+    const axes = [];
 
-function getDefault(layout) {
+    const hasSecondAxis = Boolean(getSeriesByAxisNumber(layout.chartSeries, 1).length);
 
-    var _layout = {
-        ...layout,
-        chartSeries: [{
-            "id": "Uvn6LCg7dVU",
-            "axis": 1,
-            "type": "COLUMN",
-            "someContextStuff": 4
-        }, {
-            "id": "ImspTQPwCqd",
-            "type": "LINE",
-            "axis": 1,
-        }]
-    };
+    if (hasSecondAxis) {
+        axes.push({
+            title: {
+                text: 'Axis 1',
+                style: {
+                    color: colors[0],
+                    'font-weight': 700,
+                },
+            },
+        });
 
-    const axes = getExtraAxisIds(_layout.chartSeries);
+        axes.push({
+            title: {
+                text: 'Axis 2',
+                style: {
+                    color: colors[1],
+                    'font-weight': 700,
+                },
+            },
+            opposite: true,
+        });
+    }
+    else {
+        axes.push(objectClean({
+            min: getMinValue(layout),
+            max: getMaxValue(layout),
+            tickAmount: getSteps(layout),
+            title: getAxisTitle(layout.rangeAxisLabel),
+            plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)]),
+            gridLineColor: DEFAULT_GRIDLINE_COLOR,
+            labels: getLabels(layout),
 
+            // DHIS2-649: put first serie at the bottom of the stack
+            // in this way the legend sequence matches the serie sequence
+            reversedStacks: getIsStacked(layout.type) ? false : true,
+        }));
+    }
 
-
-    return objectClean({
-        min: getMinValue(layout),
-        max: getMaxValue(layout),
-        tickAmount: getSteps(layout),
-        title: getAxisTitle(layout.rangeAxisLabel),
-        plotLines: arrayClean([getTargetLine(layout), getBaseLine(layout)]),
-        gridLineColor: DEFAULT_GRIDLINE_COLOR,
-        labels: getLabels(layout),
-
-        // DHIS2-649: put first serie at the bottom of the stack
-        // in this way the legend sequence matches the serie sequence
-        reversedStacks: getIsStacked(layout.type) ? false : true,
-    });
+    return axes;
 }
 
 export default function(layout, series, extraOptions) {
@@ -132,7 +140,7 @@ console.log("YAXIS", layout, series, extraOptions);
             yAxis = getGauge(series, extraOptions.legendSet);
             break;
         default:
-            yAxis = getDefault(layout);
+            yAxis = getDefault(layout, extraOptions.colors);
     }
 
     return yAxis;

@@ -25,6 +25,17 @@ const getTransformedLayout = layout => ({
 export default function({ store, layout, el, extraConfig, extraOptions }) {
     const _layout = getTransformedLayout(layout);
 
+    _layout.chartSeries = [{
+            "id": "AUqdhY4mpvp",
+            "axis": 1,
+            "type": "COLUMN",
+            "someContextStuff": 4
+        }, {
+            "id": "ReUHfIn0pTQ",
+            "type": "LINE",
+            "axis": 1,
+    }];
+
     let series = store.generateData({
         type: _layout.type,
         seriesId: _layout.columns && _layout.columns.length ? _layout.columns[0].dimension : null,
@@ -91,6 +102,6 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
 
     // force apply extra config
     Object.assign(config, extraConfig);
-console.log("CONFIG", objectClean(config));
+console.log("returned chart config", config);
     return objectClean(config);
 }
