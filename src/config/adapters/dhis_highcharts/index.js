@@ -85,7 +85,11 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
 
     // DHIS2-1243 add trend lines after sorting
     // trend line on pie and gauge does not make sense
-    if (_layout.regressionType !== 'NONE' && !isRegressionIneligible(_layout.type)) {
+    if (
+        _layout.regressionType !== undefined &&
+        _layout.regressionType !== 'NONE' &&
+        !isRegressionIneligible(_layout.type)
+    ) {
         config.series = addTrendLines(_layout.regressionType, config.series, isStacked);
     }
 
