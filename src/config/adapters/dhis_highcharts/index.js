@@ -1,4 +1,5 @@
 import objectClean from 'd2-utilizr/lib/objectClean';
+import isString from 'd2-utilizr/lib/isString';
 import getChart from './chart';
 import getXAxis from './xAxis';
 import getYAxis from './yAxis';
@@ -85,7 +86,11 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
 
     // DHIS2-1243 add trend lines after sorting
     // trend line on pie and gauge does not make sense
-    if (_layout.regressionType !== 'NONE' && !isRegressionIneligible(_layout.type)) {
+    if (
+        isString(_layout.regressionType) &&
+        _layout.regressionType !== 'NONE' &&
+        !isRegressionIneligible(_layout.type)
+    ) {
         config.series = addTrendLines(_layout.regressionType, config.series, isStacked);
     }
 
