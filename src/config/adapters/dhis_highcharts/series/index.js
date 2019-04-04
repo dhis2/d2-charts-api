@@ -4,6 +4,7 @@ import getGauge from './gauge';
 import getType, { isDualAxis } from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
 import getIdAxisMap from '../getIdAxisMap';
+import { getIdColorMap } from '../chartSeries';
 
 const DEFAULT_ANIMATION_DURATION = 200;
 
@@ -14,16 +15,30 @@ const HIGHCHARTS_TYPE_NORMAL = 'normal';
 
 const epiCurveTypes = [HIGHCHARTS_TYPE_COLUMN, HIGHCHARTS_TYPE_BAR];
 
-function getColor(colors, index) {
-    return colors[index] || getColor(colors, index - colors.length);
-}
-
 function getAnimation(option, fallback) {
     return typeof option === 'number' ? option : fallback;
 }
 
+function getColor(colors, index) {
+    return colors[index] || getColor(colors, index - colors.length);
+}
+
+function getAxisAndColorMap(series, layout, extraOptions) {
+    const idAxisMap = getIdAxisMap(layout.chartSeries);
+
+    if (idAxisMap && isDualAxis(layout.type)) {
+
+    }
+
+    const map = series.reduce((obj, series) => {
+        obj[series.id] =
+    })
+
+}
+
 function getDefault(series, store, layout, isStacked, extraOptions) {
     const idAxisMap = getIdAxisMap(layout.chartSeries);
+    const idColorMap = getIdColorMap(chartSeries, series, layout, extraOptions);
 
     series.forEach((seriesObj, index) => {
         // show values
@@ -53,14 +68,15 @@ function getDefault(series, store, layout, isStacked, extraOptions) {
         // color
         seriesObj.color = getColor(extraOptions.colors, index);
 
-        // custom names for series for Year on year chart type
+        // dual axis number
+        // if (isDualAxis(layout.type) && idAxisMap && idAxisMap[seriesObj.id]) {
+        //     seriesObj.yAxis = idAxisMap[seriesObj.id];
+        // }
+        seriesObj.yAxis = idAxisMap[seriesObj.id];
+
+        // custom names for "year over year" series
         if (extraOptions.yearlySeries) {
             seriesObj.name = extraOptions.yearlySeries[index];
-        }
-
-        // dual axis number
-        if (isDualAxis(layout.type) && idAxisMap && idAxisMap[seriesObj.id]) {
-            seriesObj.yAxis = idAxisMap[seriesObj.id];
         }
     });
 
@@ -83,7 +99,7 @@ export default function(series, store, layout, isStacked, extraOptions) {
         default:
             series = getDefault(series, store, layout, isStacked, extraOptions);
     }
-
+console.log("extraOptions", extraOptions);
     series.forEach(seriesObj => {
         // animation
         seriesObj.animation = {
