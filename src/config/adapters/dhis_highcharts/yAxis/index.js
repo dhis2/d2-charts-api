@@ -6,7 +6,7 @@ import getAxisTitle from '../getAxisTitle';
 import { CHART_TYPE_GAUGE, isDualAxis } from '../type';
 import getGauge from './gauge';
 import { getIsStacked } from '../type';
-import getSeriesByAxisNumber from '../getSeriesByAxisNumber';
+import { hasExtraAxis } from '../chartSeries';
 
 const DEFAULT_MIN_VALUE = 0;
 
@@ -86,9 +86,8 @@ function getLabels(layout) {
 
 function getDefault(layout, colors) {
     const axes = [];
-    const hasSecondAxis = Boolean(getSeriesByAxisNumber(layout.chartSeries, 1).length);
 
-    if (isDualAxis(layout.type) && hasSecondAxis) {
+    if (isDualAxis(layout.type) && hasExtraAxis(layout.chartSeries)) {
         axes.push({
             title: {
                 text: 'Axis 1',

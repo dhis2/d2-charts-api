@@ -3,8 +3,9 @@ import getPie from './pie';
 import getGauge from './gauge';
 import getType, { isDualAxis } from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
-import getIdAxisMap from '../getIdAxisMap';
-import { getIdColorMap } from '../chartSeries';
+import { getFullIdAxisMap, getAxisIdMap, hasExtraAxis } from '../chartSeries';
+import { defaultMultiAxisTheme1 } from '../../../../util/colors/themes';
+import { generateColors } from '../../../../util/colors/gradientColorGenerator';
 
 const DEFAULT_ANIMATION_DURATION = 200;
 
@@ -23,23 +24,66 @@ function getColor(colors, index) {
     return colors[index] || getColor(colors, index - colors.length);
 }
 
-function getAxisAndColorMap(series, layout, extraOptions) {
-    const idAxisMap = getIdAxisMap(layout.chartSeries);
+// returns:
+// {
+//     id1: 'color1',
+//     id2: 'color2',
+//     id3: 'color3',
+// };
+function getIdColorMap(chartSeries, series, layout, extraOptions) {
+    console.log("getIdColorMap", chartSeries);
+     if (hasExtraAxis(chartSeries) && isDualAxis(layout.type)) {
+        // {
+        //     0: ['id1', 'id2', 'id3'],
+        //     1: ['id4', 'id5'],
+        // };
+        const axisIdMap = getAxisIdMap(chartSeries, series);
+        // {
+        //     0: {
+        //         startColor: '#3f6a92',
+        //         endColor: '#6cb8ff'
+        //     },
+        //     1: {
+        //         startColor: '#9e3640',
+        //         endColor: '#ff5666',
+        //     },
+        // };
+        const theme = extraOptions.multiAxisTheme || defaultMultiAxisTheme1;
+        // {
+        //     0: ['color1', 'color2', 'color3'],
+        //     1: ['color4', 'color5'],
+        // };
+        const colorsByAxis = Object.keys(axisIdMap).reduce((map, axis) => {
+            const numberOfIds = axisIdMap[axis].length;
+            map[axis] = generateColors(theme[axis].startColor, theme[axis].endColor, numberOfIds);
+            return map;
+        }, {});
 
-    if (idAxisMap && isDualAxis(layout.type)) {
+        return Object.keys(colorsByAxis).reduce((map, axis) => {
+            const colors = colorsByAxis[axis];
+            const ids = axisIdMap[axis];
 
+            ids.forEach((id, index) => {
+                map[id] = colors[index];
+            });
+
+            return map;
+        }, {});
     }
+    else {
+        const colors = extraOptions.colors;
 
-    const map = series.reduce((obj, series) => {
-        obj[series.id] =
-    })
-
+        return series.reduce((map, s, index) => {
+            map[s.id] = getColor(colors, index);
+        }, {});
+    }
 }
 
 function getDefault(series, store, layout, isStacked, extraOptions) {
-    const idAxisMap = getIdAxisMap(layout.chartSeries);
-    const idColorMap = getIdColorMap(chartSeries, series, layout, extraOptions);
-
+    const fullIdAxisMap = getFullIdAxisMap(layout.chartSeries, series);
+    const idColorMap = getIdColorMap(layout.chartSeries, series, layout, extraOptions);
+console.log("fullIdAxisMap", fullIdAxisMap);
+console.log("idColorMap", idColorMap);
     series.forEach((seriesObj, index) => {
         // show values
         if (layout.showValues || layout.showData) {
@@ -68,11 +112,7 @@ function getDefault(series, store, layout, isStacked, extraOptions) {
         // color
         seriesObj.color = getColor(extraOptions.colors, index);
 
-        // dual axis number
-        // if (isDualAxis(layout.type) && idAxisMap && idAxisMap[seriesObj.id]) {
-        //     seriesObj.yAxis = idAxisMap[seriesObj.id];
-        // }
-        seriesObj.yAxis = idAxisMap[seriesObj.id];
+        seriesObj.yAxis = fullIdAxisMap[seriesObj.id];
 
         // custom names for "year over year" series
         if (extraOptions.yearlySeries) {
