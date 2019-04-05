@@ -4,7 +4,6 @@ import getGauge from './gauge';
 import getType, { isDualAxis } from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
 import { getFullIdAxisMap, getAxisIdMap, hasExtraAxis } from '../chartSeries';
-import { defaultMultiAxisTheme1 } from '../../../../util/colors/themes';
 import { generateColors } from '../../../../util/colors/gradientColorGenerator';
 
 const DEFAULT_ANIMATION_DURATION = 200;
@@ -48,14 +47,14 @@ function getIdColorMap(chartSeries, series, layout, extraOptions) {
         //         endColor: '#ff5666',
         //     },
         // };
-        const theme = extraOptions.multiAxisTheme || defaultMultiAxisTheme1;
+        const theme = extraOptions.multiAxisTheme;
         // {
         //     0: ['color1', 'color2', 'color3'],
         //     1: ['color4', 'color5'],
         // };
         const colorsByAxis = Object.keys(axisIdMap).reduce((map, axis) => {
             const numberOfIds = axisIdMap[axis].length;
-            map[axis] = generateColors(theme[axis].startColor, theme[axis].endColor, numberOfIds);
+            map[axis] = generateColors(theme[axis].startColor, theme[axis].endColor, numberOfIds, true);
             return map;
         }, {});
 
@@ -110,7 +109,7 @@ console.log("idColorMap", idColorMap);
         }
 
         // color
-        seriesObj.color = getColor(extraOptions.colors, index);
+        seriesObj.color = idColorMap[seriesObj.id];
 
         seriesObj.yAxis = fullIdAxisMap[seriesObj.id];
 

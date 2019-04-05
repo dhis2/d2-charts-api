@@ -27,7 +27,7 @@ function convertToRGB(hex) {
     return color;
 }
 
-export function generateColors(colorStart, colorEnd, colorCount) {
+export function generateColors(colorStart, colorEnd, colorCount, addHash) {
     // The beginning of your gradient
     var start = convertToRGB(colorStart);
 
@@ -52,7 +52,7 @@ export function generateColors(colorStart, colorEnd, colorCount) {
         c[1] = start[1] * alpha + (1 - alpha) * end[1];
         c[2] = start[2] * alpha + (1 - alpha) * end[2];
 
-        saida.push(convertToHex(c));
+        saida.push((addHash ? '#' : '') + convertToHex(c));
     }
 
     return saida;

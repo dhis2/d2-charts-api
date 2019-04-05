@@ -84,7 +84,7 @@ function getLabels(layout) {
     return isNumeric(layout.rangeAxisDecimals) ? getFormatter(layout) : undefined;
 }
 
-function getDefault(layout, colors) {
+function getDefault(layout, extraOptions) {
     const axes = [];
 
     if (isDualAxis(layout.type) && hasExtraAxis(layout.chartSeries)) {
@@ -92,7 +92,7 @@ function getDefault(layout, colors) {
             title: {
                 text: 'Axis 1',
                 style: {
-                    // color: colors[0],
+                    color: extraOptions.multiAxisTheme[0].mainColor,
                     'font-weight': 700,
                 },
             },
@@ -102,7 +102,7 @@ function getDefault(layout, colors) {
             title: {
                 text: 'Axis 2',
                 style: {
-                    // color: colors[1],
+                    color: extraOptions.multiAxisTheme[1].mainColor,
                     'font-weight': 700,
                 },
             },
@@ -137,7 +137,7 @@ console.log("YAXIS", layout, series, extraOptions);
             yAxis = getGauge(series, extraOptions.legendSet);
             break;
         default:
-            yAxis = getDefault(layout, extraOptions.colors);
+            yAxis = getDefault(layout, extraOptions);
     }
 
     return yAxis;
