@@ -3,7 +3,7 @@ import getPie from './pie';
 import getGauge from './gauge';
 import getType, { isDualAxis } from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
-import { getFullIdAxisMap, getAxisIdMap, hasExtraAxis } from '../chartSeries';
+import { getFullIdAxisMap, getAxisIdsMap, hasExtraAxis } from '../seriesItems';
 import { generateColors } from '../../../../util/colors/gradientColorGenerator';
 
 const DEFAULT_ANIMATION_DURATION = 200;
@@ -29,14 +29,14 @@ function getColor(colors, index) {
 //     id2: 'color2',
 //     id3: 'color3',
 // };
-function getIdColorMap(chartSeries, series, layout, extraOptions) {
-    console.log("getIdColorMap", chartSeries);
-     if (hasExtraAxis(chartSeries) && isDualAxis(layout.type)) {
+function getIdColorMap(seriesItems, series, layout, extraOptions) {
+    console.log("getIdColorMap", seriesItems);
+     if (hasExtraAxis(seriesItems) && isDualAxis(layout.type)) {
         // {
         //     0: ['id1', 'id2', 'id3'],
         //     1: ['id4', 'id5'],
         // };
-        const axisIdMap = getAxisIdMap(chartSeries, series);
+        const axisIdsMap = getAxisIdsMap(seriesItems, series);
         // {
         //     0: {
         //         startColor: '#3f6a92',
@@ -52,15 +52,15 @@ function getIdColorMap(chartSeries, series, layout, extraOptions) {
         //     0: ['color1', 'color2', 'color3'],
         //     1: ['color4', 'color5'],
         // };
-        const colorsByAxis = Object.keys(axisIdMap).reduce((map, axis) => {
-            const numberOfIds = axisIdMap[axis].length;
+        const colorsByAxis = Object.keys(axisIdsMap).reduce((map, axis) => {
+            const numberOfIds = axisIdsMap[axis].length;
             map[axis] = generateColors(theme[axis].startColor, theme[axis].endColor, numberOfIds, true);
             return map;
         }, {});
 
         return Object.keys(colorsByAxis).reduce((map, axis) => {
             const colors = colorsByAxis[axis];
-            const ids = axisIdMap[axis];
+            const ids = axisIdsMap[axis];
 
             ids.forEach((id, index) => {
                 map[id] = colors[index];
@@ -79,8 +79,8 @@ function getIdColorMap(chartSeries, series, layout, extraOptions) {
 }
 
 function getDefault(series, store, layout, isStacked, extraOptions) {
-    const fullIdAxisMap = getFullIdAxisMap(layout.chartSeries, series);
-    const idColorMap = getIdColorMap(layout.chartSeries, series, layout, extraOptions);
+    const fullIdAxisMap = getFullIdAxisMap(layout.seriesItems, series);
+    const idColorMap = getIdColorMap(layout.seriesItems, series, layout, extraOptions);
 console.log("fullIdAxisMap", fullIdAxisMap);
 console.log("idColorMap", idColorMap);
     series.forEach((seriesObj, index) => {
