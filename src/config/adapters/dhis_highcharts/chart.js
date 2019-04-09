@@ -1,8 +1,10 @@
 import getType from './type';
 
 const DEFAULT_CHART = {
-    fontFamily: 'Roboto,Helvetica Neue,Helvetica,Arial,sans-serif !important',
-    spacingTop: 20
+    spacingTop: 20,
+    style: {
+        fontFamily: 'Roboto,Helvetica Neue,Helvetica,Arial,sans-serif',
+    },
 };
 
 const DASHBOARD_CHART = {

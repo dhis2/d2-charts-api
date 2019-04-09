@@ -27,12 +27,23 @@ const yearOverYearTypes = [
     CHART_TYPE_YEAR_OVER_YEAR_COLUMN
 ];
 
+const dualAxisTypes = [
+    CHART_TYPE_COLUMN,
+    CHART_TYPE_BAR,
+    CHART_TYPE_LINE,
+    CHART_TYPE_AREA,
+];
+
 export function getIsStacked(type) {
     return arrayContains(stackedTypes, type);
 }
 
 export function isYearOverYear(type) {
     return arrayContains(yearOverYearTypes, type);
+}
+
+export function isDualAxis(type) {
+    return arrayContains(dualAxisTypes, type);
 }
 
 export default function(type) {

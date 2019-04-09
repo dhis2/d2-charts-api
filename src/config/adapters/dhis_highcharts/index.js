@@ -13,6 +13,7 @@ import { getIsStacked } from './type';
 import getSortedConfig from './getSortedConfig';
 import getTrimmedConfig from './getTrimmedConfig';
 import addTrendLines, { isRegressionIneligible } from './addTrendLines';
+import { defaultMultiAxisTheme1 } from '../../../util/colors/themes';
 
 const getTransformedLayout = layout => ({
     ...layout,
@@ -23,8 +24,14 @@ const getTransformedLayout = layout => ({
     baseLineLabel: layout.baseLineLabel || layout.baseLineTitle,
 });
 
+const getTransformedExtraOptions = extraOptions => ({
+    ...extraOptions,
+    multiAxisTheme: extraOptions.multiAxisTheme || defaultMultiAxisTheme1,
+});
+
 export default function({ store, layout, el, extraConfig, extraOptions }) {
     const _layout = getTransformedLayout(layout);
+    const _extraOptions = getTransformedExtraOptions(extraOptions);
 
     let series = store.generateData({
         type: _layout.type,
@@ -36,25 +43,25 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
 
     let config = {
         // type etc
-        chart: getChart(_layout, el, extraOptions.dashboard),
+        chart: getChart(_layout, el, _extraOptions.dashboard),
 
         // title
-        title: getTitle(_layout, store.data[0].metaData, extraOptions.dashboard),
+        title: getTitle(_layout, store.data[0].metaData, _extraOptions.dashboard),
 
         // subtitle
-        subtitle: getSubtitle(series, _layout, store.data[0].metaData, extraOptions.dashboard),
+        subtitle: getSubtitle(series, _layout, store.data[0].metaData, _extraOptions.dashboard),
 
         // x-axis
-        xAxis: getXAxis(store, _layout, extraOptions),
+        xAxis: getXAxis(store, _layout, _extraOptions),
 
         // y-axis
-        yAxis: getYAxis(_layout, series, extraOptions),
+        yAxis: getYAxis(_layout, series, _extraOptions),
 
         // series
-        series: getSeries(series.slice(), store, _layout, isStacked, extraOptions),
+        series: getSeries(series.slice(), store, _layout, isStacked, _extraOptions),
 
         // legend
-        legend: getLegend(_layout, extraOptions.dashboard),
+        legend: getLegend(_layout, _extraOptions.dashboard),
 
         // pane
         pane: getPane(_layout.type),
