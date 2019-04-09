@@ -39,7 +39,7 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
     });
 
     const isStacked = getIsStacked(_layout.type);
-console.log("d2ca _layout", _layout);
+
     let config = {
         // type etc
         chart: getChart(_layout, el, _extraOptions.dashboard),
@@ -98,6 +98,6 @@ console.log("d2ca _layout", _layout);
 
     // force apply extra config
     Object.assign(config, extraConfig);
-console.log("returned chart config", config);
+
     return objectClean(config);
 }

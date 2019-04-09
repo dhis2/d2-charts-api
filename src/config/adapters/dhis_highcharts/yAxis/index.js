@@ -131,7 +131,6 @@ function getDefault(layout, extraOptions) {
 export default function(layout, series, extraOptions) {
     let yAxis;
 
-console.log("YAXIS", layout, series, extraOptions);
     switch (layout.type) {
         case CHART_TYPE_GAUGE:
             yAxis = getGauge(series, extraOptions.legendSet);

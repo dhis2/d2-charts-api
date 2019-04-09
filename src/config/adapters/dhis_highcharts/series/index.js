@@ -30,8 +30,7 @@ function getColor(colors, index) {
 //     id3: 'color3',
 // };
 function getIdColorMap(seriesItems, series, layout, extraOptions) {
-    console.log("getIdColorMap", seriesItems);
-     if (hasExtraAxis(seriesItems) && isDualAxis(layout.type)) {
+    if (hasExtraAxis(seriesItems) && isDualAxis(layout.type)) {
         // {
         //     0: ['id1', 'id2', 'id3'],
         //     1: ['id4', 'id5'],
@@ -74,6 +73,7 @@ function getIdColorMap(seriesItems, series, layout, extraOptions) {
 
         return series.reduce((map, s, index) => {
             map[s.id] = getColor(colors, index);
+            return map;
         }, {});
     }
 }
@@ -81,8 +81,7 @@ function getIdColorMap(seriesItems, series, layout, extraOptions) {
 function getDefault(series, store, layout, isStacked, extraOptions) {
     const fullIdAxisMap = getFullIdAxisMap(layout.seriesItems, series);
     const idColorMap = getIdColorMap(layout.seriesItems, series, layout, extraOptions);
-console.log("fullIdAxisMap", fullIdAxisMap);
-console.log("idColorMap", idColorMap);
+
     series.forEach((seriesObj, index) => {
         // show values
         if (layout.showValues || layout.showData) {
@@ -138,7 +137,7 @@ export default function(series, store, layout, isStacked, extraOptions) {
         default:
             series = getDefault(series, store, layout, isStacked, extraOptions);
     }
-console.log("extraOptions", extraOptions);
+
     series.forEach(seriesObj => {
         // animation
         seriesObj.animation = {
