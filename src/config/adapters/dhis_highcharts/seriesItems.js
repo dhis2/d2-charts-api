@@ -31,6 +31,17 @@ export function hasExtraAxis(seriesItems) {
     return Boolean(Object.keys(getIdAxisMap(seriesItems)).length);
 }
 
+// returns: true or false
+export function hasExtraAxisItems(seriesItems, columns) {
+    const axisIds = Object.keys(getIdAxisMap(seriesItems))
+    const seriesIds = columns.reduce((all, dim) => {
+        all.push(...(dim.items.map(item => item.id)));
+        return all;
+    }, []);
+
+    return axisIds.find(id => seriesIds.includes(id));
+}
+
 // returns:
 // {
 //     0: ['a', 'b'],
