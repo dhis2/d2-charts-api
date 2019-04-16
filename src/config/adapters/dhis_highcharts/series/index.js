@@ -3,7 +3,7 @@ import getPie from './pie';
 import getGauge from './gauge';
 import getType, { isDualAxis } from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
-import { getFullIdAxisMap, getAxisIdsMap, hasExtraAxis } from '../seriesItems';
+import { getFullIdAxisMap, getAxisIdsMap, hasExtraAxisItems } from '../seriesItems';
 import { generateColors } from '../../../../util/colors/gradientColorGenerator';
 
 const DEFAULT_ANIMATION_DURATION = 200;
@@ -23,34 +23,11 @@ function getColor(colors, index) {
     return colors[index] || getColor(colors, index - colors.length);
 }
 
-// returns:
-// {
-//     id1: 'color1',
-//     id2: 'color2',
-//     id3: 'color3',
-// };
 function getIdColorMap(seriesItems, series, layout, extraOptions) {
-    if (hasExtraAxis(seriesItems) && isDualAxis(layout.type)) {
-        // {
-        //     0: ['id1', 'id2', 'id3'],
-        //     1: ['id4', 'id5'],
-        // };
+    if (hasExtraAxisItems(seriesItems, layout.columns) && isDualAxis(layout.type)) {
         const axisIdsMap = getAxisIdsMap(seriesItems, series);
-        // {
-        //     0: {
-        //         startColor: '#3f6a92',
-        //         endColor: '#6cb8ff'
-        //     },
-        //     1: {
-        //         startColor: '#9e3640',
-        //         endColor: '#ff5666',
-        //     },
-        // };
         const theme = extraOptions.multiAxisTheme;
-        // {
-        //     0: ['color1', 'color2', 'color3'],
-        //     1: ['color4', 'color5'],
-        // };
+
         const colorsByAxis = Object.keys(axisIdsMap).reduce((map, axis) => {
             const numberOfIds = axisIdsMap[axis].length;
             map[axis] = generateColors(theme[axis].startColor, theme[axis].endColor, numberOfIds, true);

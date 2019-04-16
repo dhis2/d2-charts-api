@@ -6,7 +6,7 @@ import getAxisTitle from '../getAxisTitle';
 import { CHART_TYPE_GAUGE, isDualAxis } from '../type';
 import getGauge from './gauge';
 import { getIsStacked } from '../type';
-import { hasExtraAxis, hasExtraAxisItems } from '../seriesItems';
+import { hasExtraAxisItems } from '../seriesItems';
 
 const DEFAULT_MIN_VALUE = 0;
 
@@ -88,7 +88,6 @@ function getDefault(layout, extraOptions) {
     const axes = [];
 
     if (isDualAxis(layout.type) &&
-        hasExtraAxis(layout.seriesItems) &&
         hasExtraAxisItems(layout.seriesItems, layout.columns)) {
         axes.push({
             title: {
