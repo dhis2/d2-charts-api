@@ -31,7 +31,6 @@ const dualAxisTypes = [
     CHART_TYPE_COLUMN,
     CHART_TYPE_BAR,
     CHART_TYPE_LINE,
-    CHART_TYPE_AREA,
 ];
 
 export function getIsStacked(type) {

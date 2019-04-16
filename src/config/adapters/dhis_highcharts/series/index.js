@@ -87,7 +87,8 @@ function getDefault(series, store, layout, isStacked, extraOptions) {
         // color
         seriesObj.color = idColorMap[seriesObj.id];
 
-        seriesObj.yAxis = fullIdAxisMap[seriesObj.id];
+        // axis number
+        seriesObj.yAxis = isDualAxis(layout.type) ? fullIdAxisMap[seriesObj.id] : 0;
 
         // custom names for "year over year" series
         if (extraOptions.yearlySeries) {
