@@ -84,31 +84,43 @@ function getLabels(layout) {
     return isNumeric(layout.rangeAxisDecimals) ? getFormatter(layout) : undefined;
 }
 
-function getDefault(layout, extraOptions) {
-    const axes = [];
-
-    if (isDualAxis(layout.type) &&
-        hasExtraAxisItems(layout.seriesItems, layout.columns)) {
-        axes.push({
+function getDualAxes(theme) {
+    return [
+        {
             title: {
                 text: 'Axis 1',
                 style: {
-                    color: extraOptions.multiAxisTheme[0].mainColor,
+                    color: theme[0].mainColor,
                     'font-weight': 700,
                 },
             },
-        });
-
-        axes.push({
+        }, {
             title: {
                 text: 'Axis 2',
                 style: {
-                    color: extraOptions.multiAxisTheme[1].mainColor,
+                    color: theme[1].mainColor,
                     'font-weight': 700,
                 },
             },
             opposite: true,
-        });
+        }
+    ];
+}
+
+function isDataSeries(layout) {
+    return Array.isArray(layout.columns) &&
+        layout.columns[0] &&
+        layout.columns[0].dimension === 'dx';
+}
+
+function getDefault(layout, extraOptions) {
+    const axes = [];
+
+    if (isDualAxis(layout.type) &&
+        isDataSeries(layout) &&
+        hasExtraAxisItems(layout.seriesItems, layout.columns)) {
+            const dualAxes = getDualAxes(extraOptions.multiAxisTheme);
+            axes.push(dualAxes[0], dualAxes[1]);
     }
     else {
         axes.push(objectClean({
