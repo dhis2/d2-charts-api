@@ -56,7 +56,7 @@ function getIdColorMap(series, layout, extraOptions) {
     }
 }
 
-function getDefault(series, store, layout, isStacked, extraOptions) {
+function getDefault(series, layout, isStacked, extraOptions) {
     const fullIdAxisMap = getFullIdAxisMap(layout.seriesItems, series);
     const idColorMap = getIdColorMap(series, layout, extraOptions);
 
@@ -114,7 +114,7 @@ export default function(series, store, layout, isStacked, extraOptions) {
             series = getGauge(series, extraOptions.dashboard);
             break;
         default:
-            series = getDefault(series, store, layout, isStacked, extraOptions);
+            series = getDefault(series, layout, isStacked, extraOptions);
     }
 
     series.forEach(seriesObj => {
