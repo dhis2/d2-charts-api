@@ -3,10 +3,10 @@ import objectClean from 'd2-utilizr/lib/objectClean';
 import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
 import getAxisTitle from '../getAxisTitle';
-import { CHART_TYPE_GAUGE, isDualAxis } from '../type';
+import { CHART_TYPE_GAUGE } from '../type';
 import getGauge from './gauge';
 import { getIsStacked } from '../type';
-import { hasExtraAxisItems } from '../seriesItems';
+import { shouldHaveDualAxis } from '../layout';
 
 const DEFAULT_MIN_VALUE = 0;
 
@@ -84,31 +84,35 @@ function getLabels(layout) {
     return isNumeric(layout.rangeAxisDecimals) ? getFormatter(layout) : undefined;
 }
 
-function getDefault(layout, extraOptions) {
-    const axes = [];
-
-    if (isDualAxis(layout.type) &&
-        hasExtraAxisItems(layout.seriesItems, layout.columns)) {
-        axes.push({
+function getDualAxes(theme) {
+    return [
+        {
             title: {
                 text: 'Axis 1',
                 style: {
-                    color: extraOptions.multiAxisTheme[0].mainColor,
+                    color: theme[0].mainColor,
                     'font-weight': 700,
                 },
             },
-        });
-
-        axes.push({
+        }, {
             title: {
                 text: 'Axis 2',
                 style: {
-                    color: extraOptions.multiAxisTheme[1].mainColor,
+                    color: theme[1].mainColor,
                     'font-weight': 700,
                 },
             },
             opposite: true,
-        });
+        }
+    ];
+}
+
+function getDefault(layout, extraOptions) {
+    const axes = [];
+
+    if (shouldHaveDualAxis(layout)) {
+            const dualAxes = getDualAxes(extraOptions.multiAxisTheme);
+            axes.push(dualAxes[0], dualAxes[1]);
     }
     else {
         axes.push(objectClean({

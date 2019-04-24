@@ -3,8 +3,9 @@ import getPie from './pie';
 import getGauge from './gauge';
 import getType, { isDualAxis } from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
-import { getFullIdAxisMap, getAxisIdsMap, hasExtraAxisItems } from '../seriesItems';
+import { getFullIdAxisMap, getAxisIdsMap } from '../seriesItems';
 import { generateColors } from '../../../../util/colors/gradientColorGenerator';
+import { shouldHaveDualAxis } from '../layout';
 
 const DEFAULT_ANIMATION_DURATION = 200;
 
@@ -23,9 +24,9 @@ function getColor(colors, index) {
     return colors[index] || getColor(colors, index - colors.length);
 }
 
-function getIdColorMap(seriesItems, series, layout, extraOptions) {
-    if (hasExtraAxisItems(seriesItems, layout.columns) && isDualAxis(layout.type)) {
-        const axisIdsMap = getAxisIdsMap(seriesItems, series);
+function getIdColorMap(series, layout, extraOptions) {
+    if (shouldHaveDualAxis(layout)) {
+        const axisIdsMap = getAxisIdsMap(layout.seriesItems, series);
         const theme = extraOptions.multiAxisTheme;
 
         const colorsByAxis = Object.keys(axisIdsMap).reduce((map, axis) => {
@@ -57,7 +58,7 @@ function getIdColorMap(seriesItems, series, layout, extraOptions) {
 
 function getDefault(series, store, layout, isStacked, extraOptions) {
     const fullIdAxisMap = getFullIdAxisMap(layout.seriesItems, series);
-    const idColorMap = getIdColorMap(layout.seriesItems, series, layout, extraOptions);
+    const idColorMap = getIdColorMap(series, layout, extraOptions);
 
     series.forEach((seriesObj, index) => {
         // show values
