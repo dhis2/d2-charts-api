@@ -1,7 +1,7 @@
 import getCumulativeData from './../getCumulativeData';
 import getPie from './pie';
 import getGauge from './gauge';
-import getType, { isDualAxis } from '../type';
+import getType, { isDualAxis, isYearOverYear } from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
 import { getFullIdAxisMap, getAxisIdsMap } from '../seriesItems';
 import { generateColors } from '../../../../util/colors/gradientColorGenerator';
@@ -56,7 +56,7 @@ function getIdColorMap(series, layout, extraOptions) {
     }
 }
 
-function getDefault(series, store, layout, isStacked, extraOptions) {
+function getDefault(series, layout, isStacked, extraOptions) {
     const fullIdAxisMap = getFullIdAxisMap(layout.seriesItems, series);
     const idColorMap = getIdColorMap(series, layout, extraOptions);
 
@@ -86,7 +86,9 @@ function getDefault(series, store, layout, isStacked, extraOptions) {
         }
 
         // color
-        seriesObj.color = idColorMap[seriesObj.id];
+        seriesObj.color = isYearOverYear(layout.type) ?
+            extraOptions.colors[index] :
+            idColorMap[seriesObj.id];
 
         // axis number
         seriesObj.yAxis = isDualAxis(layout.type) ? fullIdAxisMap[seriesObj.id] : 0;
@@ -114,7 +116,7 @@ export default function(series, store, layout, isStacked, extraOptions) {
             series = getGauge(series, extraOptions.dashboard);
             break;
         default:
-            series = getDefault(series, store, layout, isStacked, extraOptions);
+            series = getDefault(series, layout, isStacked, extraOptions);
     }
 
     series.forEach(seriesObj => {
