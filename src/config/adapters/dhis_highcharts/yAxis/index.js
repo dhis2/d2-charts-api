@@ -3,10 +3,10 @@ import objectClean from 'd2-utilizr/lib/objectClean';
 import isNumeric from 'd2-utilizr/lib/isNumeric';
 import isString from 'd2-utilizr/lib/isString';
 import getAxisTitle from '../getAxisTitle';
-import { CHART_TYPE_GAUGE, isDualAxis } from '../type';
+import { CHART_TYPE_GAUGE } from '../type';
 import getGauge from './gauge';
 import { getIsStacked } from '../type';
-import { hasExtraAxisItems } from '../seriesItems';
+import { shouldHaveDualAxis } from '../layout';
 
 const DEFAULT_MIN_VALUE = 0;
 
@@ -25,8 +25,6 @@ const DEFAULT_PLOTLINE_LABEL = {
         textShadow: '0 0 6px #FFF',
     },
 };
-
-const DATA_DIMENSION_ID = 'dx';
 
 function getMinValue(layout) {
     return isNumeric(layout.rangeAxisMinValue) ? layout.rangeAxisMinValue : DEFAULT_MIN_VALUE;
@@ -109,18 +107,10 @@ function getDualAxes(theme) {
     ];
 }
 
-function isDataSeries(layout) {
-    return Array.isArray(layout.columns) &&
-        layout.columns[0] &&
-        layout.columns[0].dimension === DATA_DIMENSION_ID;
-}
-
 function getDefault(layout, extraOptions) {
     const axes = [];
 
-    if (isDualAxis(layout.type) &&
-        isDataSeries(layout) &&
-        hasExtraAxisItems(layout.seriesItems, layout.columns)) {
+    if (shouldHaveDualAxis(layout)) {
             const dualAxes = getDualAxes(extraOptions.multiAxisTheme);
             axes.push(dualAxes[0], dualAxes[1]);
     }
