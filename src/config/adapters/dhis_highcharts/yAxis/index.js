@@ -26,6 +26,8 @@ const DEFAULT_PLOTLINE_LABEL = {
     },
 };
 
+const DATA_DIMENSION_ID = 'dx';
+
 function getMinValue(layout) {
     return isNumeric(layout.rangeAxisMinValue) ? layout.rangeAxisMinValue : DEFAULT_MIN_VALUE;
 }
@@ -110,7 +112,7 @@ function getDualAxes(theme) {
 function isDataSeries(layout) {
     return Array.isArray(layout.columns) &&
         layout.columns[0] &&
-        layout.columns[0].dimension === 'dx';
+        layout.columns[0].dimension === DATA_DIMENSION_ID;
 }
 
 function getDefault(layout, extraOptions) {
