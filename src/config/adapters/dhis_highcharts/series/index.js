@@ -3,7 +3,7 @@ import getPie from './pie';
 import getGauge from './gauge';
 import getType, { isDualAxis } from '../type';
 import { CHART_TYPE_PIE, CHART_TYPE_GAUGE } from '../type';
-import { getFullIdAxisMap, getAxisIdsMap, hasExtraAxisItems } from '../seriesItems';
+import { getFullIdAxisMap, getAxisIdsMap } from '../seriesItems';
 import { generateColors } from '../../../../util/colors/gradientColorGenerator';
 import { shouldHaveDualAxis } from '../layout';
 
