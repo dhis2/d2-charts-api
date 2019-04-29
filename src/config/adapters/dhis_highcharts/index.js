@@ -22,6 +22,9 @@ const getTransformedLayout = layout => ({
     domainAxisLabel: layout.domainAxisLabel || layout.domainAxisTitle,
     targetLineLabel: layout.targetLineLabel || layout.targetLineTitle,
     baseLineLabel: layout.baseLineLabel || layout.baseLineTitle,
+    // DHIS2-6774: make sure seriesItems is initialized as Array when switching
+    // visualization type in dashboards app
+    seriesItems: layout.seriesItems || [],
 });
 
 const getTransformedExtraOptions = extraOptions => ({
