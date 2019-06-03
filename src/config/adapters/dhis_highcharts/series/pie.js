@@ -6,6 +6,7 @@ export default function(series, store, layout, isStacked, colors) {
             allowPointSelect: true,
             cursor: 'pointer',
             data: series,
+            colors: colors,
             dataLabels: {
                 enabled: true,
                 formatter: function() {
