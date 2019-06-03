@@ -1,5 +1,7 @@
 import highcharts from './highcharts';
+import dhis from './dhis';
 
 export default {
-    highcharts
+    highcharts,
+    dhis
 };
