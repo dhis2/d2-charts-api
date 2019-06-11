@@ -41,7 +41,8 @@ export default function({ store, layout, el, extraConfig, extraOptions }) {
         seriesId: _layout.columns && _layout.columns.length ? _layout.columns[0].dimension : null,
         categoryId: _layout.rows && _layout.rows.length ? _layout.rows[0].dimension : null,
     });
-
+console.log("STORE", store);
+console.log("SERIES", series);
     const isStacked = getIsStacked(_layout.type);
 
     let config = {

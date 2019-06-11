@@ -1,0 +1,1 @@
+export const CHART_TYPE_SINGLE_VALUE = 'SINGLE_VALUE';
