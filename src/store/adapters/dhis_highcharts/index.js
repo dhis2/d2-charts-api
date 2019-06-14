@@ -1,107 +1,117 @@
-import getYearOnYear from './yearOnYear';
-import getPie from './pie';
-import getGauge from './gauge';
+import getYearOnYear from './yearOnYear'
+import getPie from './pie'
+import getGauge from './gauge'
 import {
-    CHART_TYPE_YEAR_OVER_YEAR_COLUMN, CHART_TYPE_YEAR_OVER_YEAR_LINE, CHART_TYPE_PIE, CHART_TYPE_GAUGE
-} from '../../../config/adapters/dhis_highcharts/type';
+    CHART_TYPE_YEAR_OVER_YEAR_COLUMN,
+    CHART_TYPE_YEAR_OVER_YEAR_LINE,
+    CHART_TYPE_PIE,
+    CHART_TYPE_GAUGE,
+} from '../../../config/adapters/dhis_highcharts/type'
 
-const VALUE_ID = 'value';
+const VALUE_ID = 'value'
 
 function getHeaderIdIndexMap(headers) {
-    const map = new Map();
+    const map = new Map()
 
     headers.forEach((header, index) => {
-        map.set(header.name, index);
-    });
+        map.set(header.name, index)
+    })
 
-    return map;
+    return map
 }
 
 function getPrefixedId(row, header) {
-    return (header.isPrefix ? header.name + '_' : '') + row[header.index];
+    return (header.isPrefix ? header.name + '_' : '') + row[header.index]
 }
 
+/* eslint-disable-next-line max-params */
 function getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex) {
-    const map = new Map();
+    const map = new Map()
 
-    let key;
-    let value;
+    let key
+    let value
 
     rows.forEach(row => {
         key = [
             ...(seriesHeader ? [getPrefixedId(row, seriesHeader)] : []),
             ...(categoryHeader ? [getPrefixedId(row, categoryHeader)] : []),
-        ].join('-');
+        ].join('-')
 
-        value = row[valueIndex];
+        value = row[valueIndex]
 
-        map.set(key, value);
-    });
+        map.set(key, value)
+    })
 
-    return map;
+    return map
 }
 
+/* eslint-disable-next-line max-params */
 function getDefault(acc, seriesIds, categoryIds, idValueMap, metaData) {
     seriesIds.forEach(seriesId => {
-        const serieData = [];
-        const serieLabel = metaData.items[seriesId].name;
+        const serieData = []
+        const serieLabel = metaData.items[seriesId].name
 
         categoryIds.forEach(categoryId => {
-            const value = idValueMap.get(`${seriesId}-${categoryId}`);
+            const value = idValueMap.get(`${seriesId}-${categoryId}`)
 
             // DHIS2-1261: 0 is a valid value
             // undefined value means the key was not found within the rows
             // in that case null is returned as value in the serie for highcharts
-            serieData.push(value == undefined ? null : parseFloat(value));
-        });
+            serieData.push(value == undefined ? null : parseFloat(value))
+        })
 
         acc.push({
             id: seriesId,
             name: metaData.items[seriesId].name,
             data: serieData,
-        });
-    });
+        })
+    })
 
-    return acc;
+    return acc
 }
 
 function getSeriesFunction(type) {
     switch (type) {
         case CHART_TYPE_PIE:
-            return getPie;
+            return getPie
         case CHART_TYPE_GAUGE:
-            return getGauge;
+            return getGauge
         case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
         case CHART_TYPE_YEAR_OVER_YEAR_LINE:
-            return getYearOnYear;
+            return getYearOnYear
         default:
-            return getDefault;
+            return getDefault
     }
 }
 
 export default function({ type, data, seriesId, categoryId }) {
-    const seriesFunction = getSeriesFunction(type);
+    const seriesFunction = getSeriesFunction(type)
 
     return data.reduce((acc, res) => {
-        const headers = res.headers;
-        const metaData = res.metaData;
-        const rows = res.rows;
-        const headerIdIndexMap = getHeaderIdIndexMap(headers);
+        const headers = res.headers
+        const metaData = res.metaData
+        const rows = res.rows
+        const headerIdIndexMap = getHeaderIdIndexMap(headers)
 
-        const seriesIndex = headerIdIndexMap.get(seriesId);
-        const categoryIndex = headerIdIndexMap.get(categoryId);
-        const valueIndex = headerIdIndexMap.get(VALUE_ID);
+        const seriesIndex = headerIdIndexMap.get(seriesId)
+        const categoryIndex = headerIdIndexMap.get(categoryId)
+        const valueIndex = headerIdIndexMap.get(VALUE_ID)
 
-        const seriesHeader = headers[seriesIndex];
-        const categoryHeader = headers[categoryIndex];
+        const seriesHeader = headers[seriesIndex]
+        const categoryHeader = headers[categoryIndex]
 
-        const idValueMap = getIdValueMap(rows, seriesHeader, categoryHeader, valueIndex);
+        const idValueMap = getIdValueMap(
+            rows,
+            seriesHeader,
+            categoryHeader,
+            valueIndex
+        )
 
-        const seriesIds = metaData.dimensions[seriesId];
-        const categoryIds = metaData.dimensions[categoryId];
+        const seriesIds = metaData.dimensions[seriesId]
+        const categoryIds = metaData.dimensions[categoryId]
 
-        seriesFunction(acc, seriesIds, categoryIds, idValueMap, metaData);
+        seriesFunction(acc, seriesIds, categoryIds, idValueMap, metaData)
 
-        return acc;
-    }, []);
+        return acc
+    }, [])
 }

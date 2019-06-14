@@ -1,8 +1,8 @@
-import dhis from './dhis';
+import dhis from './dhis'
 
-const noValidation = (data) => data;
+const noValidation = data => data
 
 export default {
     dhis,
-    noValidation
-};
+    noValidation,
+}

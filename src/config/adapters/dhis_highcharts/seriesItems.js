@@ -1,5 +1,5 @@
-export const SERIES_ITEM_SERIES = 'series';
-export const SERIES_ITEM_AXIS = 'axis';
+export const SERIES_ITEM_SERIES = 'series'
+export const SERIES_ITEM_AXIS = 'axis'
 
 // returns:
 // {
@@ -8,38 +8,38 @@ export const SERIES_ITEM_AXIS = 'axis';
 // }
 export function getIdAxisMap(seriesItems) {
     return seriesItems.reduce((map, item) => {
-        map[item[SERIES_ITEM_SERIES]] = item[SERIES_ITEM_AXIS];
-        return map;
-    }, {});
+        map[item[SERIES_ITEM_SERIES]] = item[SERIES_ITEM_AXIS]
+        return map
+    }, {})
 }
 
 export function getFullIdAxisMap(seriesItems, series) {
-    const idAxisMap = getIdAxisMap(seriesItems);
+    const idAxisMap = getIdAxisMap(seriesItems)
 
     // adds first axis ids to seriesAxisMap
     series.forEach(s => {
         if (!(s.id in idAxisMap)) {
-            idAxisMap[s.id] = 0;
+            idAxisMap[s.id] = 0
         }
-    });
+    })
 
-    return idAxisMap;
+    return idAxisMap
 }
 
 // returns: true or false
 export function hasExtraAxis(seriesItems) {
-    return Boolean(Object.keys(getIdAxisMap(seriesItems)).length);
+    return Boolean(Object.keys(getIdAxisMap(seriesItems)).length)
 }
 
 // returns: true or false
 export function hasExtraAxisItems(seriesItems, columns) {
     const axisIds = Object.keys(getIdAxisMap(seriesItems))
     const seriesIds = columns.reduce((all, dim) => {
-        all.push(...(dim.items.map(item => item.id)));
-        return all;
-    }, []);
+        all.push(...dim.items.map(item => item.id))
+        return all
+    }, [])
 
-    return axisIds.find(id => seriesIds.includes(id));
+    return axisIds.find(id => seriesIds.includes(id))
 }
 
 // returns:
@@ -48,14 +48,14 @@ export function hasExtraAxisItems(seriesItems, columns) {
 //     1: ['c'],
 // }
 export function getAxisIdsMap(seriesItems, series) {
-    const fullIdAxisMap = getFullIdAxisMap(seriesItems, series);
+    const fullIdAxisMap = getFullIdAxisMap(seriesItems, series)
 
     return Object.entries(fullIdAxisMap).reduce((map, [id, axis]) => {
         if (!(axis in map)) {
-            map[axis] = [];
+            map[axis] = []
         }
 
-        map[axis].push(id);
-        return map;
-    }, {});
+        map[axis].push(id)
+        return map
+    }, {})
 }

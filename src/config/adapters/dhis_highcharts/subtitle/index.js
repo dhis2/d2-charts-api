@@ -1,13 +1,13 @@
-import isString from 'd2-utilizr/lib/isString';
-import getGauge from './gauge';
-import getFilterTitle from '../getFilterTitle';
+import isString from 'd2-utilizr/lib/isString'
+import getGauge from './gauge'
+import getFilterTitle from '../getFilterTitle'
 import {
     CHART_TYPE_PIE,
     CHART_TYPE_GAUGE,
     CHART_TYPE_YEAR_OVER_YEAR_LINE,
     CHART_TYPE_YEAR_OVER_YEAR_COLUMN,
-} from '../type';
-import getYearOverYearTitle from '../title/yearOverYear';
+} from '../type'
+import getYearOverYearTitle from '../title/yearOverYear'
 
 const DEFAULT_SUBTITLE = {
     style: {
@@ -20,7 +20,7 @@ const DEFAULT_SUBTITLE = {
         color: '#555',
         textShadow: '0 0 #999',
     },
-};
+}
 
 const DASHBOARD_SUBTITLE = {
     style: {
@@ -31,40 +31,50 @@ const DASHBOARD_SUBTITLE = {
 
         fontSize: '12px',
     },
-};
+}
 
 function getDefault(layout, dashboard, filterTitle) {
     return {
         text: dashboard || isString(layout.title) ? filterTitle : undefined,
-    };
+    }
 }
 
+/* eslint-disable-next-line max-params */
 export default function(series, layout, metaData, dashboard) {
     let subtitle = {
         text: undefined,
-    };
+    }
 
     if (layout.hideSubtitle) {
-        return null;
+        return null
     }
 
     // DHIS2-578: allow for optional custom subtitle
     if (isString(layout.subtitle)) {
-        subtitle.text = layout.subtitle;
+        subtitle.text = layout.subtitle
     } else {
-        const filterTitle = getFilterTitle(layout.filters, metaData);
+        const filterTitle = getFilterTitle(layout.filters, metaData)
 
         switch (layout.type) {
             case CHART_TYPE_YEAR_OVER_YEAR_LINE:
             case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
-                subtitle.text = getYearOverYearTitle(layout, metaData, Boolean(!dashboard));
-                break;
+                subtitle.text = getYearOverYearTitle(
+                    layout,
+                    metaData,
+                    Boolean(!dashboard)
+                )
+                break
             default:
-                subtitle = getDefault(layout, dashboard, filterTitle);
+                subtitle = getDefault(layout, dashboard, filterTitle)
         }
     }
 
     return subtitle
-        ? Object.assign({}, DEFAULT_SUBTITLE, dashboard ? DASHBOARD_SUBTITLE : undefined, subtitle)
-        : subtitle;
+        ? Object.assign(
+              {},
+              DEFAULT_SUBTITLE,
+              dashboard ? DASHBOARD_SUBTITLE : undefined,
+              subtitle
+          )
+        : subtitle
 }

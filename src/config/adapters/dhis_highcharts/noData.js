@@ -1,8 +1,8 @@
-export default function () {
-    return {
+export default function() {
+    return {
         style: {
             fontSize: '13px',
-            fontWeight: 'normal'
-        }
-    };
+            fontWeight: 'normal',
+        },
+    }
 }

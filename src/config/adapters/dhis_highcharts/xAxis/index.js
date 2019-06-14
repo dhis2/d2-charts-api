@@ -1,16 +1,16 @@
-import objectClean from 'd2-utilizr/lib/objectClean';
-import getAxisTitle from '../getAxisTitle';
-import getCategories from '../getCategories';
-import getYearOnYear from './yearOnYear';
+import objectClean from 'd2-utilizr/lib/objectClean'
+import getAxisTitle from '../getAxisTitle'
+import getCategories from '../getCategories'
+import getYearOnYear from './yearOnYear'
 import {
     CHART_TYPE_GAUGE,
     CHART_TYPE_YEAR_OVER_YEAR_LINE,
     CHART_TYPE_YEAR_OVER_YEAR_COLUMN,
     CHART_TYPE_PIE,
-} from '../type';
+} from '../type'
 
 function noAxis() {
-    return null;
+    return null
 }
 
 function getDefault(store, layout) {
@@ -23,24 +23,24 @@ function getDefault(store, layout) {
                 textShadow: '0 0 #ccc',
             },
         },
-    });
+    })
 }
 
 export default function(store, layout, extraOptions) {
-    let xAxis;
+    let xAxis
 
     switch (layout.type) {
         case CHART_TYPE_PIE:
         case CHART_TYPE_GAUGE:
-            xAxis = noAxis();
-            break;
+            xAxis = noAxis()
+            break
         case CHART_TYPE_YEAR_OVER_YEAR_LINE:
         case CHART_TYPE_YEAR_OVER_YEAR_COLUMN:
-            xAxis = getYearOnYear(store, layout, extraOptions);
-            break;
+            xAxis = getYearOnYear(store, layout, extraOptions)
+            break
         default:
-            xAxis = getDefault(store, layout);
+            xAxis = getDefault(store, layout)
     }
 
-    return xAxis;
+    return xAxis
 }

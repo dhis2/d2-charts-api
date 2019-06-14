@@ -1,110 +1,164 @@
-import arrayContains from 'd2-utilizr/lib/arrayContains';
-import arrayUnique from 'd2-utilizr/lib/arrayUnique';
+import arrayContains from 'd2-utilizr/lib/arrayContains'
+import arrayUnique from 'd2-utilizr/lib/arrayUnique'
 
 function arrayCleanUndefined(array) {
-    return array.filter(item => item !== undefined);
+    return array.filter(item => item !== undefined)
 }
 
-function arrayNullsOnly(array) {
-    return arrayContains(array, null) && arrayUnique(array).length === 1;
+function arrayNullsOnly(array) {
+    return arrayContains(array, null) && arrayUnique(array).length === 1
 }
 
-function getEmptySeriesIndexes(series) {
-    const emptyIndexes = [];
-    let seriesValues;
+function getEmptySeriesIndexes(series) {
+    const emptyIndexes = []
+    let seriesValues
 
-    series[0].data.forEach((value, index) => {
-        seriesValues = [];
+    series[0].data.forEach((value, index) => {
+        seriesValues = []
 
-        series.forEach(seriesObj => {
-            seriesValues.push(seriesObj.data[index]);
-        });
+        series.forEach(seriesObj => {
+            seriesValues.push(seriesObj.data[index])
+        })
 
-        if (arrayNullsOnly(seriesValues)) {
-            emptyIndexes.push(index);
+        if (arrayNullsOnly(seriesValues)) {
+            emptyIndexes.push(index)
         }
-    });
+    })
 
-    return emptyIndexes;
+    return emptyIndexes
 }
 
 function getFirstLastValueIndexes(series) {
-    let firstValueIndex = undefined;
-    let lastValueIndex = 0;
-    let data;
-    let i;
+    let firstValueIndex = undefined
+    let lastValueIndex = 0
+    let data
+    let i
 
     series.forEach(seriesObj => {
         // make a copy of the array so we can reverse it
         // without affecting the original
-        data = seriesObj.data.slice();
+        data = seriesObj.data.slice()
 
-        i = data.findIndex(value => value != undefined);
-
-        if (i > -1) {
-            firstValueIndex = (firstValueIndex !== undefined) ? Math.min(firstValueIndex, i) : i;
-        }
-
-        i = data.reverse().findIndex(value => value != undefined);
+        i = data.findIndex(value => value != undefined)
 
         if (i > -1) {
-            lastValueIndex = Math.max(lastValueIndex, (data.length - 1 - i));
+            firstValueIndex =
+                firstValueIndex !== undefined ? Math.min(firstValueIndex, i) : i
         }
-    });
 
-    return { firstValueIndex, lastValueIndex };
+        i = data.reverse().findIndex(value => value != undefined)
+
+        if (i > -1) {
+            lastValueIndex = Math.max(lastValueIndex, data.length - 1 - i)
+        }
+    })
+
+    return { firstValueIndex, lastValueIndex }
 }
 
-function cleanData(data, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems) {
-    let cleanedData;
+/* eslint-disable-next-line max-params */
+function cleanData(
+    data,
+    emptySeriesIndexes,
+    firstValueIndex,
+    lastValueIndex,
+    hideEmptyRowItems
+) {
+    let cleanedData
 
     switch (hideEmptyRowItems) {
         case 'ALL':
-            cleanedData = arrayCleanUndefined(data.map((value, index) => arrayContains(emptySeriesIndexes, index) ? undefined : value));
-            break;
+            cleanedData = arrayCleanUndefined(
+                data.map((value, index) =>
+                    arrayContains(emptySeriesIndexes, index) ? undefined : value
+                )
+            )
+            break
         case 'BEFORE_FIRST':
-            cleanedData = data.slice(firstValueIndex);
-            break;
+            cleanedData = data.slice(firstValueIndex)
+            break
         case 'AFTER_LAST':
-            cleanedData = data.slice(0, lastValueIndex + 1);
-            break;
+            cleanedData = data.slice(0, lastValueIndex + 1)
+            break
         case 'BEFORE_FIRST_AFTER_LAST':
-            cleanedData = data.slice(firstValueIndex, lastValueIndex + 1);
-            break;
+            cleanedData = data.slice(firstValueIndex, lastValueIndex + 1)
+            break
         default:
-            cleanedData = data;
+            cleanedData = data
     }
 
-    return cleanedData;
+    return cleanedData
 }
 
-function getTrimmedXAxisObject(xAxis, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems) {
+/* eslint-disable-next-line max-params */
+function getTrimmedXAxisObject(
+    xAxis,
+    emptySeriesIndexes,
+    firstValueIndex,
+    lastValueIndex,
+    hideEmptyRowItems
+) {
     return {
         xAxis: {
             ...xAxis,
-            categories: cleanData(xAxis.categories, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems)
-        }
-    };
+            categories: cleanData(
+                xAxis.categories,
+                emptySeriesIndexes,
+                firstValueIndex,
+                lastValueIndex,
+                hideEmptyRowItems
+            ),
+        },
+    }
 }
 
-function getTrimmedSeriesObject(series, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems) {
+/* eslint-disable-next-line max-params */
+function getTrimmedSeriesObject(
+    series,
+    emptySeriesIndexes,
+    firstValueIndex,
+    lastValueIndex,
+    hideEmptyRowItems
+) {
     return {
         series: series.map(seriesObj => ({
             ...seriesObj,
-            data: cleanData(seriesObj.data, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems)
-        }))
-    };
+            data: cleanData(
+                seriesObj.data,
+                emptySeriesIndexes,
+                firstValueIndex,
+                lastValueIndex,
+                hideEmptyRowItems
+            ),
+        })),
+    }
 }
 
-export default function (config, hideEmptyRowItems) {
-    const emptySeriesIndexes = getEmptySeriesIndexes(config.series);
+export default function(config, hideEmptyRowItems) {
+    const emptySeriesIndexes = getEmptySeriesIndexes(config.series)
 
-    const { firstValueIndex, lastValueIndex } = getFirstLastValueIndexes(config.series);
+    const { firstValueIndex, lastValueIndex } = getFirstLastValueIndexes(
+        config.series
+    )
 
-    return emptySeriesIndexes.length && config.xAxis && config.series ?
-        Object.assign({},
-            config,
-            getTrimmedXAxisObject(config.xAxis, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems),
-            getTrimmedSeriesObject(config.series, emptySeriesIndexes, firstValueIndex, lastValueIndex, hideEmptyRowItems)
-        ) : config;
+    return emptySeriesIndexes.length && config.xAxis && config.series
+        ? Object.assign(
+              {},
+              config,
+              getTrimmedXAxisObject(
+                  config.xAxis,
+                  emptySeriesIndexes,
+                  firstValueIndex,
+                  lastValueIndex,
+                  hideEmptyRowItems
+              ),
+              getTrimmedSeriesObject(
+                  config.series,
+                  emptySeriesIndexes,
+                  firstValueIndex,
+                  lastValueIndex,
+                  hideEmptyRowItems
+              )
+          )
+        : config
 }

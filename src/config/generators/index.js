@@ -1,5 +1,5 @@
-import highcharts from './highcharts';
+import highcharts from './highcharts'
 
 export default {
-    highcharts
-};
+    highcharts,
+}

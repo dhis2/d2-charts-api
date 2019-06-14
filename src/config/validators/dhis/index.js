@@ -1,3 +1,3 @@
-export default function ({ layout, onError, onWarning }) {
-    return layout;
+export default function({ layout, onError, onWarning }) {
+    return layout
 }

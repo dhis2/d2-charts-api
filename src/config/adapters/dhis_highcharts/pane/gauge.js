@@ -1,4 +1,4 @@
-export default function () {
+export default function() {
     return {
         center: ['50%', '85%'],
         size: '90%',
@@ -8,7 +8,7 @@ export default function () {
             backgroundColor: '#F1F1F1',
             innerRadius: '60%',
             outerRadius: '100%',
-            shape: 'arc'
-        }
-    };
+            shape: 'arc',
+        },
+    }
 }

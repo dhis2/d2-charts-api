@@ -1,16 +1,22 @@
 language: node_js
 node_js:
-- '6'
-cache:
-  directories:
-  - node_modules
+- lts/*
+
 script:
-- npm run build
+- yarn build
+
 deploy:
-  provider: npm
-  email: deployment@dhis2.org
-  api_key:
-    secure: Va7C0mm9gZ29UEzT6mltrcKYxqNXwOSIU4bPHCz1P2q63jfngA5QLPwcPqTbI/DxcQQsKbh7pa9uxy1ysw8TdtaKSpmF8S9J95VwhSYmn1HX9Hzc+rpFJZuQxFkphSx3WAi0+mPwyJxT2xoCsbLfwjZ/DdB0VV9UfV6rV/1EkCd3GfqtcbjPZxzao1CMxnQ9BHMT/D/ylB/hH0qodcyXGClrTMWTJXcwD0Ll9t/ctUjdk/4U9miK9LKB9K0lK5neexsS1lOw3/FFpQEHfZoBuC39y/9ir2Ac4jD/dG40nAYDkfWahlCHYa5kgvcx4qH+cJYkqd1VSdtH3/v+9wE4A7kUH048AvAG0N312T/Vtc9Zy/ggzTx+1V1NFwKAxFoNubBo76Mv+3a7SKXvNe3Fi5elEgs6JQexu4UwYG5z19cr8MimIZTeHPOgD8wOS8kcgBfizYFRX3slJFSgKGHD1a2Blo+YmUkiho74Lm7T+vxKPZMnS11FtKToMXnP+f9WGz7t3dKlDXsj6ylegoisGbPCFqvFr9M4I93jOlLAaXbBgi/nSb7eoYufRPpQNnZXD1pSyhgLZR8yfCYPON7BbKrmdlBBgU2lJrN2t2+pmdQw1Mj+gaZdkFwnjH7nB3PmP1rnMBH9V9H5MuDb8bg8Ad5uL12HNyWPO14iBNAhfmM=
-  on:
-    tags: true
+- provider: script
   skip_cleanup: true
+  script:
+    - npx @dhis2/cli-utils release --publish npm
+  on:
+    tags: false
+    branch: master
+
+env:
+  global:
+  - GIT_AUTHOR_NAME=@dhis2-bot
+  - GIT_AUTHOR_EMAIL=ci@dhis2.org
+  - GIT_COMMITTER_NAME=@dhis2-bot
+  - GIT_COMMITTER_EMAIL=ci@dhis2.org

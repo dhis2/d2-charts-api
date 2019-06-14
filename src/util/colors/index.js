@@ -1,7 +1,4 @@
-import { theme1 } from './themes';
-import { generateColors } from './gradientColorGenerator.js';
+import { theme1 } from './themes'
+import { generateColors } from './gradientColorGenerator.js'
 
-export {
-    theme1,
-    generateColors
-};
+export { theme1, generateColors }

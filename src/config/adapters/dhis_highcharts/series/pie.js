@@ -1,3 +1,4 @@
+/* eslint-disable-next-line max-params */
 export default function(series, store, layout, isStacked, colors) {
     return [
         {
@@ -18,9 +19,9 @@ export default function(series, store, layout, isStacked, colors) {
                         '<span style="font-weight:normal"> (' +
                         this.percentage.toFixed(1) +
                         ' %)</span>'
-                    );
+                    )
                 },
             },
         },
-    ];
+    ]
 }
