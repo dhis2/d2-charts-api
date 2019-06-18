@@ -3,5 +3,5 @@ import dhis_dhis from './dhis_dhis';
 
 export default {
     dhis_highcharts,
-    dhis_dhis
+    dhis_dhis,
 };
