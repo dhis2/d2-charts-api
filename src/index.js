@@ -18,11 +18,20 @@ function createChart(
     el,
     extraOptions,
     error = defaultError,
-    warning = defaultWarning
+    warning = defaultWarning,
+    outputFormat
 ) {
     const _data = isArray(data) ? data : [data];
-    const store = new Store({ data: _data, error, warning });
-    const config = new Config({ store, layout, el, extraOptions, error, warning });
+    const store = new Store({ data: _data, error, warning, outputFormat });
+    const config = new Config({
+        store,
+        layout,
+        el,
+        outputFormat,
+        extraOptions,
+        error,
+        warning,
+    });
 
     return {
         store,
