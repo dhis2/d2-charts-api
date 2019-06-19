@@ -29,6 +29,8 @@ export default function(config, parentEl) {
             }
 
             node.appendChild(content);
+
+            return node.innerHTML;
         }
     }
 }
