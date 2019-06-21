@@ -11,7 +11,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "d2-style commit check",
-      "pre-commit": "d2-style js apply"
+      "pre-commit": "d2-style validate js package --fix"
     }
   },
   "author": "",
@@ -29,7 +29,7 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "@dhis2/cli-style": "^3.3.4",
+    "@dhis2/cli-style": "3.3.4",
     "husky": "^2.4.1"
   }
 }
