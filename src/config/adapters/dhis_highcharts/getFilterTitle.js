@@ -1,5 +1,5 @@
 import isArray from 'd2-utilizr/lib/isArray';
-import { orgUnitId } from '@dhis2/d2-ui-analytics'
+import { ouIdHelper } from '@dhis2/d2-ui-analytics'
 import i18n from '@dhis2/d2-i18n'
 
 export default function (filters, metaData) {
@@ -13,8 +13,8 @@ export default function (filters, metaData) {
         let l;
 
         filters.forEach((filter, index, array) => {
-            const isOuFilterWithLevel = filter.dimension === 'ou' ? filter.items.some(item => orgUnitId.hasLevelPrefix(item.id)) : false;
-            const isOuFilterWithGroups = filter.dimension === 'ou' ? filter.items.some(item => orgUnitId.hasGroupPrefix(item.id)) : false;
+            const isOuFilterWithLevel = filter.dimension === 'ou' ? filter.items.some(item => ouIdHelper.hasLevelPrefix(item.id)) : false;
+            const isOuFilterWithGroups = filter.dimension === 'ou' ? filter.items.some(item => ouIdHelper.hasGroupPrefix(item.id)) : false;
 
             if (isOuFilterWithLevel || isOuFilterWithGroups) {
                 const titleParts = [];
@@ -63,21 +63,21 @@ export default function (filters, metaData) {
 const getOuFilterTitle = (items, metaData, isLevel) => {
     const getNameFromMetadata = id => metaData.items[id] ? metaData.items[id].name : id;
 
-    const dynamicOuItems = items.filter(item => isLevel ? orgUnitId.hasLevelPrefix(item.id) : orgUnitId.hasGroupPrefix(item.id));
+    const dynamicOuItems = items.filter(item => isLevel ? ouIdHelper.hasLevelPrefix(item.id) : ouIdHelper.hasGroupPrefix(item.id));
     const lastItem = dynamicOuItems.length > 1 ? dynamicOuItems.pop() : null;
-    const dynamicOuNames = dynamicOuItems.map(item => getNameFromMetadata(orgUnitId.removePrefix(item.id))).join(', ');
+    const dynamicOuNames = dynamicOuItems.map(item => getNameFromMetadata(ouIdHelper.removePrefix(item.id))).join(', ');
 
     let allDynamicOuNames;
 
     if (lastItem) {
-        const lastOuName = getNameFromMetadata(orgUnitId.removePrefix(lastItem.id));
+        const lastOuName = getNameFromMetadata(ouIdHelper.removePrefix(lastItem.id));
         allDynamicOuNames = `${dynamicOuNames} ${i18n.t('and')} ${lastOuName}`
     } else {
         allDynamicOuNames = dynamicOuNames;
     }
     
     const staticOuNames = items
-        .filter(item => !orgUnitId.hasGroupPrefix(item.id) && !orgUnitId.hasLevelPrefix(item.id))
+        .filter(item => !ouIdHelper.hasGroupPrefix(item.id) && !ouIdHelper.hasLevelPrefix(item.id))
         .map(item => getNameFromMetadata(item.id))
         .join(', ');
     
