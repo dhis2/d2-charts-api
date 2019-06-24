@@ -4,7 +4,7 @@ import i18n from '@dhis2/d2-i18n'
 
 export default function (filters, metaData) {
     let title;
-    
+
     if (isArray(filters) && filters.length) {
         title = '';
         
