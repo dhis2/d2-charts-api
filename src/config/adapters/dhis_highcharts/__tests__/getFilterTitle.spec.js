@@ -1,13 +1,4 @@
-import { ouIdHelper } from '@dhis2/d2-ui-analytics';
 import getFilterTitle from '../getFilterTitle';
-
-jest.mock('@dhis2/d2-ui-analytics', () => ({
-    ouIdHelper: {
-        hasLevelPrefix: jest.fn(),
-        hasGroupPrefix: jest.fn(),
-        removePrefix: jest.fn(),
-    }
-}))
 
 let filters;
 let metaData;
@@ -47,106 +38,81 @@ describe('getFilterTitle', () => {
         }
     });
 
-    describe('without ou levels and groups', () => {
-        beforeEach(() => {
-            ouIdHelper.hasGroupPrefix.mockImplementation(()=> false)
-            ouIdHelper.hasLevelPrefix.mockImplementation(()=> false)
-        });
+    it('joins items with a comma', () => {
+        expect(getFilterTitle(filters, metaData)).toEqual('Clinics, Hospital');
+    });
 
-        it('joins items with a comma', () => {
-            expect(getFilterTitle(filters, metaData)).toEqual('Clinics, Hospital');
-        });
+    it('joins filters with a "-"', () => {
+        filters.push(
+            {
+                dimension: '_period_',
+                items: [
+                    {
+                        id: '_201801_',
+                        name: '01 of 2018'
+                    },
+                    {
+                        id: '_201802_',
+                        name: '02 of 2018'
+                    }
+                ]
+            }
+        );
 
-        it('joins filters with a "-"', () => {
-            filters.push(
-                {
-                    dimension: '_period_',
-                    items: [
-                        {
-                            id: '_201801_',
-                            name: '01 of 2018'
-                        },
-                        {
-                            id: '_201802_',
-                            name: '02 of 2018'
-                        }
-                    ]
-                }
-            );
+        metaData.dimensions._period_ = ['_201801_', '_201802_'];
+        metaData.items._201801_ = {
+            name: '01 of 2018',
+            uid: '_201801_'
+        };
+        metaData.items._201802_ = {
+            name: '02 of 2018',
+            uid: '_201802_'
+        };
 
-            metaData.dimensions._period_ = ['_201801_', '_201802_'];
-            metaData.items._201801_ = {
-                name: '01 of 2018',
-                uid: '_201801_'
-            };
-            metaData.items._201802_ = {
-                name: '02 of 2018',
-                uid: '_201802_'
-            };
-
-            expect(getFilterTitle(filters, metaData)).toEqual('Clinics, Hospital - 01 of 2018, 02 of 2018');
-        })
+        expect(getFilterTitle(filters, metaData)).toEqual('Clinics, Hospital - 01 of 2018, 02 of 2018');
     })
 
-    describe('with ou levels and groups', () => {
-        beforeEach(() => {
-            ouIdHelper.hasGroupPrefix.mockImplementation(val => val === 'OU_GROUP-fruit' || val === 'OU_GROUP-veggies')
-            ouIdHelper.hasLevelPrefix.mockImplementation(val => 
-                val === 'LEVEL-2nd-floor'
-            );
-            ouIdHelper.removePrefix.mockImplementation(val => {
-                if (val === 'LEVEL-2nd-floor') {
-                    return '2nd-floor';
-                } else if (val === 'OU_GROUP-veggies') {
-                    return 'veggies';
-                }
+    it('summarizes ou levels and groups', () => {
+        filters.push(
+            {
+                dimension: 'ou',
+                items: [
+                    {
+                        id: 'LEVEL-2nd-floor',
+                    },
+                    {
+                        id: 'OU_GROUP-fruit',
+                    },
+                    {
+                        id: 'OU_GROUP-veggies',
+                    },
+                    {
+                        id: '_SierraLeone_',
+                    }
+                ]
+            }
+        );
 
-                return 'fruit';
-            });
-        })
-        
-        it('summarizes ou levels and groups', () => {
-            filters.push(
-                {
-                    dimension: 'ou',
-                    items: [
-                        {
-                            id: 'LEVEL-2nd-floor',
-                        },
-                        {
-                            id: 'OU_GROUP-fruit',
-                        },
-                        {
-                            id: 'OU_GROUP-veggies',
-                        },
-                        {
-                            id: '_SierraLeone_',
-                        }
-                    ]
-                }
-            );
+        metaData.dimensions.ou = ['LEVEL-2nd-floor', 'OU_GROUP-fruit', 'OU_GROUP-veggies', '_SierraLeone_'];
+        metaData.items._SierraLeone_ = {
+            name: 'Sierra Leone',
+            uid: '_SierraLeone_'
+        };
+        metaData.items['fruit'] = {
+            name: 'Fruit',
+            uid: 'fruit'
+        };
+        metaData.items['veggies'] = {
+            name: 'Veggies',
+            uid: 'veggies'
+        };
+        metaData.items['2nd-floor'] = {
+            name: 'Second floor',
+            uid: '2nd-floor'
+        };
 
-            metaData.dimensions.ou = ['LEVEL-2nd-floor', 'OU_GROUP-fruit', 'OU_GROUP-veggies', '_SierraLeone_'];
-            metaData.items._SierraLeone_ = {
-                name: 'Sierra Leone',
-                uid: '_SierraLeone_'
-            };
-            metaData.items['fruit'] = {
-                name: 'Fruit',
-                uid: 'fruit'
-            };
-            metaData.items['veggies'] = {
-                name: 'Veggies',
-                uid: 'veggies'
-            };
-            metaData.items['2nd-floor'] = {
-                name: 'Second floor',
-                uid: '2nd-floor'
-            };
-
-            expect(getFilterTitle(filters, metaData)).toEqual('Clinics, Hospital - Fruit and Veggies groups in Sierra Leone - Second floor levels in Sierra Leone');
-        })
-    });
+        expect(getFilterTitle(filters, metaData)).toEqual('Clinics, Hospital - Fruit and Veggies groups in Sierra Leone - Second floor levels in Sierra Leone');
+    })
 
     describe('metadata is missing', () => {
         it('uses uids in the title', () => {

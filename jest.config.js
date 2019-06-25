@@ -10,4 +10,7 @@ module.exports = {
     transformIgnorePatterns: [
         'node_modules/(?!(lodash-es|@dhis2/d2-ui-[a-z-]+)/)',
     ],
+    moduleNameMapper: {
+        "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
 }
