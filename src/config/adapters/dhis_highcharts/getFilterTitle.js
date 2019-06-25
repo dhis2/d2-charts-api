@@ -7,15 +7,15 @@ export default function (filters, metaData) {
         const titleParts = [];
 
         filters.forEach(filter => {
-            const isOuFilterWithLevels = filter.dimension === 'ou' ? filter.items.some(item => ouIdHelper.hasLevelPrefix(item.id)) : false;
-            const isOuFilterWithGroups = filter.dimension === 'ou' ? filter.items.some(item => ouIdHelper.hasGroupPrefix(item.id)) : false;
+            const hasOuLevel = filter.dimension === 'ou' ? filter.items.some(item => ouIdHelper.hasLevelPrefix(item.id)) : false;
+            const hasOuGroup = filter.dimension === 'ou' ? filter.items.some(item => ouIdHelper.hasGroupPrefix(item.id)) : false;
 
-            if (isOuFilterWithLevels || isOuFilterWithGroups) {
-                if (isOuFilterWithGroups) {
+            if (hasOuLevel || hasOuGroup) {
+                if (hasOuGroup) {
                     titleParts.push(getOuFilterTitle(filter.items, metaData, false))
                 }
 
-                if (isOuFilterWithLevels) {
+                if (hasOuLevel) {
                     titleParts.push(getOuFilterTitle(filter.items, metaData, true))
                 }    
             } else {
